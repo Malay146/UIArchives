@@ -1,7 +1,7 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inria+Serif:ital,wght@0,300;0,400;0,700;1,300;1,400;1,700&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Pixelify+Sans:wght@400..700&display=swap');
 
-:root {
+/* :root {
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -18,7 +18,7 @@
     --background: #0a0a0a;
     --foreground: #ededed;
   }
-}
+} */
 
 html {
   scroll-behavior: smooth;
