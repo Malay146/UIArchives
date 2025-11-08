@@ -1,6 +1,12 @@
+"use client";
+
+import React, { useMemo, useState } from "react";
 import Image from "next/image";
 import UiCard, { UiCardData } from "@/components/UiCard";
 import Silk from "@/components/Silk";
+import Link from "next/link";
+import { twMerge } from "tailwind-merge";
+import clsx from "clsx";
 
 const cardData: UiCardData[] = [
   {
@@ -30,7 +36,7 @@ const cardData: UiCardData[] = [
     title: "Radix UI",
     description:
       "Radix UI provides accessible, unstyled UI primitives for building high-quality design systems and web apps.",
-    tag: "UI Primitives",
+    tag: ["UI Primitives", "Component Library"],
     image: "/radix-ui.webp",
     links: {
       website: "https://www.radix-ui.com",
@@ -45,13 +51,39 @@ const cardData: UiCardData[] = [
     image: "/reactbits.png", // Place this image inside your /public folder
     links: {
       website: "https://reactbits.dev",
-      github: "https://github.com/vasanthk/react-bits",
-      twitter: "https://twitter.com/vasanthk",
+      github: "https://github.com/DavidHDev/react-bits",
+      twitter: "https://x.com/davidhdev",
     },
-  },
+  },  
 ];
 
 export default function Home() {
+  const [selectedTag, setSelectedTag] = useState<string>("All");
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const filteredCards = useMemo(() => {
+  const q = searchQuery.trim().toLowerCase();
+
+  return cardData.filter((card) => {
+    // Normalize tags to array
+    const tags = Array.isArray(card.tag) ? card.tag : [card.tag];
+
+    const tagMatches =
+      selectedTag === "All" ||
+      tags.some((t) => t.toLowerCase().includes(selectedTag.toLowerCase()));
+
+    const queryMatches =
+      !q ||
+      [card.title, card.description, ...tags]
+        .join(" ")
+        .toLowerCase()
+        .includes(q);
+
+    return tagMatches && queryMatches;
+  });
+}, [selectedTag, searchQuery]);
+
+
   return (
     <div className="w-full relative min-h-screen">
       {/* Black Basic Grid Background */}
@@ -60,8 +92,8 @@ export default function Home() {
         style={{
           background: "#000000",
           backgroundImage: `
-        linear-gradient(to right, rgba(75, 85, 99, 0.15) 1px, transparent 1px),
-        linear-gradient(to bottom, rgba(75, 85, 99, 0.15) 1px, transparent 1px)
+        linear-gradient(to right, rgba(75, 85, 99, 0.3) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(75, 85, 99, 0.3) 1px, transparent 1px)
       `,
           backgroundSize: "40px 40px",
           backgroundRepeat: "repeat",
@@ -451,18 +483,12 @@ export default function Home() {
 
           {/* Hero Image */}
           <div className="hero-image -mt-8 relative w-[822px] h-[126px] rounded-[88px] overflow-hidden">
-            {/* <Image
-              src="/graphic.jpg"
-              alt="Graphic"
-              fill
-              className="object-cover bg-center"
-            /> */}
             <Silk
-              speed={5}
-              scale={1}
+              speed={15}
+              scale={0.9}
               color="#7B7481"
               noiseIntensity={1.5}
-              rotation={50}
+              rotation={1.94}
             />
           </div>
           <p className="text-[#888888] max-w-4xl font-[Inria_Serif] text-[24px] text-center font-extralight tracking-tigher leading-6 mt-3">
@@ -473,27 +499,33 @@ export default function Home() {
 
           {/* CTA */}
           <div className="flex gap-4 mt-8">
-            <Button1 className="tracking-tighter">
-              <a href="#filter">Explore Resouces</a>
-            </Button1>
-            <Button2 className="flex items-center gap-2 tracking-tighter">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="1.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="lucide lucide-github-icon lucide-github"
-              >
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
-                <path d="M9 18c-4.51 2-5-2-7-2" />
-              </svg>
-              Github
-            </Button2>
+            <Link href="#filter">
+              <Button1 className="tracking-tighter">Explore Resources</Button1>
+            </Link>
+            <Link
+              href="https://github.com/Malay146/UIArchives"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button2 className="flex items-center gap-2 tracking-tighter">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-github-icon lucide-github"
+                >
+                  <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
+                  <path d="M9 18c-4.51 2-5-2-7-2" />
+                </svg>
+                Github
+              </Button2>
+            </Link>
           </div>
 
           {/* Divider */}
@@ -506,8 +538,8 @@ export default function Home() {
               <p className="font-thin text-lg">Resources Shared</p>
             </div>
             <div>
-              <p className="text-3xl font-extrabold">100%</p>
-              <p className="font-thin text-lg">Free</p>
+              <p className="text-3xl font-black">∞</p>
+              <p className="font-thin text-lg">Design Inspiration</p>
             </div>
           </div>
 
@@ -517,27 +549,43 @@ export default function Home() {
             id="filter"
           >
             <div className="flex gap-2">
-              <Button1>All</Button1>
-              <Button1>Component Library</Button1>
-              <Button1>Framework</Button1>
-              <Button1>Fonts</Button1>
-              <Button1>Icons</Button1>
-              <Button1>Testing</Button1>
-              <Button1>X/Twitter</Button1>
-              <Button1>Youtube</Button1>
-              <Button1>Favourite</Button1>
+              {[
+                "All",
+                "Component Library",
+                "Framework",
+                "Fonts",
+                "Icons",
+                "Testing",
+                "X/Twitter",
+                "Youtube",
+                "Inspiration",
+              ].map((tag) => (
+                <Button1
+                  key={tag}
+                  onClick={() => setSelectedTag(tag)}
+                  className={
+                    selectedTag === tag
+                      ? "shadow-[inset_-4px_-4px_4px_rgba(255,255,255,0.08),inset_4px_4px_4px_rgba(0,0,0,0.5)] text-zinc-200"
+                      : ""
+                  }
+                >
+                  {tag}
+                </Button1>
+              ))}
             </div>
             <Search
               type="text"
               placeholder="Search..."
               autoComplete="off"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
               className="pl-10 w-full mt-3 outline-none"
             />
           </div>
 
           {/* Cards */}
           <div className="Cards w-full grid grid-cols-3 gap-3 mt-5 font-[Inter] tracking-tight">
-            {cardData.map((card, index) => (
+            {filteredCards.map((card, index) => (
               <UiCard key={index} {...card} />
             ))}
           </div>
@@ -582,7 +630,14 @@ const Button1 = ({ children, className = "", ...props }: Button1Props) => {
   return (
     <button
       {...props}
-      className={`noise font-[Inter]  px-5 py-3 bg-[#171717] cursor-pointer rounded-2xl shadow-[inset_4px_4px_4px_rgba(255,255,255,0.04),inset_-4px_-4px_4px_rgba(0,0,0,0.5)] hover:shadow-[inset_-4px_-4px_4px_rgba(255,255,255,0.08),inset_4px_4px_4px_rgba(0,0,0,0.5)] transition-shadow duration-300 font-light text-zinc-400 ${className}`}
+      className={twMerge(
+        clsx(
+          "noise font-[Inter] px-5 py-3 bg-[#171717] cursor-pointer rounded-2xl transition-shadow duration-300 font-light text-zinc-400",
+          "shadow-[inset_4px_4px_4px_rgba(255,255,255,0.04),inset_-4px_-4px_4px_rgba(0,0,0,0.5)]",
+          "hover:shadow-[inset_-4px_-4px_4px_rgba(255,255,255,0.08),inset_4px_4px_4px_rgba(0,0,0,0.5)]",
+          className
+        )
+      )}
     >
       {children}
     </button>
