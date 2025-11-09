@@ -46,3 +46,30 @@ body {
   z-index: 1;
 }
 
+/* Hide scrollbar but allow scrolling */
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;  /* Chrome, Safari and Opera */
+}
+
+/* Responsive background grid */
+.bg-grid-responsive {
+  background-size: 20px 20px;
+}
+
+@media (min-width: 640px) {
+  .bg-grid-responsive {
+    background-size: 30px 30px;
+  }
+}
+
+@media (min-width: 768px) {
+  .bg-grid-responsive {
+    background-size: 40px 40px;
+  }
+}
+

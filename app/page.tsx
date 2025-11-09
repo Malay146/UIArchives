@@ -225,7 +225,7 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://tabler.io/icons",
       github: "https://github.com/tabler/tabler-icons",
-      twitter: "https://x.com/tabler_io"
+      twitter: "https://x.com/tabler_io",
     },
   },
   {
@@ -236,7 +236,7 @@ const cardData: UiCardData[] = [
     image: "/nucleo.png",
     links: {
       website: "https://nucleoapp.com/free-icons",
-      twitter: "https://x.com/nucleoicons"
+      twitter: "https://x.com/nucleoicons",
     },
   },
 
@@ -249,7 +249,7 @@ const cardData: UiCardData[] = [
     image: "/fontshare.png",
     links: {
       website: "https://www.fontshare.com",
-      twitter: "https://x.com/fontshare_com"
+      twitter: "https://x.com/fontshare_com",
     },
   },
   {
@@ -279,7 +279,14 @@ const cardData: UiCardData[] = [
     title: "TypeScale",
     description:
       "TypeScale helps you visualize and generate harmonious typographic scales for your website — perfect for setting consistent font sizes and rhythm.",
-    tag: ["Typography Tool", "Font Scale", "Type Scale", "typography", "fonts" , "tools"],
+    tag: [
+      "Typography Tool",
+      "Font Scale",
+      "Type Scale",
+      "typography",
+      "fonts",
+      "tools",
+    ],
     image: "/typescale.png",
     links: {
       website: "https://typescale.com",
@@ -334,7 +341,7 @@ export default function Home() {
     <div className="w-full relative min-h-screen">
       {/* Black Basic Grid Background */}
       <div
-        className="fixed inset-0 -z-10 h-full w-full min-h-screen"
+        className="fixed inset-0 -z-10 h-full w-full min-h-screen bg-grid-responsive"
         style={{
           background: "#000000",
           backgroundImage: `
@@ -353,7 +360,11 @@ export default function Home() {
         viewBox="0 0 959 800"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
-        className="absolute z-99 pointer-events-none"
+        className="absolute z-99 pointer-events-none hidden sm:block  h-auto opacity-50 sm:opacity-100"
+        style={{
+          maxWidth: "100%",
+          height: "auto",
+        }}
       >
         <g opacity="0.14" filter="url(#filter0_f_67_2)">
           <path
@@ -718,17 +729,17 @@ export default function Home() {
         </defs>
       </svg>
 
-      <div className="max-w-7xl h-screen mx-auto">
+      <div className="max-w-7xl min-h-screen mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
         <Navbar />
 
         {/* Hero Section */}
-        <div className="hero-section flex flex-col items-center justify-center gap-6">
-          <h1 className="font-[Inria_Serif] text-[88px] font-bold bg-clip-text text-center text-transparent bg-linear-to-r from-[#3F3F3F] via-[#FFFFFF] to-[#3F3F3F] tracking-tighter mt-24">
+        <div className="hero-section flex flex-col items-center justify-center gap-4 sm:gap-5 md:gap-6 pt-8 sm:pt-12 md:pt-16 lg:pt-20 xl:pt-24">
+          <h1 className="font-[Inria_Serif] text-[32px] sm:text-[48px] md:text-[64px] lg:text-[72px] xl:text-[88px] font-bold bg-clip-text text-center text-transparent bg-linear-to-r from-[#3F3F3F] via-[#FFFFFF] to-[#3F3F3F] tracking-tighter px-2 sm:px-4">
             All Your Frontend Necessities
           </h1>
 
           {/* Hero Image */}
-          <div className="hero-image -mt-8 relative w-[822px] h-[126px] rounded-[88px] overflow-hidden">
+          <div className="hero-image -mt-4 sm:-mt-6 md:-mt-8 relative w-[90%] max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[620px] xl:max-w-[822px] h-[60px] sm:h-[80px] md:h-[100px] lg:h-[110px] xl:h-[126px] rounded-[44px] sm:rounded-[55px] md:rounded-[66px] lg:rounded-[77px] xl:rounded-[88px] overflow-hidden mx-auto">
             <Silk
               speed={20}
               scale={0.9}
@@ -737,34 +748,37 @@ export default function Home() {
               rotation={1.94}
             />
           </div>
-          <p className="text-[#888888] max-w-4xl font-[Inria_Serif] text-[24px] text-center font-extralight tracking-tigher leading-6 ">
+          <p className="text-[#888888] max-w-4xl font-[Inria_Serif] text-sm sm:text-base md:text-lg lg:text-xl xl:text-[24px] text-center font-extralight tracking-tigher leading-5 sm:leading-6 px-4 sm:px-6 md:px-8">
             Explore a universe of tools, frameworks, and components — all in one
             place. Just search what you need, and get instant access to the best
             resources.
           </p>
 
           {/* CTA */}
-          <div className="flex gap-4 mt-5">
-            <Link href="#filter">
-              <Button1 className="tracking-tighter">Explore Resources</Button1>
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 sm:mt-5 w-full sm:w-auto px-4 sm:px-0">
+            <Link href="#filter" className="w-full sm:w-auto">
+              <Button1 className="tracking-tighter w-full sm:w-auto text-center">
+                Explore Resources
+              </Button1>
             </Link>
             <Link
               href="https://github.com/Malay146/UIArchives"
               target="_blank"
               rel="noopener noreferrer"
+              className="w-full sm:w-auto"
             >
-              <Button2 className="flex items-center gap-2 tracking-tighter">
+              <Button2 className="flex items-center justify-center gap-2 tracking-tighter w-full sm:w-auto">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
+                  width="20"
+                  height="20"
                   viewBox="0 0 24 24"
                   fill="none"
                   stroke="currentColor"
                   strokeWidth="1.5"
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  className="lucide lucide-github-icon lucide-github"
+                  className="lucide lucide-github-icon lucide-github sm:w-5 sm:h-5 md:w-6 md:h-6"
                 >
                   <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" />
                   <path d="M9 18c-4.51 2-5-2-7-2" />
@@ -775,31 +789,35 @@ export default function Home() {
           </div>
 
           {/* Divider */}
-          <div className="divider border-t border-zinc-800 w-xl h-px mt-3" />
+          <div className="divider border-t border-zinc-800 w-full max-w-xl h-px mt-3 sm:mt-4" />
 
           {/* Metrics */}
-          <div className="metrics max-w-xl flex items-center justify-center gap-32 font-[Inter] text-center mt-1 text-white">
+          <div className="metrics max-w-xl flex items-center justify-center gap-8 sm:gap-12 md:gap-16 lg:gap-24 xl:gap-32 font-[Inter] text-center mt-2 sm:mt-3 text-white px-4">
             <div>
-              <p className="text-3xl font-extrabold">
+              <p className="text-xl sm:text-2xl md:text-3xl font-extrabold">
                 {/* 1000+ */}
                 {cardData.length >= 1000
                   ? `${(cardData.length / 1000).toFixed(1)}k+`
                   : `${cardData.length}+`}
               </p>
-              <p className="font-thin text-lg">Resources Shared</p>
+              <p className="font-thin text-xs sm:text-sm md:text-base lg:text-lg">
+                Resources Shared
+              </p>
             </div>
             <div>
-              <p className="text-3xl font-black">∞</p>
-              <p className="font-thin text-lg">Design Inspiration</p>
+              <p className="text-xl sm:text-2xl md:text-3xl font-black">∞</p>
+              <p className="font-thin text-xs sm:text-sm md:text-base lg:text-lg">
+                Design Inspiration
+              </p>
             </div>
           </div>
 
           {/* Filter & Search */}
           <div
-            className="filter max-w-7xl tracking-tighter mt-12 flex flex-col"
+            className="filter scroll-mt-3 max-w-7xl tracking-tighter mt-8 sm:mt-10 md:mt-12 flex flex-col items-center px-4 sm:px-6 md:px-0"
             id="filter"
           >
-            <div className="flex gap-2">
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-2 md:gap-2">
               {[
                 "All",
                 "Component Library",
@@ -816,8 +834,8 @@ export default function Home() {
                   onClick={() => setSelectedTag(tag)}
                   className={
                     selectedTag === tag
-                      ? "shadow-[inset_-4px_-4px_4px_rgba(255,255,255,0.08),inset_4px_4px_4px_rgba(0,0,0,0.5)] text-zinc-200 font-normal"
-                      : ""
+                      ? "shadow-[inset_-4px_-4px_4px_rgba(255,255,255,0.08),inset_4px_4px_4px_rgba(0,0,0,0.5)] text-zinc-200 font-normal whitespace-nowrap flex-shrink-0"
+                      : "whitespace-nowrap flex-shrink-0"
                   }
                 >
                   {tag}
@@ -830,18 +848,18 @@ export default function Home() {
               autoComplete="off"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 w-full mt-3 outline-none"
+              className="pl-10 w-full mt-3 sm:mt-4 outline-none"
             />
           </div>
 
           {/* Cards */}
-          <div className="Cards w-full grid grid-cols-3 gap-3 mt-5 font-[Inter] tracking-tight mb-3">
+          <div className="Cards w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-3 mt-5 sm:mt-6 md:mt-8 font-[Inter] tracking-tight mb-3 sm:mb-6 md:mb-8 px-4 sm:px-6 md:px-0">
             {filteredCards.length > 0 ? (
               filteredCards.map((card, index) => (
                 <UiCard key={index} {...card} />
               ))
             ) : (
-              <p className="text-zinc-500 text-center col-span-3 mt-5 mb-14 py-3 bg-zinc-900 rounded-2xl w-[31%] mx-auto">
+              <p className="text-zinc-500 text-center text-balance col-span-1 sm:col-span-2 lg:col-span-3 mt-5 mb-14 py-3 bg-zinc-900 rounded-2xl mx-auto px-5">
                 No results found. Try a different keyword or filter.
               </p>
             )}
@@ -854,14 +872,15 @@ export default function Home() {
 
 const Navbar = () => {
   return (
-    <div className="navbar pt-10 flex items-center justify-between">
-      <Link href="/">
+    <div className="navbar pt-6 sm:pt-8 md:pt-10 flex items-center justify-between gap-4 sm:gap-6">
+      <Link href="/" className="flex-shrink-0">
         <svg
           width="265"
           height="55"
           viewBox="0 0 265 55"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className="w-[140px] h-[29px] sm:w-[180px] sm:h-[37px] md:w-[220px] md:h-[45px] lg:w-[265px] lg:h-[55px]"
         >
           <path
             d="M22.6 5.70001V27.2L17.7 24.4C9 19.4 3.59999 10.1 3.59999 0H0V24.6C0 32.6 4.59999 40 11.9 43.5L22.7 48.7V27.2L27.6 30C36.3 35 41.7 44.3 41.7 54.4H45.3V29.8C45.3 21.8 40.7 14.4 33.4 10.9L22.6 5.70001Z"
@@ -874,8 +893,9 @@ const Navbar = () => {
         </svg>
       </Link>
 
-      <Button1 className="font-extralight tracking-tighter">
-        Share your Resource
+      <Button1 className="font-extralight tracking-tighter text-xs sm:text-sm md:text-base px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 whitespace-nowrap">
+        <span className="hidden sm:inline">Share your Resource</span>
+        <span className="sm:hidden">Share</span>
       </Button1>
     </div>
   );
@@ -891,9 +911,9 @@ const Button1 = ({ children, className = "", ...props }: Button1Props) => {
       {...props}
       className={twMerge(
         clsx(
-          "noise font-[Inter] px-5 py-3 bg-[#171717] cursor-pointer rounded-2xl transition-shadow duration-300 font-light text-zinc-400",
+          "noise font-[Inter] px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 bg-[#171717] cursor-pointer rounded-xl sm:rounded-2xl transition-shadow duration-300 font-light text-zinc-400 text-xs sm:text-sm md:text-base",
           "shadow-[inset_4px_4px_4px_rgba(255,255,255,0.04),inset_-4px_-4px_4px_rgba(0,0,0,0.5)]",
-          "hover:shadow-[inset_-4px_-4px_4px_rgba(255,255,255,0.08),inset_4px_4px_4px_rgba(0,0,0,0.5)]",
+          "hover:shadow-[inset_-2px_-2px_2px_rgba(255,255,255,0.08),inset_2px_2px_2px_rgba(0,0,0,0.5)] sm:hover:shadow-[inset_-4px_-4px_4px_rgba(255,255,255,0.08),inset_4px_4px_4px_rgba(0,0,0,0.5)]",
           className
         )
       )}
@@ -911,10 +931,10 @@ const Button2 = ({ children, className = "", ...props }: Button2Props) => {
   return (
     <button
       {...props}
-      className={`noise font-[Inter] px-5 py-3 bg-[#BDBDBD] cursor-pointer rounded-2xl   
-      shadow-[inset_-4px_-4px_4px_rgba(0,0,0,0.5),inset_4px_4px_4px_rgba(255,255,255,0.5)]
-      hover:shadow-[inset_4px_4px_4px_rgba(0,0,0,0.5),inset_-4px_-4px_4px_rgba(255,255,255,0.5)]
-      transition-shadow duration-300 font-light text-zinc-800 ${className}`}
+      className={`noise font-[Inter] px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 bg-[#BDBDBD] cursor-pointer rounded-xl sm:rounded-2xl   
+      shadow-[inset_-2px_-2px_2px_rgba(0,0,0,0.5),inset_2px_2px_2px_rgba(255,255,255,0.5)] sm:shadow-[inset_-4px_-4px_4px_rgba(0,0,0,0.5),inset_4px_4px_4px_rgba(255,255,255,0.5)]
+      hover:shadow-[inset_2px_2px_2px_rgba(0,0,0,0.5),inset_-2px_-2px_2px_rgba(255,255,255,0.5)] sm:hover:shadow-[inset_4px_4px_4px_rgba(0,0,0,0.5),inset_-4px_-4px_4px_rgba(255,255,255,0.5)]
+      transition-shadow duration-300 font-light text-zinc-800 text-xs sm:text-sm md:text-base ${className}`}
     >
       {children}
     </button>
@@ -929,10 +949,10 @@ const Search = ({ className = "", ...props }: SearchProps) => {
   return (
     <input
       {...props}
-      className={`noise font-[Inter] px-5 py-3 bg-[#BDBDBD] rounded-2xl 
-      shadow-[inset_-4px_-4px_4px_rgba(0,0,0,0.5),inset_4px_4px_4px_rgba(255,255,255,0.5)]
-      focus:shadow-[inset_4px_4px_4px_rgba(0,0,0,0.5),inset_-4px_-4px_4px_rgba(255,255,255,0.5)]
-      transition-shadow duration-300 font-light text-zinc-800 placeholder:text-zinc-500
+      className={`noise font-[Inter] px-4 py-2.5 sm:px-5 sm:py-3 bg-[#BDBDBD] rounded-xl sm:rounded-2xl 
+      shadow-[inset_-2px_-2px_2px_rgba(0,0,0,0.5),inset_2px_2px_2px_rgba(255,255,255,0.5)] sm:shadow-[inset_-4px_-4px_4px_rgba(0,0,0,0.5),inset_4px_4px_4px_rgba(255,255,255,0.5)]
+      focus:shadow-[inset_2px_2px_2px_rgba(0,0,0,0.5),inset_-2px_-2px_2px_rgba(255,255,255,0.5)] sm:focus:shadow-[inset_4px_4px_4px_rgba(0,0,0,0.5),inset_-4px_-4px_4px_rgba(255,255,255,0.5)]
+      transition-shadow duration-300 font-light text-zinc-800 placeholder:text-zinc-500 text-sm sm:text-base
       ${className}`}
     />
   );
