@@ -814,7 +814,7 @@ export default function Home() {
 
           {/* Filter & Search */}
           <div
-            className="filter scroll-mt-3 max-w-7xl tracking-tighter mt-8 sm:mt-10 md:mt-12 flex flex-col items-center px-4 sm:px-6 md:px-0"
+            className="filter scroll-mt-5 max-w-7xl tracking-tighter mt-8 sm:mt-10 md:mt-12 flex flex-col items-center px-4 sm:px-6 md:px-0"
             id="filter"
           >
             <div className="flex flex-wrap justify-center gap-2 sm:gap-2 md:gap-2">
@@ -893,10 +893,15 @@ const Navbar = () => {
         </svg>
       </Link>
 
-      <Button1 className="font-extralight tracking-tighter text-xs sm:text-sm md:text-base px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 whitespace-nowrap">
-        <span className="hidden sm:inline">Share your Resource</span>
-        <span className="sm:hidden">Share</span>
-      </Button1>
+      <div className="flex items-center gap-3">
+        <Button1 className="font-extralight tracking-tighter text-xs sm:text-sm md:text-base px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 whitespace-nowrap">
+          <span className="sm:inline">Share</span>
+        </Button1>
+        <Button1 className="font-extralight tracking-tighter text-xs sm:text-sm md:text-base px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 whitespace-nowrap">
+          <span className="hidden sm:inline">Add your Resource</span>
+          <span className="sm:hidden">Add</span>
+        </Button1>
+      </div>
     </div>
   );
 };
