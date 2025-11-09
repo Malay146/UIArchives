@@ -20,6 +20,14 @@ const inriaSerif = Inria_Serif({
 });
 
 // -------------------------------
+// Environment Variables
+// -------------------------------
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://uiarchives.com";
+const GOOGLE_VERIFICATION =
+  process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ||
+  "your-google-site-verification-code";
+
+// -------------------------------
 // SEO Metadata
 // -------------------------------
 export const metadata: Metadata = {
@@ -44,23 +52,23 @@ export const metadata: Metadata = {
     "Next.js UI components",
   ],
 
-  authors: [{ name: "UIArchives Team", url: "https://uiarchives.com" }],
+  authors: [{ name: "UIArchives Team", url: SITE_URL }],
   creator: "UIArchives",
   publisher: "UIArchives",
 
-  metadataBase: new URL("https://uiarchives.com"),
+  metadataBase: new URL(SITE_URL),
 
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://uiarchives.com",
+    url: SITE_URL,
     title: "UIArchives – Curated UI Components, Tools & Design Systems",
     description:
       "Explore the ultimate archive of UI components, design frameworks, and frontend tools. Save time and elevate your projects with curated UI inspiration.",
     siteName: "UIArchives",
     images: [
       {
-        url: "https://uiarchives.com/og-image.png",
+        url: `${SITE_URL}/og-image.png`,
         width: 1200,
         height: 630,
         alt: "UIArchives – Curated UI Components and Design Tools",
@@ -73,8 +81,8 @@ export const metadata: Metadata = {
     title: "UIArchives – Curated UI Components, Tools & Design Systems",
     description:
       "Find the best UI resources, design systems, and frontend components curated for modern developers and designers.",
-    creator: "@uiarchives", // change if you have a Twitter handle
-    images: ["https://uiarchives.com/og-image.png"],
+    creator: "@uiarchives",
+    images: [`${SITE_URL}/og-image.png`],
   },
 
   icons: {
@@ -89,11 +97,11 @@ export const metadata: Metadata = {
   category: "Web Development",
 
   alternates: {
-    canonical: "https://uiarchives.com",
+    canonical: SITE_URL,
   },
 
   verification: {
-    google: "your-google-site-verification-code", // replace with actual code from Search Console
+    google: GOOGLE_VERIFICATION,
   },
 };
 
@@ -108,10 +116,18 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
+        {/* ✅ Manual Meta Description (Visible to Lighthouse) */}
+        <meta
+          name="description"
+          content="Discover the best UI components, frameworks, and design tools for modern developers and designers. Explore curated resources to build beautiful, responsive, and consistent interfaces faster."
+        />
+
+        {/* Google Site Verification */}
         <meta
           name="google-site-verification"
-          content="swpNY2jMYcXF6ZnIj0SgD6LjvdnVXPIOZ8LlWv0w2CA"
+          content={GOOGLE_VERIFICATION}
         />
+
         {/* Light & Dark Favicons */}
         <link
           rel="icon"
@@ -130,7 +146,7 @@ export default function RootLayout({
             "@context": "https://schema.org",
             "@type": "WebSite",
             name: "UIArchives",
-            url: "https://uiarchives.com",
+            url: SITE_URL,
             description:
               "Curated collection of UI components, frameworks, and design tools for designers and frontend developers.",
             sameAs: [
@@ -140,12 +156,13 @@ export default function RootLayout({
             ],
             potentialAction: {
               "@type": "SearchAction",
-              target: "https://uiarchives.com/search?q={search_term_string}",
+              target: `${SITE_URL}/search?q={search_term_string}`,
               "query-input": "required name=search_term_string",
             },
           })}
         </Script>
       </head>
+
       <body className={`${inter.variable} ${inriaSerif.variable} antialiased`}>
         {children}
       </body>

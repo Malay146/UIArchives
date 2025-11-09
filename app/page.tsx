@@ -873,7 +873,7 @@ export default function Home() {
 const Navbar = () => {
   return (
     <div className="navbar pt-6 sm:pt-8 md:pt-10 flex items-center justify-between gap-4 sm:gap-6">
-      <Link href="/" className="flex-shrink-0">
+      <Link href="/" className="flex-shrink-0" aria-label="Home">
         <svg
           width="265"
           height="55"
@@ -891,6 +891,7 @@ const Navbar = () => {
             fill="white"
           />
         </svg>
+        <span className="sr-only">Home</span>
       </Link>
 
       <div className="flex items-center gap-3">
