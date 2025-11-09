@@ -27,7 +27,7 @@ const cardData: UiCardData[] = [
     description:
       "Tailwind CSS is a utility-first CSS framework for rapidly building custom designs without leaving your HTML.",
     tag: "CSS Framework",
-    image: "/tailwindcss.webp",
+    image: "/tailwindcss.png",
     links: {
       website: "https://tailwindcss.com",
       github: "https://github.com/tailwindlabs/tailwindcss",
@@ -38,7 +38,7 @@ const cardData: UiCardData[] = [
     description:
       "Radix UI provides accessible, unstyled UI primitives for building high-quality design systems and web apps.",
     tag: ["UI Primitives", "Component Library"],
-    image: "/radix-ui.webp",
+    image: "/radix-ui.png",
     links: {
       website: "https://www.radix-ui.com",
       github: "https://github.com/radix-ui",
@@ -61,7 +61,7 @@ const cardData: UiCardData[] = [
     description:
       "TweakCN offers a collection of visual and motion design experiments, interactive components, and UI concepts for developers and designers looking to enhance creativity.",
     tag: ["Theme Editor", "UI Experiments", "Shadcn/UI", "Frontend"],
-    image: "/tweakcn1.webp",
+    image: "/tweakcn.png",
     links: {
       website: "https://tweakcn.com",
       github: "https://github.com/jnsahaj/tweakcn",
@@ -108,11 +108,11 @@ const cardData: UiCardData[] = [
     description:
       "8bitCN showcases pixel-art inspired UI, retro designs, and nostalgic web aesthetics that bring a vintage touch to modern frontend projects.",
     tag: ["Retro UI", "Pixel Art", "Frontend"],
-    image: "/8-bitcn.webp",
+    image: "/8bitcn.png",
     links: {
       website: "https://www.8bitcn.com",
       github: "https://github.com/TheOrcDev/8bitcn-ui",
-      twitter: "https://x.com/theorcdev"
+      twitter: "https://x.com/theorcdev",
     },
   },
   {
@@ -123,7 +123,7 @@ const cardData: UiCardData[] = [
     image: "/boxshadows.png",
     links: {
       website: "https://ui.aceternity.com/tools/box-shadows",
-      twitter: "https://x.com/mannupaaji"
+      twitter: "https://x.com/mannupaaji",
     },
   },
   {
@@ -150,12 +150,12 @@ const cardData: UiCardData[] = [
     title: "React Scan",
     description:
       "React Scan is a powerful tool to visualize React component performance in real time, helping you debug and optimize your React applications efficiently.",
-    tag: ["Developer Tool", "React", "Performance Tool" ,"Tools"],
+    tag: ["Developer Tool", "React", "Performance Tool", "Tools"],
     image: "/reactscan.png",
     links: {
       website: "https://react-scan.com",
       github: "https://github.com/aidenybai/react-scan",
-      twitter: "https://x.com/aidenybai"
+      twitter: "https://x.com/aidenybai",
     },
   },
   {
@@ -177,7 +177,7 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://www.shadergradient.co/customize",
       github: "https://github.com/ruucm/shadergradient",
-      twitter: "https://x.com/ruucm"
+      twitter: "https://x.com/ruucm",
     },
   },
   {
@@ -199,7 +199,7 @@ const cardData: UiCardData[] = [
     image: "/minimalgallery.png",
     links: {
       website: "https://www.minimal.gallery",
-      github: "https://x.com/minimal_gallery"
+      github: "https://x.com/minimal_gallery",
     },
   },
   {
@@ -211,77 +211,80 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://stacksorted.com",
       github: "https://github.com/juxtopposed/stacksorted",
-      twitter: "https://x.com/juxtopposed"
+      twitter: "https://x.com/juxtopposed",
     },
   },
 
   // // 🧩 Icons
-  // {
-  //   title: "Tabler Icons",
-  //   description:
-  //     "Tabler Icons offers over 5,000 beautifully consistent, open-source icons for web and product interfaces — all customizable and MIT licensed.",
-  //   tag: "Icons",
-  //   image: "/tablericons.webp",
-  //   links: {
-  //     website: "https://tabler.io/icons",
-  //     github: "https://github.com/tabler/tabler-icons",
-  //   },
-  // },
-  // {
-  //   title: "Nucleo App",
-  //   description:
-  //     "Nucleo provides a curated collection of pixel-perfect icons with a clean and cohesive style. It also includes a free set for personal and commercial use.",
-  //   tag: "Icons",
-  //   image: "/nucleo.webp",
-  //   links: {
-  //     website: "https://nucleoapp.com/free-icons",
-  //   },
-  // },
+  {
+    title: "Tabler Icons",
+    description:
+      "Tabler Icons offers over 5,000 beautifully consistent, open-source icons for web and product interfaces — all customizable and MIT licensed.",
+    tag: ["Icons", "Icon Library"],
+    image: "/tabler.png",
+    links: {
+      website: "https://tabler.io/icons",
+      github: "https://github.com/tabler/tabler-icons",
+      twitter: "https://x.com/tabler_io"
+    },
+  },
+  {
+    title: "Nucleo App",
+    description:
+      "Nucleo provides a curated collection of pixel-perfect icons with a clean and cohesive style. It also includes a free set for personal and commercial use.",
+    tag: ["Icons", "Icon Library"],
+    image: "/nucleo.png",
+    links: {
+      website: "https://nucleoapp.com/free-icons",
+      twitter: "https://x.com/nucleoicons"
+    },
+  },
 
   // // ✍️ Typography – Free Fonts
-  // {
-  //   title: "FontShare",
-  //   description:
-  //     "FontShare by the Indian Type Foundry offers high-quality, modern fonts completely free for both personal and commercial projects.",
-  //   tag: "Typography",
-  //   image: "/fontshare.webp",
-  //   links: {
-  //     website: "https://www.fontshare.com",
-  //   },
-  // },
-  // {
-  //   title: "Google Fonts",
-  //   description:
-  //     "Google Fonts hosts thousands of open-source typefaces, enabling designers and developers to integrate beautiful typography into web and mobile apps easily.",
-  //   tag: "Typography",
-  //   image: "/googlefonts.webp",
-  //   links: {
-  //     website: "https://fonts.google.com",
-  //     github: "https://github.com/google/fonts",
-  //   },
-  // },
-  // {
-  //   title: "Uncut.wtf",
-  //   description:
-  //     "Uncut.wtf is a creative type foundry offering free, experimental, and unique fonts — perfect for expressive typography in modern web projects.",
-  //   tag: "Typography",
-  //   image: "/uncutwtf.webp",
-  //   links: {
-  //     website: "https://uncut.wtf",
-  //   },
-  // },
+  {
+    title: "FontShare",
+    description:
+      "FontShare by the Indian Type Foundry offers high-quality, modern fonts completely free for both personal and commercial projects.",
+    tag: ["Fonts", "Typography", "Free Fonts"],
+    image: "/fontshare.png",
+    links: {
+      website: "https://www.fontshare.com",
+      twitter: "https://x.com/fontshare_com"
+    },
+  },
+  {
+    title: "Google Fonts",
+    description:
+      "Google Fonts hosts thousands of open-source typefaces, enabling designers and developers to integrate beautiful typography into web and mobile apps easily.",
+    tag: ["Fonts", "Typography", "Free Fonts", "Font Library"],
+    image: "/googlefonts.png",
+    links: {
+      website: "https://fonts.google.com",
+      github: "https://github.com/google/fonts",
+    },
+  },
+  {
+    title: "Uncut.wtf",
+    description:
+      "Uncut.wtf is a creative type foundry offering free, experimental, and unique fonts — perfect for expressive typography in modern web projects.",
+    tag: ["Fonts", "Typography", "Free Fonts", "Type Foundry"],
+    image: "/uncutwtf.png",
+    links: {
+      website: "https://uncut.wtf",
+    },
+  },
 
   // // 🧠 Typography – Helpful Tools
-  // {
-  //   title: "TypeScale",
-  //   description:
-  //     "TypeScale helps you visualize and generate harmonious typographic scales for your website — perfect for setting consistent font sizes and rhythm.",
-  //   tag: "Typography Tool",
-  //   image: "/typescale.webp",
-  //   links: {
-  //     website: "https://typescale.com",
-  //   },
-  // },
+  {
+    title: "TypeScale",
+    description:
+      "TypeScale helps you visualize and generate harmonious typographic scales for your website — perfect for setting consistent font sizes and rhythm.",
+    tag: ["Typography Tool", "Font Scale", "Type Scale", "typography", "fonts" , "tools"],
+    image: "/typescale.png",
+    links: {
+      website: "https://typescale.com",
+    },
+  },
 ];
 
 export default function Home() {
@@ -777,7 +780,12 @@ export default function Home() {
           {/* Metrics */}
           <div className="metrics max-w-xl flex items-center justify-center gap-32 font-[Inter] text-center mt-1 text-white">
             <div>
-              <p className="text-3xl font-extrabold">1000+</p>
+              <p className="text-3xl font-extrabold">
+                {/* 1000+ */}
+                {cardData.length >= 1000
+                  ? `${(cardData.length / 1000).toFixed(1)}k+`
+                  : `${cardData.length}+`}
+              </p>
               <p className="font-thin text-lg">Resources Shared</p>
             </div>
             <div>

@@ -35,7 +35,7 @@ export default function UiCard({
             src={image ?? "/graphic.jpg"}
             alt={title}
             fill
-            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105"
+            className="object-cover w-full h-full transition-transform duration-500 group-hover:scale-105 "
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             priority
           />
