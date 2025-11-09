@@ -871,8 +871,8 @@ export default function Home() {
 }
 
 const Navbar = () => {
-  const [showToast, setShowToast] = useState(false);
-  const [toastMessage, setToastMessage] = useState("");
+  const [showToast, setShowToast] = useState<boolean>(false); 
+  const [toastMessage, setToastMessage] = useState<string>("");
 
   const handleShare = async () => {
     const url = window.location.href;
@@ -915,7 +915,7 @@ const Navbar = () => {
 
   return (
     <>
-      <div className="navbar relative pt-6 sm:pt-8 md:pt-10 flex items-center justify-between gap-4 sm:gap-6">
+      <div className="navbar pt-6 sm:pt-8 md:pt-10 flex items-center justify-between gap-4 sm:gap-6">
         <Link href="/" className="flex-shrink-0" aria-label="Home">
           <svg
             width="265"
@@ -953,8 +953,8 @@ const Navbar = () => {
       </div>
 
       {/* Toast Notification */}
-      {showToast && (
-        <div className="absolute top-6 left-1/2 -translate-x-1/2 z-50 toast-animation">
+      {/* {showToast && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 toast-animation">
           <div className="bg-zinc-800 text-white px-4 py-3 rounded-xl shadow-lg border border-zinc-700 flex items-center gap-2 backdrop-blur-sm">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -973,7 +973,7 @@ const Navbar = () => {
             <span className="text-sm font-medium">{toastMessage}</span>
           </div>
         </div>
-      )}
+      )} */}
     </>
   );
 };
