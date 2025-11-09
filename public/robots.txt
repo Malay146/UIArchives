@@ -1,0 +1,10 @@
+# Allow all search engines to crawl everything
+User-agent: *
+Allow: /
+
+# Disallow private or admin routes (optional, you can add later)
+# Disallow: /admin/
+# Disallow: /api/
+
+# Point to your sitemap
+Sitemap: https://uiarchives.com/sitemap.xml
