@@ -42,7 +42,7 @@ export default function UiCard({
           />
 
           {/* Overlay */}
-          <div className="absolute inset-0 bg-black/80 backdrop-blur-[3px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3 z-10">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-[5px] opacity-0 group-hover:opacity-100 transition-all duration-300 flex items-center justify-center gap-3 z-10">
             <h1 className="font-[Inter] text-white font-bold text-3xl sm:text-4xl tracking-tighter">
               Visit
             </h1>

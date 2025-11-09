@@ -73,3 +73,19 @@ body {
   }
 }
 
+/* Toast animation */
+@keyframes slideUpFadeIn {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+
+.toast-animation {
+  animation: slideUpFadeIn 0.3s ease-out;
+}
+
