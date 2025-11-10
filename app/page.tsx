@@ -292,6 +292,27 @@ const cardData: UiCardData[] = [
       website: "https://typescale.com",
     },
   },
+
+  //components
+  {
+    title: "Aceternity UI",
+    description:
+      "Aceternity UI offers a collection of modern, animated, and beautifully designed UI components built with React, Framer Motion, and Tailwind CSS — perfect for building sleek web interfaces quickly.",
+    tag: [
+      "Component Library",
+      "UI Components",
+      "React",
+      "Tailwind CSS",
+      "Framer Motion",
+      "Design System",
+      "Frontend",
+    ],
+    image: "/aceternityui.png",
+    links: {
+      website: "https://ui.aceternity.com/components",
+      twitter: "https://x.com/mannupaaji",
+    },
+  },
 ];
 
 export default function Home() {
@@ -871,7 +892,7 @@ export default function Home() {
 }
 
 const Navbar = () => {
-  const [showToast, setShowToast] = useState<boolean>(false); 
+  const [showToast, setShowToast] = useState<boolean>(false);
   const [toastMessage, setToastMessage] = useState<string>("");
 
   const handleShare = async () => {
