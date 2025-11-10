@@ -71,7 +71,7 @@ const cardData: UiCardData[] = [
     title: "Motion Primitives",
     description:
       "Motion Primitives provides beautiful, composable motion utilities for React — helping you create elegant animations and transitions easily.",
-    tag: ["Animation Library", "React", "Framer Motion", "UI Animation"],
+    tag: ["Animation Library", "React", "Framer Motion", "UI Animation", "Animation"],
     image: "/motion-primitives.png",
     links: {
       website: "https://motion-primitives.com",
@@ -140,7 +140,7 @@ const cardData: UiCardData[] = [
     title: "Tympanus Codrops",
     description:
       "Codrops is a well-known design and development blog that shares tutorials, experiments, and inspirational UI interactions for creative developers.",
-    tag: ["Design Blog", "Design Inspiration", "UI Experiments"],
+    tag: ["Design Blog", "Design Inspiration", "UI Experiments", "Animation"],
     image: "/codrops.png",
     links: {
       website: "https://tympanus.net/codrops",
@@ -189,6 +189,7 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://shadway.online",
       github: "https://github.com/moazamtech/shadway",
+      twitter: "https://x.com/loxtmozzi"
     },
   },
   {
@@ -847,7 +848,7 @@ export default function Home() {
                 "Icons",
                 "Tools",
                 "X/Twitter",
-                "Youtube",
+                "Animation",
                 "Inspiration",
               ].map((tag) => (
                 <Button1
