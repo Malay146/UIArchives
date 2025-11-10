@@ -60,7 +60,7 @@ const cardData: UiCardData[] = [
     title: "TweakCN",
     description:
       "TweakCN offers a collection of visual and motion design experiments, interactive components, and UI concepts for developers and designers looking to enhance creativity.",
-    tag: ["Theme Editor", "UI Experiments", "Shadcn/UI", "Frontend"],
+    tag: ["Theme Editor", "UI Experiments", "Shadcn/UI", "Frontend", "Tools"],
     image: "/tweakcn.png",
     links: {
       website: "https://tweakcn.com",
@@ -107,7 +107,7 @@ const cardData: UiCardData[] = [
     title: "8bitCN",
     description:
       "8bitCN showcases pixel-art inspired UI, retro designs, and nostalgic web aesthetics that bring a vintage touch to modern frontend projects.",
-    tag: ["Retro UI", "Pixel Art", "Frontend"],
+    tag: ["Retro UI", "Pixel Art", "Frontend", "Component Library"],
     image: "/8bitcn.png",
     links: {
       website: "https://www.8bitcn.com",
@@ -756,7 +756,7 @@ export default function Home() {
 
         {/* Hero Section */}
         <div className="hero-section flex flex-col items-center justify-center gap-4 sm:gap-5 md:gap-6 pt-8 sm:pt-12 md:pt-16 lg:pt-20 xl:pt-24">
-          <h1 className="font-[Inria_Serif] text-[32px] sm:text-[48px] md:text-[64px] lg:text-[72px] xl:text-[88px] font-bold bg-clip-text text-center text-transparent bg-linear-to-r from-[#3F3F3F] via-[#FFFFFF] to-[#3F3F3F] tracking-tighter px-2 sm:px-4">
+          <h1 className="font-[Inria_Serif] text-[32px] sm:text-[48px] md:text-[64px] lg:text-[72px] xl:text-[88px] font-bold bg-clip-text text-center text-transparent bg-linear-to-r from-[#3F3F3F] via-[#FFFFFF] to-[#3F3F3F] tracking-tighter px-2 sm:px-4 text-balance">
             All Your Frontend Necessities
           </h1>
 
@@ -770,7 +770,7 @@ export default function Home() {
               rotation={1.94}
             />
           </div>
-          <p className="text-[#888888] max-w-4xl font-[Inria_Serif] text-sm sm:text-base md:text-lg lg:text-xl xl:text-[24px] text-center font-extralight tracking-tigher leading-5 sm:leading-6 px-4 sm:px-6 md:px-8">
+          <p className="text-[#888888] max-w-4xl font-[Inria_Serif] text-sm sm:text-base md:text-lg lg:text-xl xl:text-[24px] text-center font-extralight tracking-tighter leading-5 sm:leading-7 px-4 sm:px-6 md:px-8">
             Explore a universe of tools, frameworks, and components — all in one
             place. Just search what you need, and get instant access to the best
             resources.
