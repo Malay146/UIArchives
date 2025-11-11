@@ -2,6 +2,7 @@
 import React, { useRef, useState } from "react";
 import Navbar from "@/components/Navbar";
 import Button1 from "@/components/ui-components/Button1";
+import { Input } from "@/components/ui-components/Input";
 
 const AddResourcePage = () => {
   const [value, setValue] = useState("");
@@ -467,16 +468,3 @@ const AddResourcePage = () => {
 };
 
 export default AddResourcePage;
-
-type InputProps = React.InputHTMLAttributes<HTMLInputElement>;
-
-export function Input({ className = "", ...props }: InputProps) {
-  return (
-    <input
-      {...props}
-      className={`px-4 py-2 rounded-lg bg-zinc-600 text-zinc-900 outline-none placeholder:text-zinc-800 w-full text-sm sm:text-base ${className}`}
-    />
-  );
-}
-
-
