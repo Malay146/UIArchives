@@ -24,8 +24,7 @@ const inriaSerif = Inria_Serif({
 // -------------------------------
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://uiarchives.com";
 const GOOGLE_VERIFICATION =
-  process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION ||
-  "your-google-site-verification-code";
+  process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION;
 
 // -------------------------------
 // SEO Metadata
