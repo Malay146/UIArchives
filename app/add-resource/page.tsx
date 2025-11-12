@@ -77,7 +77,7 @@ const AddResourcePage = () => {
     <div className="w-full relative min-h-screen">
       {/* Black Basic Grid Background */}
       <div
-        className="fixed inset-0 h-full w-full min-h-screen bg-grid-responsive"
+        className="fixed inset-0 -z-10 h-full w-full min-h-screen bg-grid-responsive"
         style={{
           background: "#000000",
           backgroundImage: `
