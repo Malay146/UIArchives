@@ -1,8 +1,41 @@
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
+import { rateLimiter } from "./rateLimiter";
 
 export async function POST(req: NextRequest) {
   try {
+    // Get client IP address for rate limiting
+    const forwarded = req.headers.get("x-forwarded-for");
+    const ip = forwarded ? forwarded.split(",")[0] : req.headers.get("x-real-ip") || "unknown";
+
+    // Check rate limit
+    const rateLimitResult = rateLimiter.check(ip);
+    
+    if (!rateLimitResult.allowed) {
+      const resetTime = new Date(rateLimitResult.resetTime);
+      const minutesUntilReset = Math.ceil(rateLimiter.getTimeUntilReset(ip) / 60000);
+      
+      console.log(`Rate limit exceeded for IP: ${ip}`);
+      
+      return NextResponse.json(
+        { 
+          error: `Too many submissions. Please try again in ${minutesUntilReset} minute${minutesUntilReset !== 1 ? 's' : ''}.`,
+          resetTime: resetTime.toISOString()
+        },
+        { 
+          status: 429,
+          headers: {
+            "Retry-After": String(Math.ceil(rateLimiter.getTimeUntilReset(ip) / 1000)),
+            "X-RateLimit-Limit": "3",
+            "X-RateLimit-Remaining": "0",
+            "X-RateLimit-Reset": resetTime.toISOString(),
+          }
+        }
+      );
+    }
+
+    console.log(`Rate limit check passed for IP: ${ip}, remaining: ${rateLimitResult.remaining}`);
+
     const body = await req.json();
     const { name, email, title, description, webLink, github, twitter } = body;
 
@@ -22,17 +55,6 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
-
-    // Debug: Log environment variables (remove in production)
-    console.log("Environment check:", {
-      hasHost: !!process.env.SMTP_HOST,
-      hasPort: !!process.env.SMTP_PORT,
-      hasUser: !!process.env.SMTP_USER,
-      hasPass: !!process.env.SMTP_PASS,
-      host: process.env.SMTP_HOST,
-      port: process.env.SMTP_PORT,
-      user: process.env.SMTP_USER,
-    });
 
     // Use environment variables
     const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
@@ -143,7 +165,14 @@ ${twitter ? `Twitter: ${twitter}` : ""}` : ""}
 
     return NextResponse.json(
       { success: true, message: "Resource submitted successfully!" },
-      { status: 200 }
+      { 
+        status: 200,
+        headers: {
+          "X-RateLimit-Limit": "3",
+          "X-RateLimit-Remaining": String(rateLimitResult.remaining),
+          "X-RateLimit-Reset": new Date(rateLimitResult.resetTime).toISOString(),
+        }
+      }
     );
   } catch (error) {
     console.error("Error sending email:", error);
