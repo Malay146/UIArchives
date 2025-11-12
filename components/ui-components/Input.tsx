@@ -7,7 +7,7 @@ export function Input({ className = "", ...props }: InputProps) {
   return (
     <input
       {...props}
-      className={`px-4 py-2 rounded-lg bg-zinc-600 text-zinc-900 outline-none placeholder:text-zinc-800 w-full text-sm sm:text-base ${className}`}
+      className={`px-4 py-2 rounded-lg bg-zinc-600 text-zinc-950 outline-none placeholder:text-zinc-800 w-full text-sm sm:text-base ${className}`}
     />
   );
 }

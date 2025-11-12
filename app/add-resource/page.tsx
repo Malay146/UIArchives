@@ -1,5 +1,5 @@
 "use client";
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Button1 from "@/components/ui-components/Button1";
 import { Input } from "@/components/ui-components/Input";
@@ -7,6 +7,26 @@ import { Input } from "@/components/ui-components/Input";
 const AddResourcePage = () => {
   const [value, setValue] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // form state
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    title: "",
+    description: "",
+    webLink: "",
+    github: "",
+    twitter: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+  const [toast, setToast] = useState<null | { type: "success" | "error"; text: string }>(null);
+
+  useEffect(() => {
+    if (!toast) return;
+    const t = setTimeout(() => setToast(null), 4500);
+    return () => clearTimeout(t);
+  }, [toast]);
 
   const handleChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const textarea = textareaRef.current;
@@ -17,6 +37,40 @@ const AddResourcePage = () => {
     textarea.style.height = `${Math.min(textarea.scrollHeight, 160)}px`;
 
     setValue(e.target.value);
+  };
+
+  const update = (k: keyof typeof form, v: string) => setForm((s) => ({ ...s, [k]: v }));
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await fetch("/api/send-resource", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          title: form.title,
+          description: form.description,
+          webLink: form.webLink,
+          github: form.github,
+          twitter: form.twitter,
+        }),
+      });
+      const data = await res.json();
+      if (res.ok) {
+        setToast({ type: "success", text: "Thanks — your resource was submitted successfully." });
+        setForm({ name: "", email: "", title: "", description: "", webLink: "", github: "", twitter: "" });
+        setValue("");
+      } else {
+        setToast({ type: "error", text: data?.error || "Something went wrong. Try again later." });
+      }
+    } catch (err) {
+      setToast({ type: "error", text: "Network error. Try again later." });
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -431,33 +485,114 @@ const AddResourcePage = () => {
             </h1>
 
             <form
-              action=""
+              onSubmit={handleSubmit}
               className="font-[Inter] tracking-tight mt-4 sm:mt-5 flex flex-col gap-3 font-light"
             >
               <div className="w-full flex flex-col sm:flex-row gap-5 md:gap-3 mb-2 text-zinc-950">
-                <Input type="text" placeholder="Name" required />
-                <Input type="email" placeholder="Email" required />
+                <Input
+                  type="text"
+                  placeholder="Name"
+                  required
+                  value={form.name}
+                  onChange={(e) => update("name", e.target.value)}
+                />
+                <Input
+                  type="email"
+                  placeholder="Email"
+                  required
+                  value={form.email}
+                  onChange={(e) => update("email", e.target.value)}
+                />
               </div>
               <div className="w-full flex flex-col sm:flex-row gap-5 md:gap-3 mb-2">
-                <Input type="text" placeholder="Title" required />
-                <Input type="text" placeholder="Website link" required />
+                <Input
+                  type="text"
+                  placeholder="Title"
+                  required
+                  value={form.title}
+                  onChange={(e) => update("title", e.target.value)}
+                />
+                <Input
+                  type="text"
+                  placeholder="Website link"
+                  required
+                  value={form.webLink}
+                  onChange={(e) => update("webLink", e.target.value)}
+                />
               </div>
               <div className="w-full flex gap-5 md:gap-3 mb-2">
                 <textarea
                   ref={textareaRef}
                   rows={4}
-                  value={value}
-                  onChange={handleChange}
-                  className="px-4 py-2 rounded-lg bg-zinc-600 outline-none w-full placeholder:text-zinc-800 resize-none transition-all duration-150 text-sm sm:text-base"
-                  placeholder="Description"
+                  value={form.description}
+                  onChange={(e) => {
+                    handleChange(e as React.ChangeEvent<HTMLTextAreaElement>);
+                    update("description", e.target.value);
+                  }}
+                  className="px-4 py-2 rounded-lg bg-zinc-600 outline-none w-full placeholder:text-zinc-800 text-zinc-950 resize-none transition-all duration-150 text-sm sm:text-base"
+                  placeholder="Description... (optional)"
                 />
               </div>
               <div className="w-full flex flex-col sm:flex-row gap-5 md:gap-3 mb-2">
-                <Input type="text" placeholder="GitHub link" />
-                <Input type="text" placeholder="Twitter link" required />
+                <Input
+                  type="text"
+                  placeholder="GitHub link (optional)"
+                  value={form.github}
+                  onChange={(e) => update("github", e.target.value)}
+                />
+                <Input
+                  type="text"
+                  placeholder="Twitter link (optional)"
+                  value={form.twitter}
+                  onChange={(e) => update("twitter", e.target.value)}
+                />
               </div>
               <div className="w-full flex justify-end mt-2">
-                <Button1 type="submit">Submit</Button1>
+                <Button1 type="submit" disabled={loading} className="px-4">
+                  {loading ? "Sending..." : "Submit"}
+                </Button1>
+              </div>
+
+              {/* Toast */}
+              <div aria-live="polite" className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+                {toast && (
+                  <div
+                    className={`${
+                      toast.type === "success" ? "border-green-600 bg-green-800" : "border-red-600 bg-red-800"
+                    } text-white px-4 py-3 rounded-xl shadow-lg border flex items-center gap-3 backdrop-blur-sm max-w-xl`}
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      className="flex-shrink-0"
+                    >
+                      {toast.type === "success" ? (
+                        <path d="M20 6L9 17l-5-5" />
+                      ) : (
+                        <>
+                          <circle cx="12" cy="12" r="10" />
+                          <path d="M12 8v4" />
+                          <path d="M12 16h.01" />
+                        </>
+                      )}
+                    </svg>
+                    <div className="text-sm font-medium">{toast.text}</div>
+                    <button
+                      onClick={() => setToast(null)}
+                      className="ml-2 text-zinc-200 hover:text-white"
+                      aria-label="Close"
+                    >
+                      ×
+                    </button>
+                  </div>
+                )}
               </div>
             </form>
           </div>
