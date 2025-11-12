@@ -365,7 +365,7 @@ const cardData: UiCardData[] = [
     },
   },
 
-  // // 🧠 Typography – Helpful Tools
+  // // 🧠 Helpful Tools
   {
     title: "TypeScale",
     description:
@@ -383,6 +383,25 @@ const cardData: UiCardData[] = [
       website: "https://typescale.com",
     },
   },
+  {
+  title: "Lighthouse",
+  description:
+        "Lighthouse is an open-source tool by Google that audits website performance, accessibility, SEO, and best practices — helping developers build faster, more optimized web experiences.",
+  tag: [
+    "Performance",
+    "SEO",
+    "Accessibility",
+    "Developer Tools",
+    "Chrome Extension",
+    "Tools"
+  ],
+  image: "/lighthouse.png",
+  links: {
+    website: "https://chromewebstore.google.com/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk",
+    github: "https://github.com/GoogleChrome/lighthouse",
+  },
+},
+
 
   //components
   {
