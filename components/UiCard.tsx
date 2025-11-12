@@ -22,7 +22,7 @@ export default function UiCard({
   links,
 }: UiCardData) {
   return (
-    <div className="bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-zinc-800">
+    <div className="bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl border border-zinc-800 hover:border-zinc-600 transition-all duration-300">
       {/* Image Section */}
       <Link
         href={links?.website || "#"}

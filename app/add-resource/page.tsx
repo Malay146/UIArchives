@@ -571,7 +571,7 @@ const AddResourcePage = () => {
                       strokeWidth="2"
                       strokeLinecap="round"
                       strokeLinejoin="round"
-                      className="flex-shrink-0"
+                      className="shrink-0"
                     >
                       {toast.type === "success" ? (
                         <path d="M20 6L9 17l-5-5" />

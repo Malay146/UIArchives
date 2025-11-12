@@ -23,8 +23,7 @@ const inriaSerif = Inria_Serif({
 // Environment Variables
 // -------------------------------
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://uiarchives.com";
-const GOOGLE_VERIFICATION =
-  process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION;
+const GOOGLE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION;
 
 // -------------------------------
 // SEO Metadata
@@ -122,10 +121,7 @@ export default function RootLayout({
         />
 
         {/* Google Site Verification */}
-        <meta
-          name="google-site-verification"
-          content={GOOGLE_VERIFICATION}
-        />
+        <meta name="google-site-verification" content={GOOGLE_VERIFICATION} />
 
         {/* Light & Dark Favicons */}
         <link
