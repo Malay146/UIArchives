@@ -946,7 +946,7 @@ export default function Home() {
       <div
         ref={goUpButtonRef}
         onClick={handleGoUpClick}
-        className="size-15 fixed rounded-full bg-white bottom-8 sm:bottom-12 md:bottom-16 lg:bottom-20 right-3 sm:right-6 md:right-8 lg:right-30 flex justify-center items-center cursor-pointer go-up z-50"
+        className="size-15 fixed rounded-full bg-zinc-900 shadow-[inset_4px_4px_4px_rgba(255,255,255,0.04),inset_-4px_-4px_4px_rgba(0,0,0,0.5)] bottom-8 sm:bottom-12 md:bottom-16 lg:bottom-20 right-3 sm:right-6 md:right-8 lg:right-30 flex justify-center items-center cursor-pointer go-up z-50"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -958,7 +958,7 @@ export default function Home() {
           strokeWidth="2.5"
           strokeLinecap="round"
           strokeLinejoin="round"
-          className="lucide lucide-arrow-up-icon lucide-arrow-up"
+          className="lucide lucide-arrow-up-icon lucide-arrow-up text-white"
         >
           <path d="m5 12 7-7 7 7" />
           <path d="M12 19V5" />

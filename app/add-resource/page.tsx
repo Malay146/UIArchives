@@ -466,7 +466,7 @@ const AddResourcePage = () => {
 
       <div className="max-w-7xl min-h-screen mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
         <Navbar showShareButton={true} showAddResourceButton={false} />
-        <div className="w-full h-full mt-8 sm:mt-12 md:mt-16 lg:mt-24 xl:mt-32 2xl:mt-40 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-6 xl:gap-8 items-center justify-center lg:items-start p-6">
+        <div className="w-full h-full mt-8 sm:mt-12 md:mt-16 lg:mt-24 xl:mt-32 2xl:mt-46 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-6 xl:gap-8 items-center justify-center lg:items-start p-6">
           <div className="w-full lg:w-[50%] shrink-0 ml-8">
             <h1 className="text-white font-[Inria_Serif] font-bold text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] xl:text-[64px] 2xl:text-[80px] tracking-tighter leading-tight sm:leading-[1.1] md:leading-[1.15]">
               Got Something Cool?
