@@ -384,24 +384,42 @@ const cardData: UiCardData[] = [
     },
   },
   {
-  title: "Lighthouse",
-  description:
-        "Lighthouse is an open-source tool by Google that audits website performance, accessibility, SEO, and best practices — helping developers build faster, more optimized web experiences.",
-  tag: [
-    "Performance",
-    "SEO",
-    "Accessibility",
-    "Developer Tools",
-    "Chrome Extension",
-    "Tools"
-  ],
-  image: "/lighthouse.png",
-  links: {
-    website: "https://chromewebstore.google.com/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk",
-    github: "https://github.com/GoogleChrome/lighthouse",
+    title: "Lighthouse",
+    description:
+      "Lighthouse is an open-source tool by Google that audits website performance, accessibility, SEO, and best practices — helping developers build faster, more optimized web experiences.",
+    tag: [
+      "Performance",
+      "SEO",
+      "Accessibility",
+      "Developer Tools",
+      "Chrome Extension",
+      "Tools",
+    ],
+    image: "/Lighthouse.png",
+    links: {
+      website:
+        "https://chromewebstore.google.com/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk",
+      github: "https://github.com/GoogleChrome/lighthouse",
+    },
   },
-},
-
+  {
+    title: "Unlighthouse",
+    description:
+      "Unlighthouse is an automated, fast, and developer-friendly tool that scans your entire website using Lighthouse to identify performance, accessibility, SEO, and best-practice issues—optimized for modern frameworks.",
+    tag: [
+      "Performance",
+      "SEO",
+      "Accessibility",
+      "Developer Tools",
+      "Auditing",
+      "Tools",
+    ],
+    image: "/Unlighthouse.png",
+    links: {
+      website: "https://unlighthouse.dev/",
+      github: "https://github.com/harlan-zw/unlighthouse",
+    },
+  },
 
   //components
   {
@@ -451,7 +469,7 @@ export default function Home() {
   // Register GSAP ScrollToPlugin on mount
   useEffect(() => {
     gsap.registerPlugin(ScrollToPlugin);
-    
+
     // Initially hide the go-up button
     if (goUpButtonRef.current) {
       gsap.set(goUpButtonRef.current, {
@@ -468,12 +486,12 @@ export default function Home() {
       if (!filterRef.current || !goUpButtonRef.current) return;
 
       const scrollY = window.scrollY || window.pageYOffset;
-      
+
       // Get the absolute bottom position of the filter section
       const filterTop = filterRef.current.offsetTop;
       const filterHeight = filterRef.current.offsetHeight;
       const filterBottom = filterTop + filterHeight;
-      
+
       // Check if scrolled past the filter section (with a small threshold)
       const isPastFilter = scrollY > filterBottom - 50;
 
@@ -598,7 +616,8 @@ export default function Home() {
         style={{
           maxWidth: "100%",
           height: "auto",
-        }}>
+        }}
+      >
         <g opacity="0.14" filter="url(#filter0_f_67_2)">
           <path
             d="M107.743 -108.483L-18.1717 31.5653C-32.8453 47.886 -29.6258 73.426 -11.3608 85.5945L712.016 567.521C725.338 576.396 742.921 575.409 755.165 565.098L761.803 559.508C777.829 546.012 778.99 521.736 764.325 506.773L160.225 -109.612C145.682 -124.45 121.634 -123.933 107.743 -108.483Z"
