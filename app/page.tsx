@@ -31,7 +31,7 @@ const cardData: UiCardData[] = [
     title: "Tailwind CSS",
     description:
       "Tailwind CSS is a utility-first CSS framework for rapidly building custom designs without leaving your HTML.",
-    tag: "CSS Framework",
+    tag: ["CSS Framework", "Utility-First", "Frontend", "Technologies"],
     image: "/tailwindcss.png",
     links: {
       website: "https://tailwindcss.com",
@@ -456,6 +456,86 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://skiper-ui.com",
       twitter: "https://x.com/Gur__vi",
+    },
+  },
+
+  //technologies
+  {
+    title: "React",
+    description:
+      "React is a JavaScript library for building fast, interactive user interfaces using a component-based architecture. It offers features like hooks, JSX, and a virtual DOM to simplify state management and improve performance.",
+    tag: [
+      "JavaScript",
+      "Frontend",
+      "UI Library",
+      "Open Source",
+      "Web Development",
+      "React.js",
+      "Technologies",
+    ],
+    image: "/reactjs.png",
+    links: {
+      website: "https://react.dev",
+      twitter: "https://x.com/reactjs",
+    },
+  },
+  {
+    title: "Next.js",
+    description:
+      "Next.js is a React framework for building fast, scalable web applications with features like server-side rendering, static site generation, routing, and API endpoints.",
+    tag: [
+      "React",
+      "Framework",
+      "Frontend",
+      "Fullstack",
+      "Web Development",
+      "Next.js",
+      "Technologies",
+    ],
+    image: "/nextjs.png",
+    links: {
+      website: "https://nextjs.org",
+      twitter: "https://x.com/nextjs",
+    },
+  },
+  {
+    title: "Framer Motion",
+    description:
+      "Motion is a powerful animation library for React, offering smooth, high-performance animations with an intuitive and flexible API.",
+    tag: [
+      "Animation",
+      "React",
+      "Framer Motion",
+      "UI/UX",
+      "Frontend",
+      "Web Development",
+      "Technologies",
+    ],
+    image: "/motion.png",
+    links: {
+      website: "https://motion.dev",
+      twitter: "https://x.com/framer",
+      github: "https://github.com/motiondivision/motion"
+    },
+  },
+  {
+    title: "GSAP",
+    description:
+      "GSAP is a powerful, high-performance JavaScript animation library used to create smooth, complex, and professional-grade web animations.",
+    tag: [
+      "Animation",
+      "JavaScript",
+      "Frontend",
+      "UI/UX",
+      "Web Development",
+      "GSAP",
+      "Technologies",
+    ],
+    image: "/gsap.png",
+    links: {
+      website: "https://gsap.com",
+      twitter: "https://x.com/greensock",
+      github: "https://github.com/greensock/GSAP"
     },
   },
 ];
@@ -1096,11 +1176,11 @@ export default function Home() {
               {[
                 "All",
                 "Component Library",
-                "Framework",
+                "Technologies",
                 "Fonts",
                 "Icons",
                 "Tools",
-                "X/Twitter",
+                "Socials",
                 "Animation",
                 "Inspiration",
               ].map((tag) => (
