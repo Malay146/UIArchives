@@ -7,10 +7,12 @@ export interface UiCardData {
   description: string;
   tag: string | string[];
   image?: string;
+  imageLink?: string; // Custom link for the image click
   links?: {
     website?: string;
     github?: string;
     twitter?: string;
+    youtube?: string;
   };
 }
 
@@ -19,13 +21,14 @@ export default function UiCard({
   description,
   tag,
   image,
+  imageLink,
   links,
 }: UiCardData) {
   return (
     <div className="bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl border border-zinc-800 hover:border-zinc-600 transition-all duration-300">
       {/* Image Section */}
       <Link
-        href={links?.website || "#"}
+        href={imageLink || links?.website || "#"}
         target="_blank"
         rel="noopener noreferrer"
         aria-label={`Open ${title} website (opens in a new tab)`}
@@ -75,6 +78,7 @@ export default function UiCard({
           <h2 className="text-lg font-semibold mr-3 truncate">{title}</h2>
           <span className="w-px h-6 rounded-full bg-zinc-500" />
           <div className="flex gap-3 text-zinc-400 mx-3">
+            
             {links?.website && (
               <a
                 href={links.website}
@@ -156,6 +160,31 @@ export default function UiCard({
                 </svg>
               </a>
             )}
+            {links?.youtube && (
+              <a
+                href={links.youtube}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:text-white"
+                aria-label={`Open ${title} on YouTube (opens in a new tab)`}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="lucide lucide-youtube-icon lucide-youtube hover:stroke-zinc-400 hover:scale-110 transition-all duration-200"
+                >
+                  <path d="M2.5 17a24.12 24.12 0 0 1 0-10 2 2 0 0 1 1.4-1.4 49.56 49.56 0 0 1 16.2 0A2 2 0 0 1 21.5 7a24.12 24.12 0 0 1 0 10 2 2 0 0 1-1.4 1.4 49.55 49.55 0 0 1-16.2 0A2 2 0 0 1 2.5 17" />
+                  <path d="m10 15 5-3-5-3z" />
+                </svg>
+              </a>
+            )}
           </div>
           <span className="text-sm text-zinc-400 bg-zinc-800 px-2 py-0.5 rounded-lg ml-auto shadow-[inset_2px_2px_2px_rgba(255,255,255,0.03),inset_-2px_-2px_2px_rgba(0,0,0,0.3)] truncate">
             {Array.isArray(tag) ? tag[0] || "Untitled" : tag}
@@ -171,3 +200,6 @@ export default function UiCard({
     </div>
   );
 }
+
+
+//<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-icon lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>

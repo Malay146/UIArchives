@@ -515,7 +515,7 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://motion.dev",
       twitter: "https://x.com/framer",
-      github: "https://github.com/motiondivision/motion"
+      github: "https://github.com/motiondivision/motion",
     },
   },
   {
@@ -535,7 +535,155 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://gsap.com",
       twitter: "https://x.com/greensock",
-      github: "https://github.com/greensock/GSAP"
+      github: "https://github.com/greensock/GSAP",
+    },
+  },
+  {
+    title: "Three.js",
+    description:
+      "Three.js is a popular open-source JavaScript 3D library that makes WebGL easier to use — enabling developers to create immersive 3D graphics, animations and visualizations in the browser.",
+    tag: [
+      "3D",
+      "JavaScript",
+      "WebGL",
+      "Graphics",
+      "Animations",
+      "Visualization",
+      "Three.js",
+      "Front-end",
+      "Web Development",
+      "Open Source",
+      "Technologies",
+    ],
+    image: "/threejs.png",
+    links: {
+      website: "https://threejs.org/",
+      twitter: "https://x.com/threejs",
+      github: "https://github.com/mrdoob/three.js",
+    },
+  },
+
+  //Socials
+  {
+    title: "Olivier Larose",
+    description:
+      "Olivier Larose is a web-developer and content creator who shares high-quality tutorials on web animations, frontend technologies, and real-world developer journeys.",
+    tag: [
+      "Web Animation",
+      "Frontend",
+      "JavaScript",
+      "React",
+      "Next.js",
+      "GSAP",
+      "Tutorials",
+      "Web Development",
+      "Socials",
+      "Inspiration",
+      "Olivier Larose",
+    ],
+    image: "/olivierlarose.png",
+    imageLink: "https://www.youtube.com/@olivierlarose1",
+    links: {
+      website: "https://www.olivierlarose.com/",
+      twitter: "https://x.com/olivierlarose_",
+      youtube: "https://www.youtube.com/@olivierlarose1",
+    },
+  },
+  {
+    title: "Manu Arora",
+    description:
+      "Manu Arora is a full-stack developer, educator, and content creator known for sharing high-quality tutorials on React, Next.js, UI/UX, and modern frontend engineering practices.",
+    tag: [
+      "Frontend",
+      "Full Stack",
+      "React",
+      "Next.js",
+      "TailwindCSS",
+      "UI/UX",
+      "Web Development",
+      "Tutorials",
+      "Inspiration",
+      "Manu Arora",
+      "Socials",
+    ],
+    image: "/manuarora.png",
+    imageLink: "https://www.youtube.com/@manuarora",
+    links: {
+      website: "https://manuarora.in",
+      twitter: "https://x.com/mannupaaji",
+      github: "https://github.com/manuarora700",
+      youtube: "https://www.youtube.com/@manuarora",
+    },
+  },
+  {
+    title: "Rauno Freiberg",
+    description:
+      "Rauno Freiberg is a designer and developer known for crafting highly polished UI interactions, sharing insights on design systems, frontend engineering, and intuitive product experiences.",
+    tag: [
+      "Designer",
+      "UI/UX",
+      "Frontend",
+      "React",
+      "Design Systems",
+      "Interaction Design",
+      "Web Development",
+      "Inspiration",
+      "Rauno Freiberg",
+      "Socials",
+    ],
+    image: "/raunofreiberg.png",
+    links: {
+      website: "https://raunofreiberg.com",
+      twitter: "https://x.com/raunofreiberg",
+    },
+  },
+  {
+    title: "Huy Nguyen",
+    description:
+      "Huy Nguyen is a developer and creator known for building elegant tools like PillarStack and sharing insights on frontend engineering, indie hacking, and developer productivity.",
+    tag: [
+      "Frontend",
+      "Indie Hacking",
+      "React",
+      "Next.js",
+      "UI/UX",
+      "Web Development",
+      "Productivity",
+      "Developer",
+      "Inspiration",
+      "Huy Nguyen",
+      "Socials",
+    ],
+    image: "/huynguyen.png",
+    imageLink: "https://www.youtube.com/@by_huy",
+    links: {
+      twitter: "https://x.com/by_huy",
+      youtube: "https://www.youtube.com/@by_huy",
+    },
+  },
+  {
+    title: "CodeGrid",
+    description:
+      "CodeGrid shares the ‘sauce’ behind top-tier websites — high-quality tutorials on HTML, CSS, JavaScript, animations, scroll effects and UI engineering.",
+    tag: [
+      "Animation",
+      "HTML",
+      "CSS",
+      "JavaScript",
+      "Web Animation",
+      "GSAP",
+      "ScrollTrigger",
+      "Front-end",
+      "Tutorials",
+      "Web Development",
+      "CodeGrid",
+      "Socials",
+    ],
+    image: "/codegrid.png",
+    imageLink: "https://www.youtube.com/@codegrid",
+    links: {
+      twitter: "https://x.com/codegridweb", // from video descriptions :contentReference[oaicite:1]{index=1}
+      youtube: "https://www.youtube.com/@codegrid",
     },
   },
 ];
