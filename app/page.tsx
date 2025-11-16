@@ -130,7 +130,7 @@ const cardData: UiCardData[] = [
     title: "Box Shadows",
     description:
       "Box Shadows by Aceternity UI is a handy tool to generate soft, realistic shadows for modern UI elements — perfect for glassmorphism and neumorphism effects.",
-    tag: ["Box Shadows", "Frontend", "UI Design Tool", "Design Tool"],
+    tag: ["Box Shadows", "Frontend", "UI Design Tool", "Design Tool", "Tools"],
     image: "/boxshadows.png",
     links: {
       website: "https://ui.aceternity.com/tools/box-shadows",
@@ -227,7 +227,7 @@ const cardData: UiCardData[] = [
     },
   },
 
-  // // 🧩 Icons
+  // Icons
   {
     title: "Tabler Icons",
     description:
@@ -315,7 +315,7 @@ const cardData: UiCardData[] = [
     },
   },
 
-  // // ✍️ Typography – Free Fonts
+  // Fonts
   {
     title: "FontShare",
     description:
@@ -365,7 +365,7 @@ const cardData: UiCardData[] = [
     },
   },
 
-  // // 🧠 Helpful Tools
+  // Tools
   {
     title: "TypeScale",
     description:
@@ -418,6 +418,30 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://unlighthouse.dev/",
       github: "https://github.com/harlan-zw/unlighthouse",
+    },
+  },
+  {
+    title: "Spline",
+    description:
+      "Spline is a powerful browser-based 3D design tool that allows creators to build, animate, and export interactive 3D experiences for the web — without needing deep 3D or WebGL expertise.",
+    tag: [
+      "3D Design",
+      "WebGL",
+      "Interactive 3D",
+      "Browser-based",
+      "Collaboration",
+      "Animation",
+      "UI/UX",
+      "Front-end",
+      "Web Development",
+      "Spline",
+      "Tools",
+      "Animation"
+    ],
+    image: "/spline.png",
+    links: {
+      website: "https://spline.design/",
+      twitter: "https://x.com/splinetool",
     },
   },
 
