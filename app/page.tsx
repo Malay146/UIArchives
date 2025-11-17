@@ -436,7 +436,7 @@ const cardData: UiCardData[] = [
       "Web Development",
       "Spline",
       "Tools",
-      "Animation"
+      "Animation",
     ],
     image: "/spline.png",
     links: {
@@ -708,6 +708,78 @@ const cardData: UiCardData[] = [
     links: {
       twitter: "https://x.com/codegridweb", // from video descriptions :contentReference[oaicite:1]{index=1}
       youtube: "https://www.youtube.com/@codegrid",
+    },
+  },
+  {
+    title: "Syntax",
+    description:
+      "Syntax is a podcast-style YouTube channel hosted by Wes Bos and Scott Tolinski that delivers high-energy, practical conversations on full-stack web development—covering JavaScript, CSS, frameworks, tooling, and developer careers.",
+    tag: [
+      "Podcast",
+      "Web Development",
+      "Full Stack",
+      "JavaScript",
+      "CSS",
+      "Frameworks",
+      "Developer Careers",
+      "Tooling",
+      "Tutorials",
+      "Syntax",
+      "Socials",
+      "Inspiration",
+    ],
+    image: "/syntax.png",
+    imageLink: "https://www.youtube.com/@syntaxfm",
+    links: {
+      website: "https://syntax.fm/",
+      twitter: "https://x.com/syntaxfm",
+      youtube: "https://www.youtube.com/@syntaxfm",
+    },
+  },
+  {
+    title: "jhey ʕ•ᴥ•ʔ",
+    description:
+      "jhey is a Staff Design Engineer at Shopify (formerly at Google and Vercel) who shares insights on design systems, frontend architecture, accessibility and converting ideas into real products.",
+    tag: [
+      "Design Systems",
+      "Frontend",
+      "Accessibility",
+      "UI/UX",
+      "Engineering",
+      "Web Development",
+      "Shopify",
+      "Tutorials",
+      "Inspiration",
+      "Socials",
+      "jhey",
+    ],
+    image: "/jhey.png",
+    imageLink: "https://x.com/jh3yy",
+    links: {
+      website: "https://www.jhey.dev/",
+      twitter: "https://x.com/jh3yy",
+    },
+  },
+  {
+    title: "Guri",
+    description:
+      "Guri is a design engineer building @SkiperUi and sharing thoughts on frontend architecture, UI engineering and component libraries.",
+    tag: [
+      "Frontend",
+      "Design Engineering",
+      "UI Engineering",
+      "Component Library",
+      "Web Development",
+      "React",
+      "Building in Public",
+      "Guri",
+      "Socials",
+    ],
+    image: "/guri.png",
+    imageLink: "https://x.com/Gur__vi",
+    links: {
+      website: "https://gxuri.in",
+      twitter: "https://x.com/Gur__vi",
     },
   },
 ];
