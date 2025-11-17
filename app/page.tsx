@@ -681,7 +681,7 @@ const cardData: UiCardData[] = [
     image: "/huynguyen.png",
     imageLink: "https://www.youtube.com/@by_huy",
     links: {
-      twitter: "https://x.com/by_huy",
+      twitter: "https://x.com/by__huy",
       youtube: "https://www.youtube.com/@by_huy",
     },
   },
