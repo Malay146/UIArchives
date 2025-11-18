@@ -482,6 +482,32 @@ const cardData: UiCardData[] = [
       twitter: "https://x.com/Gur__vi",
     },
   },
+  {
+  title: "StackBits",
+  description:
+    "StackBits is a full-stack component library offering ready-to-use React UI elements and backend code snippets to speed up modern web development.",
+  tag: [
+    "UI Components",
+    "React",
+    "Tailwind CSS",
+    "Full-Stack",
+    "Code Snippets",
+    "Web Development",
+    "Developer Tools",
+    "Front-end",
+    "Back-end",
+    "Productivity",
+    "Open Source",
+    "Component Library"
+  ],
+  image: "/stackbits.png",
+  links: {
+    website: "https://stackbits.dev/",
+    twitter: "https://x.com/samitkapoorr",
+    github: "https://github.com/samitkapoor/stackbits",
+    youtube: "",
+  },
+},
 
   //technologies
   {
