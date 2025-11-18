@@ -850,7 +850,6 @@ const cardData: UiCardData[] = [
       "Frontend",
       "Design Engineering",
       "UI Engineering",
-      "Component Library",
       "Web Development",
       "React",
       "Building in Public",
