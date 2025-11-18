@@ -586,6 +586,88 @@ const cardData: UiCardData[] = [
       github: "https://github.com/mrdoob/three.js",
     },
   },
+  {
+    title: "Webflow",
+    description:
+      "Webflow is a no-code visual web development platform that lets designers build responsive websites without writing code. It combines design, CMS, and hosting in one platform.",
+    tag: [
+      "No-Code",
+      "Web Design",
+      "Visual Development",
+      "CMS",
+      "Responsive Design",
+      "Website Builder",
+      "Front-end",
+      "Web Development",
+      "Animation",
+      "Tools",
+      "SaaS",
+      "Technologies",
+    ],
+    image: "/webflow.png",
+    links: {
+      website: "https://webflow.com/",
+      twitter: "https://x.com/webflow",
+      github: "",
+      youtube: "https://www.youtube.com/@Webflow",
+    },
+  },
+  {
+    title: "Framer",
+    description:
+      "Framer is a no-code website builder and design tool for creating responsive, interactive sites with built-in CMS and hosting.",
+    tag: [
+      "No-Code",
+      "Web Design",
+      "Website Builder",
+      "Responsive Design",
+      "Designer Tool",
+      "CMS",
+      "Hosting",
+      "Animations",
+      "Collaboration",
+      "Front-end",
+      "Web Development",
+      "SaaS",
+      "Technologies",
+      "Tools",
+    ],
+    image: "/framer.png",
+    links: {
+      website: "https://www.framer.com/",
+      twitter: "https://x.com/framer",
+      github: "",
+      youtube: "https://www.youtube.com/@Framer",
+    },
+  },
+  {
+    title: "Figma",
+    description:
+      "Figma is a cloud-based UI/UX design and prototyping tool that enables real-time collaboration for designers and teams.",
+    tag: [
+      "UI Design",
+      "UX Design",
+      "Prototyping",
+      "Vector Graphics",
+      "Collaboration",
+      "Web Design",
+      "Interface Design",
+      "Product Design",
+      "Design Systems",
+      "No-Code Workflows",
+      "Design Tool",
+      "Cloud Software",
+      "Technologies",
+      "Tools",
+    ],
+    image: "/figma.png",
+    links: {
+      website: "https://www.figma.com/",
+      twitter: "https://x.com/figma",
+      github: "",
+      youtube: "https://www.youtube.com/@Figma",
+    },
+  },
 
   //Socials
   {
@@ -780,6 +862,35 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://gxuri.in",
       twitter: "https://x.com/Gur__vi",
+    },
+  },
+
+  //Inspirations
+  {
+    title: "Dribbble",
+    description:
+      "Dribbble is a leading online community for designers and creatives to showcase their work, find inspiration, and connect with clients and peers. It also serves as a portfolio and job-listing platform.",
+    tag: [
+      "Design",
+      "Community",
+      "Portfolio",
+      "Inspiration",
+      "UI/UX",
+      "Illustration",
+      "Graphic Design",
+      "Web Design",
+      "Creative Network",
+      "Designer Platform",
+      "Jobs",
+      "Social Networking",
+      "Inspiration",
+    ],
+    image: "/dribbble.png",
+    links: {
+      website: "https://www.dribbble.com/",
+      twitter: "https://x.com/dribbble",
+      github: "",
+      youtube: "",
     },
   },
 ];

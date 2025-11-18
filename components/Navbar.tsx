@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Button1 from "@/components/ui-components/Button1";
+import Image from "next/image";
 
 type NavbarProps = {
   showShareButton?: boolean;
@@ -78,6 +79,18 @@ const Navbar = ({
           </svg>
           <span className="sr-only">Home</span>
         </Link>
+
+        <a
+          href="https://peerlist.io/malayp/project/uiarchives"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src="https://peerlist.io/api/v1/projects/embed/PRJHGNQQ6G6RLBEKEFKKN6NKAMK8PM?showUpvote=true&theme=dark"
+            alt="UIArchives"
+            style={{ width: "auto", height: "64px" }}
+          />
+        </a>
 
         <div className="flex items-center gap-3">
           {showShareButton && (
