@@ -468,7 +468,7 @@ const cardData: UiCardData[] = [
   {
     title: "Skiper UI",
     description:
-      "Skiper UI is a modern component library built on top of shadcn/ui, providing “un-common” React/Next.js components (animations, interactions, premium & free) designed with Tailwind CSS & Motion for high-impact UIs. :contentReference[oaicite:1]{index=1}",
+      "Skiper UI is a modern component library built on top of shadcn/ui, providing “un-common” React/Next.js components (animations, interactions, premium & free) designed with Tailwind CSS & Motion for high-impact UIs.",
     tag: [
       "Component Library",
       "Design Inspiration",
