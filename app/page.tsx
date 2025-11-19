@@ -162,7 +162,7 @@ const cardData: UiCardData[] = [
     description:
       "React Scan is a powerful tool to visualize React component performance in real time, helping you debug and optimize your React applications efficiently.",
     tag: ["Developer Tool", "React", "Performance Tool", "Tools"],
-    image: "/Reactscan.png",
+    image: "/REACTSCAN.png",
     links: {
       website: "https://react-scan.com",
       github: "https://github.com/aidenybai/react-scan",
@@ -183,7 +183,7 @@ const cardData: UiCardData[] = [
     title: "Shader Gradient",
     description:
       "Shader Gradient is an online tool for creating animated 3D gradients using WebGL and Three.js — perfect for interactive, eye-catching backgrounds.",
-    tag: ["Gradient Generator", "Backgrounds", "Design Tool"],
+    tag: ["Gradient Generator", "Backgrounds", "Design Tools"],
     image: "/shadergradient.avif",
     links: {
       website: "https://www.shadergradient.co/customize",
