@@ -162,7 +162,7 @@ const cardData: UiCardData[] = [
     description:
       "React Scan is a powerful tool to visualize React component performance in real time, helping you debug and optimize your React applications efficiently.",
     tag: ["Developer Tool", "React", "Performance Tool", "Tools"],
-    image: "/REACTSCAN.png",
+    image: "/react-scanbg.png",
     links: {
       website: "https://react-scan.com",
       github: "https://github.com/aidenybai/react-scan",
