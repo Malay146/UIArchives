@@ -314,6 +314,32 @@ const cardData: UiCardData[] = [
       twitter: "https://twitter.com/nounproject",
     },
   },
+  {
+    title: "3dicons",
+    description:
+      "3dicons is a free/open-source collection of 3D icons and renders designed for personal and commercial use under CC0 license.",
+    tag: [
+      "3D Icons",
+      "Design Assets",
+      "Freebies",
+      "Open Source",
+      "SVG",
+      "PNG",
+      "Figma",
+      "UI/UX",
+      "Illustration",
+      "Front-end",
+      "Designer Tool",
+      "Icons",
+    ],
+    image: "/3dicons.png",
+    links: {
+      website: "https://3dicons.co/",
+      twitter: "",
+      github: "https://github.com/realvjy/3dicons",
+      youtube: "",
+    },
+  },
 
   // Fonts
   {
@@ -351,7 +377,7 @@ const cardData: UiCardData[] = [
   {
     title: "Free Faces",
     description:
-      "Free Faces is a curated collection of typefaces available under a variety of free licences, categorized by style (cursive, display, monospace, sans serif, serif, slab) for web designers and developers. :contentReference[oaicite:1]{index=1}",
+      "Free Faces is a curated collection of typefaces available under a variety of free licences, categorized by style (cursive, display, monospace, sans serif, serif, slab) for web designers and developers.",
     tag: [
       "Font Gallery",
       "Free Fonts",
@@ -364,6 +390,104 @@ const cardData: UiCardData[] = [
       website: "https://www.freefaces.gallery/",
     },
   },
+  {
+    title: "atipo® Foundry",
+    description:
+      "atipo® Foundry is an independent digital typeface foundry and graphic design studio based in Gijón, Spain, creating retail and custom fonts from a graphic-designer perspective. ",
+    tag: [
+      "Typefaces",
+      "Font Design",
+      "Typography",
+      "Graphic Design Studio",
+      "Custom Fonts",
+      "Retail Fonts",
+      "Design Assets",
+      "Design Tools",
+      "Independent Studio",
+      "Creative Agency",
+    ],
+    image: "/atipofoundry.png",
+    links: {
+      website: "https://www.atipofoundry.com/",
+      twitter: "https://x.com/atipostudio",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "CoType Foundry",
+    description:
+      "CoType Foundry is a London-based independent type foundry founded by Mark Bloom, creating contemporary digital typefaces for print and Web use. ",
+    tag: [
+      "Typefaces",
+      "Typography",
+      "Font Design",
+      "Independent Foundry",
+      "Digital Fonts",
+      "Graphic Design",
+      "Design Assets",
+      "Print & Web",
+      "Design Studio",
+      "Fonts",
+    ],
+    image: "/cotypefoundry.png",
+    links: {
+      website: "https://cotypefoundry.com/",
+      twitter: "https://x.com/cotypefoundry",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Pangram Pangram Foundry",
+    description:
+      "Pangram Pangram is an independent type foundry offering trend-conscious, high-quality fonts that are free to try and made for bold brands and creatives.",
+    tag: [
+      "Typefaces",
+      "Typography",
+      "Font Design",
+      "Independent Foundry",
+      "Digital Fonts",
+      "Graphic Design",
+      "Design Assets",
+      "Creative Community",
+      "Brand Typography",
+      "Open Source",
+      "Design Studio",
+      "Fonts"
+    ],
+    image: "/pangrampangram.png",
+    links: {
+      website: "https://pangrampangram.com/",
+      twitter: "https://x.com/PangramPangram_",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+  title: "F37 Foundry",
+  description:
+    "F37 Foundry is an award-winning type foundry from Manchester that creates distinctive retail and custom fonts and logotypes to help brands stand out.",
+  tag: [
+    "Typefaces",
+    "Typography",
+    "Font Design",
+    "Independent Foundry",
+    "Digital Fonts",
+    "Custom Fonts",
+    "Brand Typography",
+    "Design Assets",
+    "Retail Fonts",
+    "Creative Studio"
+  ],
+  image: "/f37foundry.png",
+  links: {
+    website: "https://f37foundry.com/",
+    twitter: "",
+    github: "",
+    youtube: ""
+  },
+},
 
   // Tools
   {
@@ -444,6 +568,80 @@ const cardData: UiCardData[] = [
       twitter: "https://x.com/splinetool",
     },
   },
+  {
+    title: "CoolShapes",
+    description:
+      "CoolShapes is an open-source library of 100+ abstract, grainy-gradient shapes for design & dev projects — free for commercial and personal use.",
+    tag: [
+      "Design Assets",
+      "Abstract Shapes",
+      "Open Source",
+      "SVG",
+      "React Package",
+      "Figma",
+      "UI/UX",
+      "Front-end",
+      "Illustration",
+      "Developer Tool",
+      "Tools",
+    ],
+    image: "/coolshapes.png",
+    links: {
+      website: "https://coolshap.es/",
+      twitter: "",
+      github: "https://github.com/realvjy/coolshapes",
+      youtube: "",
+    },
+  },
+  {
+    title: "Noisy Gradients",
+    description:
+      "Noisy Gradients is a web-app (and Figma plugin) that generates customizable textured and grainy gradients for use in design and development workflows.",
+    tag: [
+      "Gradients",
+      "Design Assets",
+      "Texture",
+      "Web Tool",
+      "Figma Plugin",
+      "UI/UX",
+      "Backgrounds",
+      "Developer Tool",
+      "Front-end",
+      "Tools",
+    ],
+    image: "/noisygradients.png",
+    links: {
+      website: "https://www.noisygradients.com/app",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Vercel",
+    description:
+      "Vercel is a cloud platform for frontend teams to build, preview, and ship web applications with speed and scale. It supports frameworks like Next.js and offers hosting, edge functions, and analytics.",
+    tag: [
+      "Cloud Platform",
+      "Frontend",
+      "Web Deployment",
+      "Next.js",
+      "Serverless",
+      "Edge Functions",
+      "Developer Tools",
+      "Web Hosting",
+      "Performance",
+      "SaaS",
+      "Tools",
+    ],
+    image: "/vercel.png",
+    links: {
+      website: "https://vercel.com/",
+      twitter: "https://x.com/vercel",
+      github: "https://github.com/vercel",
+      youtube: "",
+    },
+  },
 
   //components
   {
@@ -483,31 +681,57 @@ const cardData: UiCardData[] = [
     },
   },
   {
-  title: "StackBits",
-  description:
-    "StackBits is a full-stack component library offering ready-to-use React UI elements and backend code snippets to speed up modern web development.",
-  tag: [
-    "UI Components",
-    "React",
-    "Tailwind CSS",
-    "Full-Stack",
-    "Code Snippets",
-    "Web Development",
-    "Developer Tools",
-    "Front-end",
-    "Back-end",
-    "Productivity",
-    "Open Source",
-    "Component Library"
-  ],
-  image: "/stackbits.png",
-  links: {
-    website: "https://stackbits.dev/",
-    twitter: "https://x.com/samitkapoorr",
-    github: "https://github.com/samitkapoor/stackbits",
-    youtube: "",
+    title: "StackBits",
+    description:
+      "StackBits is a full-stack component library offering ready-to-use React UI elements and backend code snippets to speed up modern web development.",
+    tag: [
+      "UI Components",
+      "React",
+      "Tailwind CSS",
+      "Full-Stack",
+      "Code Snippets",
+      "Web Development",
+      "Developer Tool",
+      "Front-end",
+      "Back-end",
+      "Productivity",
+      "Open Source",
+      "Component Library",
+      "Inspiration",
+    ],
+    image: "/stackbits.png",
+    links: {
+      website: "https://stackbits.dev/",
+      twitter: "https://x.com/samitkapoorr",
+      github: "https://github.com/samitkapoor/stackbits",
+      youtube: "",
+    },
   },
-},
+  {
+    title: "React Haiku",
+    description:
+      "React Haiku is a lightweight React library offering a large collection of hooks and utilities to save development time.",
+    tag: [
+      "React",
+      "Hooks",
+      "Utilities",
+      "Library",
+      "Frontend Development",
+      "Developer Tool",
+      "UI/UX",
+      "Open Source",
+      "Web Development",
+      "Simple & Lightweight",
+      "Component Library",
+    ],
+    image: "/reacthaiku.png",
+    links: {
+      website: "https://reacthaiku.dev/",
+      twitter: "",
+      github: "https://github.com/DavidHDev/react-haiku",
+      youtube: "",
+    },
+  },
 
   //technologies
   {
@@ -814,7 +1038,7 @@ const cardData: UiCardData[] = [
     image: "/codegrid.png",
     imageLink: "https://www.youtube.com/@codegrid",
     links: {
-      twitter: "https://x.com/codegridweb", // from video descriptions :contentReference[oaicite:1]{index=1}
+      twitter: "https://x.com/codegridweb", 
       youtube: "https://www.youtube.com/@codegrid",
     },
   },
@@ -889,6 +1113,86 @@ const cardData: UiCardData[] = [
       twitter: "https://x.com/Gur__vi",
     },
   },
+  {
+    title: "David Haz",
+    description:
+      "David Haz is a web developer and designer building tools and components for the modern web — creator of React Bits (reactbits.dev) and other open-source projects.",
+    tag: [
+      "Web Development",
+      "Frontend",
+      "Open Source",
+      "React",
+      "JavaScript",
+      "UI Components",
+      "Developer",
+      "Design Systems",
+      "Community",
+      "Creator",
+      "Socials",
+      "David Haz",
+      "Inspiration",
+    ],
+    image: "/davidhaz.png",
+    links: {
+      website: "https://davidhaz.com",
+      twitter: "https://x.com/davidhdev",
+      github: "https://github.com/DavidHDev",
+      youtube: "",
+    },
+  },
+
+  //Animations
+  {
+    title: "Make It Animated",
+    description:
+      "Make It Animated is a library of real-world animations built for React Native apps, offering ready-to-use code for gestures, motion and UI transitions.",
+    tag: [
+      "React Native",
+      "Animations",
+      "Mobile UI",
+      "Gesture Handler",
+      "Skia",
+      "Reanimated",
+      "Code Library",
+      "Developer Tool",
+      "Frontend",
+      "App Development",
+      "UI/UX",
+    ],
+    image: "/makeitanimated.png",
+    links: {
+      website: "https://makeitanimated.dev/",
+      twitter: "https://x.com/makeitanimated",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Unicorn Studio",
+    description:
+      "Unicorn Studio is a no-code WebGL design tool for creating interactive 3D effects, motion and embed-ready visual experiences for web platforms. ",
+    tag: [
+      "WebGL",
+      "3D Design",
+      "No-Code",
+      "Motion Graphics",
+      "Interactive Web",
+      "Design Tool",
+      "Frontend Web",
+      "Three.js",
+      "Designer Friendly",
+      "Developer Workflow",
+      "Tools",
+      "Animations",
+    ],
+    image: "/unicornstudio.png",
+    links: {
+      website: "https://www.unicorn.studio/",
+      twitter: "https://x.com/hiunicornstudio",
+      github: "https://github.com/hiunicornstudio/unicornstudio.js",
+      youtube: "https://www.youtube.com/@tryunicornstudio",
+    },
+  },
 
   //Inspirations
   {
@@ -914,6 +1218,31 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://www.dribbble.com/",
       twitter: "https://x.com/dribbble",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Awwwards",
+    description:
+      "Awwwards recognises and celebrates the world’s best web designers, developers and agencies through daily, monthly and yearly awards, inspiring innovation in web design. ",
+    tag: [
+      "Web Design",
+      "Web Development",
+      "Awards",
+      "Inspiration",
+      "Digital Agencies",
+      "Creative Community",
+      "UI/UX",
+      "Frontend",
+      "Design Trends",
+      "Conference",
+      "Competition",
+    ],
+    image: "/awwwards.png",
+    links: {
+      website: "https://www.awwwards.com/",
+      twitter: "https://x.com/awwwards",
       github: "",
       youtube: "",
     },
@@ -1001,6 +1330,7 @@ export default function Home() {
     if (filterRef.current) {
       gsap.to(window, {
         duration: 0.1,
+        delay: 0.1,
         scrollTo: {
           y: filterRef.current,
           offsetY: 15, // Offset from top
@@ -1444,7 +1774,7 @@ export default function Home() {
       <div
         ref={goUpButtonRef}
         onClick={handleGoUpClick}
-        className="size-15 fixed rounded-full bg-zinc-900 shadow-[inset_4px_4px_4px_rgba(255,255,255,0.04),inset_-4px_-4px_4px_rgba(0,0,0,0.5)] bottom-8 sm:bottom-12 md:bottom-16 lg:bottom-20 right-3 sm:right-6 md:right-8 lg:right-30 flex justify-center items-center cursor-pointer go-up z-50"
+        className="size-15 fixed rounded-full bg-zinc-900 shadow-[inset_4px_4px_4px_rgba(255,255,255,0.04),inset_-4px_-4px_4px_rgba(0,0,0,0.5)] active:shadow-[inset_4px_4px_4px_rgba(0,0,0,0.5),inset_-4px_-4px_4px_rgba(255,255,255,0.05)] bottom-8 sm:bottom-12 md:bottom-16 lg:bottom-20 right-3 sm:right-6 md:right-8 lg:right-30 flex justify-center items-center cursor-pointer go-up z-50"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
