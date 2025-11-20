@@ -158,7 +158,7 @@ export default function RootLayout({
         </Script>
       </head>
 
-      <body className={`${inter.variable} ${inriaSerif.variable} antialiased`}>
+      <body className={`${inter.variable} ${inriaSerif.variable} antialiased selection:bg-zinc-300 selection:text-zinc-950`}>
         {children}
       </body>
     </html>
