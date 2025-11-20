@@ -340,6 +340,54 @@ const cardData: UiCardData[] = [
       youtube: "",
     },
   },
+  {
+    title: "IconScout",
+    description:
+      "IconScout is a comprehensive digital-asset platform offering millions of icons, illustrations, 3D assets, and Lottie animations — with built-in editors and plugins to streamline design workflows. ",
+    tag: [
+      "Design Assets",
+      "Icons",
+      "Illustrations",
+      "3D Graphics",
+      "Lottie Animations",
+      "Developer Tools",
+      "UI/UX",
+      "Plugins",
+      "Creative Resources",
+      "Web Development",
+    ],
+    image: "/iconscout.png",
+    links: {
+      website: "https://iconscout.com/",
+      twitter: "https://x.com/IconScout",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Icons8",
+    description:
+      "Icons8 is a comprehensive design-asset platform offering icons, illustrations, photos, music, 3D models and AI tools — built for creative teams and developers. ",
+    tag: [
+      "Design Assets",
+      "Icons",
+      "Illustrations",
+      "Photos",
+      "Music",
+      "3D Models",
+      "AI Tools",
+      "Developer Tools",
+      "UI/UX",
+      "Stock Graphics",
+    ],
+    image: "/icons8.png",
+    links: {
+      website: "https://icons8.com/",
+      twitter: "https://x.com/Icons8",
+      github: "",
+      youtube: "",
+    },
+  },
 
   // Fonts
   {
@@ -454,7 +502,7 @@ const cardData: UiCardData[] = [
       "Brand Typography",
       "Open Source",
       "Design Studio",
-      "Fonts"
+      "Fonts",
     ],
     image: "/pangrampangram.png",
     links: {
@@ -465,29 +513,29 @@ const cardData: UiCardData[] = [
     },
   },
   {
-  title: "F37 Foundry",
-  description:
-    "F37 Foundry is an award-winning type foundry from Manchester that creates distinctive retail and custom fonts and logotypes to help brands stand out.",
-  tag: [
-    "Typefaces",
-    "Typography",
-    "Font Design",
-    "Independent Foundry",
-    "Digital Fonts",
-    "Custom Fonts",
-    "Brand Typography",
-    "Design Assets",
-    "Retail Fonts",
-    "Creative Studio"
-  ],
-  image: "/f37foundry.png",
-  links: {
-    website: "https://f37foundry.com/",
-    twitter: "",
-    github: "",
-    youtube: ""
+    title: "F37 Foundry",
+    description:
+      "F37 Foundry is an award-winning type foundry from Manchester that creates distinctive retail and custom fonts and logotypes to help brands stand out.",
+    tag: [
+      "Typefaces",
+      "Typography",
+      "Font Design",
+      "Independent Foundry",
+      "Digital Fonts",
+      "Custom Fonts",
+      "Brand Typography",
+      "Design Assets",
+      "Retail Fonts",
+      "Creative Studio",
+    ],
+    image: "/f37foundry.png",
+    links: {
+      website: "https://f37foundry.com/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
   },
-},
 
   // Tools
   {
@@ -642,6 +690,31 @@ const cardData: UiCardData[] = [
       youtube: "",
     },
   },
+  {
+    title: "Open Doodles",
+    description:
+      "Open Doodles is a free, open-source library of sketchy illustrations of people that you can use for personal and commercial projects — no attribution required.",
+    tag: [
+      "Illustrations",
+      "Free Assets",
+      "Design Resources",
+      "Sketchy Style",
+      "SVG",
+      "PNG",
+      "Vector Graphics",
+      "UI/UX",
+      "Design Library",
+      "Open Source",
+      "Tools",
+    ],
+    image: "/opendoodles.png",
+    links: {
+      website: "https://www.opendoodles.com/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
 
   //components
   {
@@ -729,6 +802,31 @@ const cardData: UiCardData[] = [
       website: "https://reacthaiku.dev/",
       twitter: "",
       github: "https://github.com/DavidHDev/react-haiku",
+      youtube: "",
+    },
+  },
+  {
+    title: "daisyUI",
+    description:
+      "daisyUI is a plugin for Tailwind CSS that adds ready-to-use component class names, customizable themes and semantic colors—so you write less utility-code and build UI faster. ",
+    tag: [
+      "Tailwind CSS",
+      "UI Components",
+      "Design System",
+      "Developer Tool",
+      "Frontend",
+      "CSS Library",
+      "Themes",
+      "Customization",
+      "Open Source",
+      "Web Development",
+      "Component Library",
+    ],
+    image: "/daisyui.png",
+    links: {
+      website: "https://daisyui.com/",
+      twitter: "https://x.com/saadeghi",
+      github: "https://github.com/saadeghi/daisyui",
       youtube: "",
     },
   },
@@ -1038,7 +1136,7 @@ const cardData: UiCardData[] = [
     image: "/codegrid.png",
     imageLink: "https://www.youtube.com/@codegrid",
     links: {
-      twitter: "https://x.com/codegridweb", 
+      twitter: "https://x.com/codegridweb",
       youtube: "https://www.youtube.com/@codegrid",
     },
   },
@@ -1193,6 +1291,81 @@ const cardData: UiCardData[] = [
       youtube: "https://www.youtube.com/@tryunicornstudio",
     },
   },
+  {
+    title: "Rive",
+    description:
+      "Rive is a real-time design and animation tool plus runtime ecosystem that lets designers and developers build interactive, high-performance motion graphics across apps, games, and websites.",
+    tag: [
+      "Animation",
+      "Interactive Design",
+      "Motion Graphics",
+      "UI/UX",
+      "No-Code",
+      "Developer Tool",
+      "Real-Time Graphics",
+      "Web Development",
+      "Game Development",
+      "Open Source",
+      "Tools",
+    ],
+    image: "/rive.png",
+    links: {
+      website: "https://rive.app/",
+      twitter: "https://x.com/rive_app",
+      github: "https://github.com/rive-app",
+      youtube: "https://www.youtube.com/channel/UCPal2R1FxwRTPylhP_7ofEg",
+    },
+  },
+  {
+    title: "Jitter",
+    description:
+      "Jitter is a web-based motion design tool that lets teams create professional animations fast — import from Figma, animate in the browser, and export to 4K, GIF, Lottie and more. ",
+    tag: [
+      "Motion Design",
+      "Animation",
+      "Web Tool",
+      "UI/UX",
+      "Designer Tool",
+      "No-Code",
+      "Export 4K",
+      "Interactive Graphics",
+      "Team Collaboration",
+      "Browser Based",
+      "Tools",
+      "Animations",
+    ],
+    image: "/jitter.png",
+    links: {
+      website: "https://jitter.video/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "LottieFiles",
+    description:
+      "LottieFiles is a platform that offers a large library of free and premium Lottie animations, plus tools to edit, test, and integrate them into web and mobile apps.",
+    tag: [
+      "Animations",
+      "Lottie",
+      "Motion Graphics",
+      "Design Assets",
+      "UI/UX",
+      "Web Development",
+      "Mobile Development",
+      "Developer Tools",
+      "Open Source",
+      "Designer Resource",
+    ],
+    image: "/lottiefiles.png",
+    links: {
+      website: "https://lottiefiles.com/",
+      twitter: "https://x.com/LottieFiles",
+      github: "https://github.com/lottiefiles",
+      youtube: "",
+    },
+  },
 
   //Inspirations
   {
@@ -1243,6 +1416,32 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://www.awwwards.com/",
       twitter: "https://x.com/awwwards",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Mobbin",
+    description:
+      "Mobbin is a searchable library of real-world mobile and web app UI/UX screenshots, helping designers find patterns and inspiration quickly. ",
+    tag: [
+      "UI Design",
+      "UX Research",
+      "Design Inspiration",
+      "Mobile UI",
+      "Web UI",
+      "Design Tool",
+      "Screenflows",
+      "Designer Resource",
+      "Product Design",
+      "Frontend",
+      "Inspiration",
+      "Animation",
+    ],
+    image: "/mobbin.png",
+    links: {
+      website: "https://mobbin.com/",
+      twitter: "",
       github: "",
       youtube: "",
     },
