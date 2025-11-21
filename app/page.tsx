@@ -388,6 +388,30 @@ const cardData: UiCardData[] = [
       youtube: "",
     },
   },
+  {
+    title: "Lineicons",
+    description:
+      "Lineicons is a comprehensive icon library offering 26,000+ handcrafted icons in multiple formats (SVG, PNG, React, Figma, Icon-Font) for designers and developers.",
+    tag: [
+      "Icons",
+      "Design Assets",
+      "SVG Icons",
+      "Figma Plugin",
+      "Web Development",
+      "React Components",
+      "UI/UX",
+      "Icon Library",
+      "Open Source",
+      "Developer Tool",
+    ],
+    image: "/lineicons.png",
+    links: {
+      website: "https://lineicons.com/",
+      twitter: "",
+      github: "https://github.com/LineiconsHQ/Lineicons",
+      youtube: "",
+    },
+  },
 
   // Fonts
   {
@@ -827,6 +851,30 @@ const cardData: UiCardData[] = [
       website: "https://daisyui.com/",
       twitter: "https://x.com/saadeghi",
       github: "https://github.com/saadeghi/daisyui",
+      youtube: "",
+    },
+  },
+  {
+    title: "MUI",
+    description:
+      "MUI is a React UI component library that provides production-ready components and tools implementing Material Design, with customization and theming built in. ",
+    tag: [
+      "React",
+      "UI Components",
+      "Material Design",
+      "Design System",
+      "Frontend Development",
+      "Developer Tool",
+      "Customization",
+      "Theming",
+      "Web Development",
+      "Open Source",
+      "Component Library",
+    ],
+    image: "/mui.png",
+    links: {
+      website: "https://mui.com/",
+      github: "https://github.com/mui/material-ui",
       youtube: "",
     },
   },
