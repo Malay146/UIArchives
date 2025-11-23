@@ -391,7 +391,7 @@ const cardData: UiCardData[] = [
   {
     title: "Lineicons",
     description:
-      "Lineicons is a comprehensive icon library offering 26,000+ handcrafted icons in multiple formats (SVG, PNG, React, Figma, Icon-Font) for designers and developers.",
+      "Lineicons is a comprehensive icon library offering 26,000+ handcrafted icons in multiple formats (SVG, PNG, React, Figma, Icon-Font) for designers and developers.q",
     tag: [
       "Icons",
       "Design Assets",
@@ -875,6 +875,31 @@ const cardData: UiCardData[] = [
     links: {
       website: "https://mui.com/",
       github: "https://github.com/mui/material-ui",
+      youtube: "",
+    },
+  },
+  {
+    title: "Aether UI",
+    description:
+      "Aether UI is a library of beautifully designed, animated React components built with Tailwind CSS and Framer Motion — ready to drop into your projects. ",
+    tag: [
+      "React",
+      "UI Components",
+      "Tailwind CSS",
+      "Animations",
+      "Framer Motion",
+      "Frontend Development",
+      "Design Systems",
+      "Web Development",
+      "Developer Tools",
+      "Reusable Components",
+      "Component Library",
+    ],
+    image: "/aetherui.png",
+    links: {
+      website: "https://www.aether-ui.com/",
+      twitter: "",
+      github: "",
       youtube: "",
     },
   },
@@ -1489,6 +1514,31 @@ const cardData: UiCardData[] = [
     image: "/mobbin.png",
     links: {
       website: "https://mobbin.com/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "404s",
+    description:
+      "404s is a curated gallery of creative ‘Page Not Found’ (404) web pages — showcasing design inspiration for error states and dead-end user experiences.",
+    tag: [
+      "Design Inspiration",
+      "Error Pages",
+      "404 Page",
+      "UI/UX",
+      "Web Design",
+      "Creative Gallery",
+      "Frontend Development",
+      "Interaction Design",
+      "Website Dead-end Design",
+      "Design Library",
+      "Inspiration",
+    ],
+    image: "/404s.png",
+    links: {
+      website: "https://www.404s.design/",
       twitter: "",
       github: "",
       youtube: "",
