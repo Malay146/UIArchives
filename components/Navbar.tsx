@@ -4,6 +4,8 @@ import React, { useState } from "react";
 import Link from "next/link";
 import Button1 from "@/components/ui-components/Button1";
 import Image from "next/image";
+import { gsap } from "gsap";
+import { useEffect } from "react";
 
 type NavbarProps = {
   showShareButton?: boolean;
@@ -56,6 +58,19 @@ const Navbar = ({
     }
   };
 
+    useEffect(() => {
+      let ctx = gsap.context(() => {
+      gsap.from(".Logo, .Banner, .Links", {
+        opacity: 0,
+        y: 50,
+        duration: 1.8,
+        filter: "blur(10px)",
+        ease: "power3.out",
+      }); 
+    });
+      return () => ctx.revert();
+    }, [])
+
   return (
     <>
       <div className="navbar pt-6 sm:pt-8 md:pt-10 flex items-center justify-between gap-4 sm:gap-6">
@@ -66,7 +81,7 @@ const Navbar = ({
             viewBox="0 0 265 55"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className="w-[140px] h-[29px] sm:w-[180px] sm:h-[37px] md:w-[220px] md:h-[45px] lg:w-[265px] lg:h-[55px]"
+            className="Logo w-[140px] h-[29px] sm:w-[180px] sm:h-[37px] md:w-[220px] md:h-[45px] lg:w-[265px] lg:h-[55px]"
           >
             <path
               d="M22.6 5.70001V27.2L17.7 24.4C9 19.4 3.59999 10.1 3.59999 0H0V24.6C0 32.6 4.59999 40 11.9 43.5L22.7 48.7V27.2L27.6 30C36.3 35 41.7 44.3 41.7 54.4H45.3V29.8C45.3 21.8 40.7 14.4 33.4 10.9L22.6 5.70001Z"
@@ -84,6 +99,7 @@ const Navbar = ({
           href="https://peerlist.io/malayp/project/uiarchives"
           target="_blank"
           rel="noreferrer"
+          className="Banner"
         >
           <img
             src="https://peerlist.io/api/v1/projects/embed/PRJHGNQQ6G6RLBEKEFKKN6NKAMK8PM?showUpvote=true&theme=dark"
@@ -92,7 +108,7 @@ const Navbar = ({
           />
         </a>
 
-        <div className="flex items-center gap-3">
+        <div className="Links flex items-center gap-3">
           {showShareButton && (
             <Button1
               onClick={handleShare}

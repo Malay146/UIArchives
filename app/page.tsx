@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useMemo, useState, useRef, useEffect } from "react";
+import React, { useMemo, useState, useRef, useEffect, use } from "react";
 import Image from "next/image";
 import UiCard, { UiCardData } from "@/components/UiCard";
 import Silk from "@/components/Silk";
@@ -12,7 +12,10 @@ import Button1 from "@/components/ui-components/Button1";
 import Button2 from "@/components/ui-components/Button2";
 import Navbar from "@/components/Navbar";
 import { gsap } from "gsap";
+import { SplitText } from "gsap/SplitText";
 import { ScrollToPlugin } from "gsap/ScrollToPlugin";
+import { title } from "process";
+import { createScopedAnimate } from "motion";
 
 const cardData: UiCardData[] = [
   {
@@ -1610,6 +1613,38 @@ export default function Home() {
     };
   }, []);
 
+  const titleRef = useRef<HTMLHeadingElement>(null);
+  const pRef = useRef<HTMLParagraphElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(SplitText);
+
+    const titleChars = new SplitText(titleRef.current, {
+      type: "words, chars",
+    });
+    const pChars = new SplitText(pRef.current, { type: "words" });
+    const ctx = gsap.context(() => {
+      gsap.from(titleChars.chars, {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.07,
+        filter: "blur(25px)",
+        ease: "power3.out",
+      });
+      gsap.from(pChars.words, {
+        y: 40,
+        opacity: 0,
+        duration: 1,
+        stagger: 0.07,
+        filter: "blur(25px)",
+        ease: "power3.out",
+      });
+    });
+
+    return () => ctx.revert();
+  }, []);
+
   const handleExploreClick = () => {
     if (filterRef.current) {
       gsap.to(window, {
@@ -2095,12 +2130,17 @@ export default function Home() {
 
         {/* Hero Section */}
         <div className="hero-section flex flex-col items-center justify-center gap-4 sm:gap-5 md:gap-6 pt-8 sm:pt-12 md:pt-16 lg:pt-20 xl:pt-24">
-          <h1 className="font-[Inria_Serif] text-[32px] sm:text-[48px] md:text-[64px] lg:text-[72px] xl:text-[88px] font-bold bg-clip-text text-center text-transparent bg-linear-to-r from-[#3F3F3F] via-[#FFFFFF] to-[#3F3F3F] tracking-tighter px-2 sm:px-4 text-balance">
+          <h1
+            ref={titleRef}
+            className="font-[Inria_Serif] text-[36px] sm:text-[48px] md:text-[64px] lg:text-[72px] xl:text-[88px] font-bold text-zinc-500 tracking-tighter px-2 sm:px-4 text-center"
+          >
             All Your Frontend Necessities
           </h1>
 
           {/* Hero Image */}
-          <div className="hero-image -mt-4 sm:-mt-6 md:-mt-8 relative w-[90%] max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[620px] xl:max-w-[822px] h-[60px] sm:h-20 md:h-[100px] lg:h-[110px] xl:h-[126px] rounded-[44px] sm:rounded-[55px] md:rounded-[66px] lg:rounded-[77px] xl:rounded-[88px] overflow-hidden mx-auto">
+          <div
+            className="hero-image -mt-4 sm:-mt-6 md:-mt-8 relative w-[90%] max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[620px] xl:max-w-[822px] h-[60px] sm:h-20 md:h-[100px] lg:h-[110px] xl:h-[126px] rounded-[44px] sm:rounded-[55px] md:rounded-[66px] lg:rounded-[77px] xl:rounded-[88px] overflow-hidden mx-auto"
+          >
             <Silk
               speed={20}
               scale={0.9}
@@ -2109,14 +2149,19 @@ export default function Home() {
               rotation={1.94}
             />
           </div>
-          <p className="text-[#888888] max-w-4xl font-[Inria_Serif] text-sm sm:text-base md:text-lg lg:text-xl xl:text-[24px] text-center font-extralight tracking-tighter leading-5 sm:leading-7 px-4 sm:px-6 md:px-8">
+          <p
+            ref={pRef}
+            className="text-[#888888] max-w-4xl font-[Inria_Serif] text-sm sm:text-base md:text-lg lg:text-xl xl:text-[24px] text-center font-extralight tracking-tighter leading-5 sm:leading-7 px-4 sm:px-6 md:px-8"
+          >
             Explore a universe of tools, frameworks, and components — all in one
             place. Just search what you need, and get instant access to the best
             resources.
           </p>
 
           {/* CTA */}
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 sm:mt-5 w-full sm:w-auto px-4 sm:px-0">
+          <div
+            className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 sm:mt-5 w-full sm:w-auto px-4 sm:px-0"
+          >
             <Button1
               onClick={handleExploreClick}
               className="tracking-tighter w-full sm:w-auto text-center"
@@ -2154,7 +2199,9 @@ export default function Home() {
           <div className="divider border-t border-zinc-800 w-full max-w-xl h-px mt-3 sm:mt-4" />
 
           {/* Metrics */}
-          <div className="metrics max-w-xl flex items-center justify-center gap-8 sm:gap-12 md:gap-16 lg:gap-24 xl:gap-32 font-[Inter] text-center mt-2 sm:mt-3 text-white px-4">
+          <div
+            className="metrics max-w-xl flex items-center justify-center gap-8 sm:gap-12 md:gap-16 lg:gap-24 xl:gap-32 font-[Inter] text-center mt-2 sm:mt-3 text-white px-4"
+          >
             <div>
               <p className="text-xl sm:text-2xl md:text-3xl font-extrabold">
                 {/* 1000+ */}
@@ -2179,7 +2226,9 @@ export default function Home() {
             ref={filterRef}
             className="max-w-7xl tracking-tighter mt-8 sm:mt-10 md:mt-12 flex flex-col items-center px-4 sm:px-6 md:px-0"
           >
-            <div className="flex flex-wrap justify-center gap-2 sm:gap-2 md:gap-2">
+            <div
+              className="flex flex-wrap justify-center gap-2 sm:gap-2 md:gap-2"
+            >
               {[
                 "All",
                 "Component Library",
@@ -2237,6 +2286,7 @@ type SearchProps = React.InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const Search = ({ className = "", ...props }: SearchProps) => {
+
   return (
     <input
       {...props}

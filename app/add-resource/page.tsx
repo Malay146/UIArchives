@@ -3,10 +3,48 @@ import React, { useRef, useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Button1 from "@/components/ui-components/Button1";
 import { Input } from "@/components/ui-components/Input";
+import { gsap } from "gsap";
+import { SplitText } from "gsap/SplitText";
 
 const AddResourcePage = () => {
   const [value, setValue] = useState("");
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const formRef = useRef<HTMLDivElement>(null);
+  const shareTitleRef = useRef<HTMLHeadingElement>(null);
+  const shareParaRef = useRef<HTMLParagraphElement>(null);
+
+  //animations
+  useEffect(() => {
+    gsap.registerPlugin(SplitText);
+
+    const splitTitle = new SplitText(shareTitleRef.current, {
+      type: "words,chars",
+    });
+    const splitPara = new SplitText(shareParaRef.current, {
+      type: "lines",
+    });
+
+    let ctx = gsap.context(() => {
+      gsap.from(formRef.current, {
+        opacity: 0,
+        y: 40,
+        duration: 1.5,
+        stagger: 0.2,
+        filter: "blur(25px)",
+        ease: "power3.out",
+      });
+      gsap.from([splitTitle.chars, splitPara.lines], {
+        opacity: 0,
+        y: 40,
+        duration: 1,
+        stagger: 0.07,
+        filter: "blur(20px)",
+        ease: "power3.out",
+      });
+    });
+    return () => ctx.revert();
+  }, []);
 
   // form state
   const [form, setForm] = useState({
@@ -20,7 +58,10 @@ const AddResourcePage = () => {
   });
 
   const [loading, setLoading] = useState(false);
-  const [toast, setToast] = useState<null | { type: "success" | "error"; text: string }>(null);
+  const [toast, setToast] = useState<null | {
+    type: "success" | "error";
+    text: string;
+  }>(null);
 
   useEffect(() => {
     if (!toast) return;
@@ -39,7 +80,8 @@ const AddResourcePage = () => {
     setValue(e.target.value);
   };
 
-  const update = (k: keyof typeof form, v: string) => setForm((s) => ({ ...s, [k]: v }));
+  const update = (k: keyof typeof form, v: string) =>
+    setForm((s) => ({ ...s, [k]: v }));
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -60,11 +102,25 @@ const AddResourcePage = () => {
       });
       const data = await res.json();
       if (res.ok) {
-        setToast({ type: "success", text: "Thanks — your resource was submitted successfully." });
-        setForm({ name: "", email: "", title: "", description: "", webLink: "", github: "", twitter: "" });
+        setToast({
+          type: "success",
+          text: "Thanks — your resource was submitted successfully.",
+        });
+        setForm({
+          name: "",
+          email: "",
+          title: "",
+          description: "",
+          webLink: "",
+          github: "",
+          twitter: "",
+        });
         setValue("");
       } else {
-        setToast({ type: "error", text: data?.error || "Something went wrong. Try again later." });
+        setToast({
+          type: "error",
+          text: data?.error || "Something went wrong. Try again later.",
+        });
       }
     } catch (err) {
       setToast({ type: "error", text: "Network error. Try again later." });
@@ -468,10 +524,15 @@ const AddResourcePage = () => {
         <Navbar showShareButton={true} showAddResourceButton={false} />
         <div className="w-full h-full mt-8 sm:mt-12 md:mt-16 lg:mt-24 xl:mt-32 2xl:mt-46 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-6 xl:gap-8 items-center justify-center lg:items-start p-6">
           <div className="w-full lg:w-[50%] shrink-0 ml-8">
-            <h1 className="text-white font-[Inria_Serif] font-bold text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] xl:text-[64px] 2xl:text-[80px] tracking-tighter leading-tight sm:leading-[1.1] md:leading-[1.15]">
+            <h1
+              ref={shareTitleRef}
+              className="text-white font-[Inria_Serif] font-bold text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] xl:text-[64px] 2xl:text-[80px] tracking-tighter leading-tight sm:leading-[1.1] md:leading-[1.15]"
+            >
               Got Something Cool?
             </h1>
-            <p className="text-zinc-400 font-[Inria_Serif] font-light tracking-normal text-base sm:text-lg md:text-xl lg:text-2xl mt-4 sm:mt-6 md:mt-8 text-balance">
+            <p 
+            ref={shareParaRef}
+            className="text-zinc-400 font-[Inria_Serif] font-light tracking-normal text-base sm:text-lg md:text-xl lg:text-2xl mt-4 sm:mt-6 md:mt-8 text-balance">
               Discovered an amazing frontend tool, library, or design
               inspiration? Share it with the community! Add your favorite
               resource to UI Archives and help developers, designers, and
@@ -479,7 +540,10 @@ const AddResourcePage = () => {
               faster and more fun.
             </p>
           </div>
-          <div className="w-full lg:w-[50%] shrink-0 noise bg-[#121212] rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 sm:mx-8 shadow-[inset_5px_5px_22px_rgba(255,255,255,0.08),inset_-5px_-5px_22px_rgba(0,0,0,1)]">
+          <div
+            ref={formRef}
+            className="w-full lg:w-[50%] shrink-0 noise bg-[#121212] rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 sm:mx-8 shadow-[inset_5px_5px_22px_rgba(255,255,255,0.08),inset_-5px_-5px_22px_rgba(0,0,0,1)]"
+          >
             <h1 className="text-zinc-500 font-bold font-[Inria_Serif] tracking-tight text-2xl sm:text-3xl md:text-4xl border-b border-zinc-700 pb-2">
               Submit your Resource
             </h1>
@@ -554,11 +618,16 @@ const AddResourcePage = () => {
               </div>
 
               {/* Toast */}
-              <div aria-live="polite" className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50">
+              <div
+                aria-live="polite"
+                className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50"
+              >
                 {toast && (
                   <div
                     className={`${
-                      toast.type === "success" ? "border-green-600 bg-green-800" : "border-red-600 bg-red-800"
+                      toast.type === "success"
+                        ? "border-green-600 bg-green-800"
+                        : "border-red-600 bg-red-800"
                     } text-white px-4 py-3 rounded-xl shadow-lg border flex items-center gap-3 backdrop-blur-sm max-w-xl`}
                   >
                     <svg

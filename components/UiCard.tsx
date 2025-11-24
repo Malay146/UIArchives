@@ -1,5 +1,9 @@
+"use client";
 import Image from "next/image";
 import { motion } from "motion/react";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/all";
+import { useEffect, useRef } from "react";
 import Link from "next/link";
 
 export interface UiCardData {
@@ -24,8 +28,38 @@ export default function UiCard({
   imageLink,
   links,
 }: UiCardData) {
+  const cardRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    gsap.registerPlugin(ScrollTrigger);
+    const ctx = gsap.context(() => {
+      const anim = gsap.from(cardRef.current, {
+        opacity: 0,
+        y: 40,
+        scale: 0.9,
+        filter: "blur(25px)",
+        duration: 0.1,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: cardRef.current,
+          start: "top 95%", // earlier trigger
+          end: "bottom 90%",
+          scrub: false, // smoother reveal without dragging
+          toggleActions: "play none none reverse",
+          markers: false,
+        },
+      });
+
+      ScrollTrigger.refresh();
+    });
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl border border-zinc-800 hover:border-zinc-600 transition-all duration-300">
+    <div
+      ref={cardRef}
+      className="bg-zinc-900 rounded-2xl overflow-hidden shadow-lg hover:shadow-xl border border-zinc-800 hover:border-zinc-600 transition-all duration-300"
+    >
       {/* Image Section */}
       <Link
         href={imageLink || links?.website || "#"}
@@ -78,7 +112,6 @@ export default function UiCard({
           <h2 className="text-lg font-semibold mr-3 truncate">{title}</h2>
           <span className="w-px h-6 rounded-full bg-zinc-500" />
           <div className="flex gap-3 text-zinc-400 mx-3">
-            
             {links?.website && (
               <a
                 href={links.website}
@@ -200,6 +233,5 @@ export default function UiCard({
     </div>
   );
 }
-
 
 //<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-user-round-icon lucide-user-round"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></svg>

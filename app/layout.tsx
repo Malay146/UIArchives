@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter, Inria_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
+import SmoothScroll from "@/components/SmoothScroll";
 
 // -------------------------------
 // Fonts
@@ -112,7 +113,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
       <head>
         {/* ✅ Manual Meta Description (Visible to Lighthouse) */}
         <meta
@@ -159,7 +160,9 @@ export default function RootLayout({
       </head>
 
       <body className={`${inter.variable} ${inriaSerif.variable} antialiased selection:bg-zinc-300 selection:text-zinc-950`}>
-        {children}
+        <SmoothScroll>
+          {children}
+        </SmoothScroll>
       </body>
     </html>
   );
