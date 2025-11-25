@@ -187,7 +187,7 @@ const cardData: UiCardData[] = [
     description:
       "Shader Gradient is an online tool for creating animated 3D gradients using WebGL and Three.js — perfect for interactive, eye-catching backgrounds.",
     tag: ["Gradient Generator", "Backgrounds", "Design Tools"],
-    image: "/shadergradient.avif",
+    image: "/shadergradient.png",
     links: {
       website: "https://www.shadergradient.co/customize",
       github: "https://github.com/ruucm/shadergradient",
@@ -1314,6 +1314,81 @@ const cardData: UiCardData[] = [
       youtube: "",
     },
   },
+  {
+    title: "Gurbinder (LegionsDev)",
+    description:
+      "Gurbinder is a full-stack developer and design engineer who builds interactive web tools and open-source projects, sharing his work under the handle LegionsDev.",
+    tag: [
+      "Design Engineer",
+      "Full-Stack Developer",
+      "Open Source",
+      "Web Tools",
+      "Interactive Charts",
+      "Developer Community",
+      "JavaScript",
+      "Frontend Development",
+      "UI/UX Design",
+      "Creator",
+      "Socials",
+    ],
+    image: "/legionsdev.png",
+    links: {
+      website: "https://legions.dev/",
+      twitter: "https://x.com/legionsdev",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Nanda Fyi",
+    description:
+      "Interactive-SVG animator and web toolmaker who shares advanced insights and tutorials about SVG motion, path animations and frontend prototyping.",
+    tag: [
+      "SVG Animations",
+      "Path Animation",
+      "Web Toolmaker",
+      "Frontend Development",
+      "Prototyping",
+      "Animation Tutorials",
+      "JS & CSS",
+      "Motion Graphics",
+      "Design Systems",
+      "Creator",
+      "Socials",
+    ],
+    image: "/nandafyi.png",
+    links: {
+      website: "https://nan.fyi/",
+      twitter: "https://x.com/nandafyi",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Samit Kapoor",
+    description:
+      "Samit Kapoor is a digital creator and community builder who shares insights on web development, productivity tools, and growth-tech aboard the social web.",
+    tag: [
+      "Web Development",
+      "Productivity",
+      "Growth Tech",
+      "Community Builder",
+      "Frontend Development",
+      "Developer Tools",
+      "Creator",
+      "Digital Community",
+      "Tech Insights",
+      "Social Media",
+      "Socials",
+    ],
+    image: "/samitkapoor.png",
+    links: {
+      website: "https://www.samitkapoor.com/",
+      twitter: "https://x.com/samitkapoorr",
+      github: "",
+      youtube: "",
+    },
+  },
 
   //Animations
   {
@@ -2138,9 +2213,7 @@ export default function Home() {
           </h1>
 
           {/* Hero Image */}
-          <div
-            className="hero-image -mt-4 sm:-mt-6 md:-mt-8 relative w-[90%] max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[620px] xl:max-w-[822px] h-[60px] sm:h-20 md:h-[100px] lg:h-[110px] xl:h-[126px] rounded-[44px] sm:rounded-[55px] md:rounded-[66px] lg:rounded-[77px] xl:rounded-[88px] overflow-hidden mx-auto"
-          >
+          <div className="hero-image -mt-4 sm:-mt-6 md:-mt-8 relative w-[90%] max-w-[320px] sm:max-w-[420px] md:max-w-[520px] lg:max-w-[620px] xl:max-w-[822px] h-[60px] sm:h-20 md:h-[100px] lg:h-[110px] xl:h-[126px] rounded-[44px] sm:rounded-[55px] md:rounded-[66px] lg:rounded-[77px] xl:rounded-[88px] overflow-hidden mx-auto">
             <Silk
               speed={20}
               scale={0.9}
@@ -2159,9 +2232,7 @@ export default function Home() {
           </p>
 
           {/* CTA */}
-          <div
-            className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 sm:mt-5 w-full sm:w-auto px-4 sm:px-0"
-          >
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 sm:mt-5 w-full sm:w-auto px-4 sm:px-0">
             <Button1
               onClick={handleExploreClick}
               className="tracking-tighter w-full sm:w-auto text-center"
@@ -2199,9 +2270,7 @@ export default function Home() {
           <div className="divider border-t border-zinc-800 w-full max-w-xl h-px mt-3 sm:mt-4" />
 
           {/* Metrics */}
-          <div
-            className="metrics max-w-xl flex items-center justify-center gap-8 sm:gap-12 md:gap-16 lg:gap-24 xl:gap-32 font-[Inter] text-center mt-2 sm:mt-3 text-white px-4"
-          >
+          <div className="metrics max-w-xl flex items-center justify-center gap-8 sm:gap-12 md:gap-16 lg:gap-24 xl:gap-32 font-[Inter] text-center mt-2 sm:mt-3 text-white px-4">
             <div>
               <p className="text-xl sm:text-2xl md:text-3xl font-extrabold">
                 {/* 1000+ */}
@@ -2226,9 +2295,7 @@ export default function Home() {
             ref={filterRef}
             className="max-w-7xl tracking-tighter mt-8 sm:mt-10 md:mt-12 flex flex-col items-center px-4 sm:px-6 md:px-0"
           >
-            <div
-              className="flex flex-wrap justify-center gap-2 sm:gap-2 md:gap-2"
-            >
+            <div className="flex flex-wrap justify-center gap-2 sm:gap-2 md:gap-2">
               {[
                 "All",
                 "Component Library",
@@ -2286,7 +2353,6 @@ type SearchProps = React.InputHTMLAttributes<HTMLInputElement> & {
 };
 
 const Search = ({ className = "", ...props }: SearchProps) => {
-
   return (
     <input
       {...props}
