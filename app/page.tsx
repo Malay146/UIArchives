@@ -2207,7 +2207,7 @@ export default function Home() {
         <div className="hero-section flex flex-col items-center justify-center gap-4 sm:gap-5 md:gap-6 pt-8 sm:pt-12 md:pt-16 lg:pt-20 xl:pt-24">
           <h1
             ref={titleRef}
-            className="font-[Inria_Serif] text-[36px] sm:text-[48px] md:text-[64px] lg:text-[72px] xl:text-[88px] font-bold text-zinc-500 tracking-tighter px-2 sm:px-4 text-center"
+            className="font-[Inria_Serif] text-[36px] sm:text-[48px] md:text-[64px] lg:text-[72px] xl:text-[88px] font-bold text-zinc-400 tracking-tighter px-2 sm:px-4 text-center"
           >
             All Your Frontend Necessities
           </h1>

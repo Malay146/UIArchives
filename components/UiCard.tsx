@@ -36,14 +36,14 @@ export default function UiCard({
       const anim = gsap.from(cardRef.current, {
         opacity: 0,
         y: 40,
-        scale: 0.9,
+        scale: 0.7,
         filter: "blur(25px)",
         duration: 0.1,
         ease: "power3.out",
         scrollTrigger: {
           trigger: cardRef.current,
           start: "top 95%", // earlier trigger
-          end: "bottom 90%",
+          end: "bottom 95%",
           scrub: false, // smoother reveal without dragging
           toggleActions: "play none none reverse",
           markers: false,

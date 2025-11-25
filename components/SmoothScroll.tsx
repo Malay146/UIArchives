@@ -10,10 +10,10 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
 
     // 1️⃣ Initialize Lenis
     const lenis = new Lenis({
-      duration: 0.7,
+      duration: 1,
       easing: (t) => 1 - Math.pow(1 - t, 3),
       smoothWheel: true,
-      wheelMultiplier: 1.5,
+      wheelMultiplier: 1.2,
     });
 
     // 2️⃣ RAF loop
