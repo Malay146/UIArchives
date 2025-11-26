@@ -23,7 +23,7 @@ const cardData: UiCardData[] = [
     description:
       "Shadcn (often written as shadcn/ui) is a popular component library for React and Next.js projects that provides beautifully designed, accessible, and customizable UI components built using Tailwind CSS and Radix UI.",
     tag: "Component Library",
-    image: "/shadcn.webp", // Place your image in /public folder
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147017/shadcn_et4nfj.png", // Place your image in /public folder
     links: {
       website: "https://ui.shadcn.com",
       github: "https://github.com/shadcn/ui",
@@ -35,7 +35,7 @@ const cardData: UiCardData[] = [
     description:
       "Tailwind CSS is a utility-first CSS framework for rapidly building custom designs without leaving your HTML.",
     tag: ["CSS Framework", "Utility-First", "Frontend", "Technologies"],
-    image: "/tailwindcss.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147024/tailwindcss_ladjtu.png",
     links: {
       website: "https://tailwindcss.com",
       github: "https://github.com/tailwindlabs/tailwindcss",
@@ -46,7 +46,7 @@ const cardData: UiCardData[] = [
     description:
       "Radix UI provides accessible, unstyled UI primitives for building high-quality design systems and web apps.",
     tag: ["UI Primitives", "Component Library"],
-    image: "/radix-ui.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147007/radix-ui_wkxkp5.png",
     links: {
       website: "https://www.radix-ui.com",
       github: "https://github.com/radix-ui",
@@ -57,7 +57,7 @@ const cardData: UiCardData[] = [
     description:
       "ReactBits is a curated collection of reusable React patterns, techniques, tips, and best practices designed to help developers write cleaner, more efficient, and scalable React code.",
     tag: "Component Library",
-    image: "/reactbits.png", // Place this image inside your /public folder
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147012/reactbits_tsoqu4.png", // Place this image inside your /public folder
     links: {
       website: "https://reactbits.dev",
       github: "https://github.com/DavidHDev/react-bits",
@@ -69,7 +69,7 @@ const cardData: UiCardData[] = [
     description:
       "TweakCN offers a collection of visual and motion design experiments, interactive components, and UI concepts for developers and designers looking to enhance creativity.",
     tag: ["Theme Editor", "UI Experiments", "Shadcn/UI", "Frontend", "Tools"],
-    image: "/tweakcn.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147028/tweakcn_xmcsfx.png",
     links: {
       website: "https://tweakcn.com",
       github: "https://github.com/jnsahaj/tweakcn",
@@ -86,7 +86,7 @@ const cardData: UiCardData[] = [
       "UI Animation",
       "Animation",
     ],
-    image: "/motion-primitives.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146998/motion-primitives_vr29ep.png",
     links: {
       website: "https://motion-primitives.com",
       github: "https://github.com/ibelick/motion-primitives",
@@ -98,7 +98,7 @@ const cardData: UiCardData[] = [
     description:
       "Pattern Craft is a playground for generative art, interactive patterns, and creative coding. It’s ideal for designers exploring algorithmic visuals and Background Patterns.",
     tag: ["Pattern Design", "Background Patterns", "Pattern"],
-    image: "/patterncraft.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147005/patterncraft_yd8flm.png",
     links: {
       website: "https://patterncraft.fun",
       github: "https://github.com/megh-bari/pattern-craft",
@@ -110,7 +110,7 @@ const cardData: UiCardData[] = [
     description:
       "Evil Charts provides unconventional, creative, and visually striking chart examples that break the mold of traditional data visualization.",
     tag: ["Data Visualization", "Graphs", "Charts", "Frontend", "UI"],
-    image: "/evilcharts.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146928/evilcharts_l9obbe.png",
     links: {
       website: "https://evilcharts.com",
       github: "https://github.com/legions-developer/evilcharts",
@@ -122,7 +122,7 @@ const cardData: UiCardData[] = [
     description:
       "8bitCN showcases pixel-art inspired UI, retro designs, and nostalgic web aesthetics that bring a vintage touch to modern frontend projects.",
     tag: ["Retro UI", "Pixel Art", "Frontend", "Component Library"],
-    image: "/8bitcn.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146926/8bitcn_fquvva.png",
     links: {
       website: "https://www.8bitcn.com",
       github: "https://github.com/TheOrcDev/8bitcn-ui",
@@ -134,7 +134,7 @@ const cardData: UiCardData[] = [
     description:
       "Box Shadows by Aceternity UI is a handy tool to generate soft, realistic shadows for modern UI elements — perfect for glassmorphism and neumorphism effects.",
     tag: ["Box Shadows", "Frontend", "UI Design Tool", "Design Tool", "Tools"],
-    image: "/boxshadows.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146928/boxshadows_ihmmwu.png",
     links: {
       website: "https://ui.aceternity.com/tools/box-shadows",
       twitter: "https://x.com/mannupaaji",
@@ -145,7 +145,7 @@ const cardData: UiCardData[] = [
     description:
       "Build UI’s Recipes section features practical, real-world examples of interactive UI patterns and animations using React and Framer Motion.",
     tag: ["UI Recipes", "Frontend", "UI Patterns"],
-    image: "/buildui.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146926/buildui_afyyra.png",
     links: {
       website: "https://buildui.com/recipes",
     },
@@ -155,7 +155,7 @@ const cardData: UiCardData[] = [
     description:
       "Codrops is a well-known design and development blog that shares tutorials, experiments, and inspirational UI interactions for creative developers.",
     tag: ["Design Blog", "Design Inspiration", "UI Experiments", "Animation"],
-    image: "/codrops.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146927/codrops_dgyi2j.png",
     links: {
       website: "https://tympanus.net/codrops",
     },
@@ -165,7 +165,7 @@ const cardData: UiCardData[] = [
     description:
       "React Scan is a powerful tool to visualize React component performance in real time, helping you debug and optimize your React applications efficiently.",
     tag: ["Developer Tool", "React", "Performance Tool", "Tools"],
-    image: "/react-scanbg.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147012/react-scanbg_uckmd4.png",
     links: {
       website: "https://react-scan.com",
       github: "https://github.com/aidenybai/react-scan",
@@ -177,7 +177,7 @@ const cardData: UiCardData[] = [
     description:
       "Pinterest is a global visual discovery platform where designers can find inspiration, moodboards, and references for UI, UX, and branding projects.",
     tag: ["Design Inspiration", "UI Inspiration", "Moodboards"],
-    image: "/pinterest.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147007/pinterest_wegl0r.png",
     links: {
       website: "https://www.pinterest.com",
     },
@@ -187,7 +187,7 @@ const cardData: UiCardData[] = [
     description:
       "Shader Gradient is an online tool for creating animated 3D gradients using WebGL and Three.js — perfect for interactive, eye-catching backgrounds.",
     tag: ["Gradient Generator", "Backgrounds", "Design Tools"],
-    image: "/shadergradient.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147017/shadergradient_lhf2e5.png",
     links: {
       website: "https://www.shadergradient.co/customize",
       github: "https://github.com/ruucm/shadergradient",
@@ -199,7 +199,7 @@ const cardData: UiCardData[] = [
     description:
       "Shadway curates a collection of websites built using Shadcn/UI, showcasing creative and production-ready examples of this modern React component library.",
     tag: ["Component Gallery", "Shadcn/UI", "Design Inspiration"],
-    image: "/shadway.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147018/shadway_vewcbu.png",
     links: {
       website: "https://shadway.online",
       github: "https://github.com/moazamtech/shadway",
@@ -211,7 +211,7 @@ const cardData: UiCardData[] = [
     description:
       "Minimal Gallery curates a collection of beautifully minimal and aesthetically pleasing websites, offering inspiration for clean and balanced web design.",
     tag: ["Design Inspiration", "Minimalist Design", "UI Inspiration"],
-    image: "/minimalgallery.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146994/minimalgallery_jrmxuz.png",
     links: {
       website: "https://www.minimal.gallery",
       github: "https://x.com/minimal_gallery",
@@ -222,7 +222,7 @@ const cardData: UiCardData[] = [
     description:
       "StackSorted is a curated directory of modern UI elements, components, and websites — a perfect place to explore and gather interface inspiration.",
     tag: ["UI Elements", "Design Inspiration", "UI Inspiration", "Frontend"],
-    image: "/stacksorted.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147018/stacksorted_pfas5n.png",
     links: {
       website: "https://stacksorted.com",
       github: "https://github.com/juxtopposed/stacksorted",
@@ -236,7 +236,7 @@ const cardData: UiCardData[] = [
     description:
       "Tabler Icons offers over 5,000 beautifully consistent, open-source icons for web and product interfaces — all customizable and MIT licensed.",
     tag: ["Icons", "Icon Library"],
-    image: "/tabler.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147024/tabler_zsbjdo.png",
     links: {
       website: "https://tabler.io/icons",
       github: "https://github.com/tabler/tabler-icons",
@@ -248,7 +248,7 @@ const cardData: UiCardData[] = [
     description:
       "Nucleo provides a curated collection of pixel-perfect icons with a clean and cohesive style. It also includes a free set for personal and commercial use.",
     tag: ["Icons", "Icon Library"],
-    image: "/nucleo.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146999/nucleo_g9viih.png",
     links: {
       website: "https://nucleoapp.com/free-icons",
       twitter: "https://x.com/nucleoicons",
@@ -259,7 +259,7 @@ const cardData: UiCardData[] = [
     description:
       "Font Awesome is one of the most popular icon libraries offering thousands of free and pro icons that can be easily customized with CSS for websites and applications.",
     tag: ["Icon Library", "Web Icons", "SVG", "UI Design", "Icons"],
-    image: "/Fontawesome.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146932/Fontawesome_dvwzwh.png",
     links: {
       website: "https://fontawesome.com/",
       github: "https://github.com/FortAwesome/Font-Awesome",
@@ -271,7 +271,7 @@ const cardData: UiCardData[] = [
     description:
       "Remix Icon is a set of open-source, neutral-style system icons designed for web and mobile interfaces, providing easy customization and integration with CSS or SVG.",
     tag: ["Icon Library", "Open Source", "SVG", "UI Design", "Icons"],
-    image: "/remixicon.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147013/remixicon_bf68d9.png",
     links: {
       website: "https://remixicon.com/",
       github: "https://github.com/Remix-Design/RemixIcon",
@@ -288,7 +288,7 @@ const cardData: UiCardData[] = [
       "Design Assets",
       "Icons",
     ],
-    image: "/Flaticon.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146929/Flaticon_krhsr9.png",
     links: {
       website: "https://www.flaticon.com/",
       twitter: "https://twitter.com/flaticon",
@@ -299,7 +299,7 @@ const cardData: UiCardData[] = [
     description:
       "Lucide is a beautifully consistent open-source icon library crafted by the community as an improved fork of Feather Icons, offering scalable and modern SVG icons for web apps.",
     tag: ["Icon Library", "Open Source", "Feather Icons", "SVG", "Icons"],
-    image: "/lucide.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146993/lucide_gkvsd5.png",
     links: {
       website: "https://lucide.dev/",
       github: "https://github.com/lucide-icons/lucide",
@@ -311,7 +311,7 @@ const cardData: UiCardData[] = [
     description:
       "The Noun Project is a massive collection of icons and symbol-graphics curated by a global community; perfect for designers and developers seeking royalty-free or licensed icons in multiple formats.",
     tag: ["Icon Library", "Symbols", "Design Assets", "Royalty-Free", "Icons"],
-    image: "/thenounproject.png", // Place your image in /public folder
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147026/thenounproject_fawdur.png", // Place your image in /public folder
     links: {
       website: "https://thenounproject.com/",
       twitter: "https://twitter.com/nounproject",
@@ -335,7 +335,7 @@ const cardData: UiCardData[] = [
       "Designer Tool",
       "Icons",
     ],
-    image: "/3dicons.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146927/3dicons_drtivv.png",
     links: {
       website: "https://3dicons.co/",
       twitter: "",
@@ -359,7 +359,7 @@ const cardData: UiCardData[] = [
       "Creative Resources",
       "Web Development",
     ],
-    image: "/iconscout.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146988/iconscout_msdv7m.png",
     links: {
       website: "https://iconscout.com/",
       twitter: "https://x.com/IconScout",
@@ -383,7 +383,7 @@ const cardData: UiCardData[] = [
       "UI/UX",
       "Stock Graphics",
     ],
-    image: "/icons8.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146987/icons8_xvhzo2.png",
     links: {
       website: "https://icons8.com/",
       twitter: "https://x.com/Icons8",
@@ -407,7 +407,7 @@ const cardData: UiCardData[] = [
       "Open Source",
       "Developer Tool",
     ],
-    image: "/lineicons.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146993/lineicons_sut1lg.png",
     links: {
       website: "https://lineicons.com/",
       twitter: "",
@@ -422,7 +422,7 @@ const cardData: UiCardData[] = [
     description:
       "FontShare by the Indian Type Foundry offers high-quality, modern fonts completely free for both personal and commercial projects.",
     tag: ["Fonts", "Typography", "Free Fonts"],
-    image: "/fontshare.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146929/fontshare_gcaq7a.png",
     links: {
       website: "https://www.fontshare.com",
       twitter: "https://x.com/fontshare_com",
@@ -433,7 +433,7 @@ const cardData: UiCardData[] = [
     description:
       "Google Fonts hosts thousands of open-source typefaces, enabling designers and developers to integrate beautiful typography into web and mobile apps easily.",
     tag: ["Fonts", "Typography", "Free Fonts", "Font Library"],
-    image: "/googlefonts.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146977/googlefonts_bcomxh.png",
     links: {
       website: "https://fonts.google.com",
       github: "https://github.com/google/fonts",
@@ -444,7 +444,7 @@ const cardData: UiCardData[] = [
     description:
       "Uncut.wtf is a creative type foundry offering free, experimental, and unique fonts — perfect for expressive typography in modern web projects.",
     tag: ["Fonts", "Typography", "Free Fonts", "Type Foundry"],
-    image: "/uncutwtf.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147029/uncutwtf_snrbap.png",
     links: {
       website: "https://uncut.wtf",
     },
@@ -460,7 +460,7 @@ const cardData: UiCardData[] = [
       "Design Assets",
       "Fonts",
     ],
-    image: "/freefaces.png", // Place your image in /public folder
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146945/freefaces_xzmywi.png", // Place your image in /public folder
     links: {
       website: "https://www.freefaces.gallery/",
     },
@@ -481,7 +481,7 @@ const cardData: UiCardData[] = [
       "Independent Studio",
       "Creative Agency",
     ],
-    image: "/atipofoundry.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146927/atipofoundry_z6cnjb.png",
     links: {
       website: "https://www.atipofoundry.com/",
       twitter: "https://x.com/atipostudio",
@@ -505,7 +505,7 @@ const cardData: UiCardData[] = [
       "Design Studio",
       "Fonts",
     ],
-    image: "/cotypefoundry.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146928/cotypefoundry_ubk7ew.png",
     links: {
       website: "https://cotypefoundry.com/",
       twitter: "https://x.com/cotypefoundry",
@@ -531,7 +531,7 @@ const cardData: UiCardData[] = [
       "Design Studio",
       "Fonts",
     ],
-    image: "/pangrampangram.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147005/pangrampangram_otv2ek.png",
     links: {
       website: "https://pangrampangram.com/",
       twitter: "https://x.com/PangramPangram_",
@@ -555,7 +555,7 @@ const cardData: UiCardData[] = [
       "Retail Fonts",
       "Creative Studio",
     ],
-    image: "/f37foundry.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146929/f37foundry_ph0pgm.png",
     links: {
       website: "https://f37foundry.com/",
       twitter: "",
@@ -577,7 +577,7 @@ const cardData: UiCardData[] = [
       "fonts",
       "tools",
     ],
-    image: "/typescale.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147028/typescale_oqs5rp.png",
     links: {
       website: "https://typescale.com",
     },
@@ -594,7 +594,7 @@ const cardData: UiCardData[] = [
       "Chrome Extension",
       "Tools",
     ],
-    image: "/Lighthouse.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146991/Lighthouse_brjyzd.png",
     links: {
       website:
         "https://chromewebstore.google.com/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk",
@@ -613,7 +613,7 @@ const cardData: UiCardData[] = [
       "Auditing",
       "Tools",
     ],
-    image: "/Unlighthouse.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147031/Unlighthouse_bmmgej.png",
     links: {
       website: "https://unlighthouse.dev/",
       github: "https://github.com/harlan-zw/unlighthouse",
@@ -637,7 +637,7 @@ const cardData: UiCardData[] = [
       "Tools",
       "Animation",
     ],
-    image: "/spline.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147018/spline_s5eove.png",
     links: {
       website: "https://spline.design/",
       twitter: "https://x.com/splinetool",
@@ -660,7 +660,7 @@ const cardData: UiCardData[] = [
       "Developer Tool",
       "Tools",
     ],
-    image: "/coolshapes.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146928/coolshapes_scp6ci.png",
     links: {
       website: "https://coolshap.es/",
       twitter: "",
@@ -684,7 +684,7 @@ const cardData: UiCardData[] = [
       "Front-end",
       "Tools",
     ],
-    image: "/noisygradients.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146999/noisygradients_tyrytx.png",
     links: {
       website: "https://www.noisygradients.com/app",
       twitter: "",
@@ -709,7 +709,7 @@ const cardData: UiCardData[] = [
       "SaaS",
       "Tools",
     ],
-    image: "/vercel.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147032/vercel_as3pro.png",
     links: {
       website: "https://vercel.com/",
       twitter: "https://x.com/vercel",
@@ -734,7 +734,7 @@ const cardData: UiCardData[] = [
       "Open Source",
       "Tools",
     ],
-    image: "/opendoodles.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147004/opendoodles_xzykjw.png",
     links: {
       website: "https://www.opendoodles.com/",
       twitter: "",
@@ -757,7 +757,7 @@ const cardData: UiCardData[] = [
       "Design System",
       "Frontend",
     ],
-    image: "/aceternityui.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146927/aceternityui_hkvljh.png",
     links: {
       website: "https://ui.aceternity.com/components",
       twitter: "https://x.com/mannupaaji",
@@ -774,7 +774,7 @@ const cardData: UiCardData[] = [
       "Frontend",
       "Shadcn/UI",
     ],
-    image: "/skiper-ui.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147018/skiper-ui_j78skp.png",
     links: {
       website: "https://skiper-ui.com",
       twitter: "https://x.com/Gur__vi",
@@ -799,7 +799,7 @@ const cardData: UiCardData[] = [
       "Component Library",
       "Inspiration",
     ],
-    image: "/stackbits.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147018/stackbits_trtjzu.png",
     links: {
       website: "https://stackbits.dev/",
       twitter: "https://x.com/samitkapoorr",
@@ -824,7 +824,7 @@ const cardData: UiCardData[] = [
       "Simple & Lightweight",
       "Component Library",
     ],
-    image: "/reacthaiku.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147017/reacthaiku_mmzmrx.png",
     links: {
       website: "https://reacthaiku.dev/",
       twitter: "",
@@ -849,7 +849,7 @@ const cardData: UiCardData[] = [
       "Web Development",
       "Component Library",
     ],
-    image: "/daisyui.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146928/daisyui_zxkujf.png",
     links: {
       website: "https://daisyui.com/",
       twitter: "https://x.com/saadeghi",
@@ -874,7 +874,7 @@ const cardData: UiCardData[] = [
       "Open Source",
       "Component Library",
     ],
-    image: "/mui.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146999/mui_rh795i.png",
     links: {
       website: "https://mui.com/",
       github: "https://github.com/mui/material-ui",
@@ -898,7 +898,7 @@ const cardData: UiCardData[] = [
       "Reusable Components",
       "Component Library",
     ],
-    image: "/aetherui.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146927/aetherui_mhnwsz.png",
     links: {
       website: "https://www.aether-ui.com/",
       twitter: "",
@@ -921,7 +921,7 @@ const cardData: UiCardData[] = [
       "React.js",
       "Technologies",
     ],
-    image: "/reactjs.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147012/reactjs_pfwajf.png",
     links: {
       website: "https://react.dev",
       twitter: "https://x.com/reactjs",
@@ -940,7 +940,7 @@ const cardData: UiCardData[] = [
       "Next.js",
       "Technologies",
     ],
-    image: "/nextjs.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146998/nextjs_sb8ldz.png",
     links: {
       website: "https://nextjs.org",
       twitter: "https://x.com/nextjs",
@@ -959,7 +959,7 @@ const cardData: UiCardData[] = [
       "Web Development",
       "Technologies",
     ],
-    image: "/motion.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146998/motion_cq7hha.png",
     links: {
       website: "https://motion.dev",
       twitter: "https://x.com/framer",
@@ -979,7 +979,7 @@ const cardData: UiCardData[] = [
       "GSAP",
       "Technologies",
     ],
-    image: "/gsap.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146987/gsap_glt1gb.png",
     links: {
       website: "https://gsap.com",
       twitter: "https://x.com/greensock",
@@ -1003,7 +1003,7 @@ const cardData: UiCardData[] = [
       "Open Source",
       "Technologies",
     ],
-    image: "/threejs.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147026/threejs_e0pnkb.png",
     links: {
       website: "https://threejs.org/",
       twitter: "https://x.com/threejs",
@@ -1028,7 +1028,7 @@ const cardData: UiCardData[] = [
       "SaaS",
       "Technologies",
     ],
-    image: "/webflow.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147035/webflow_g7psgg.png",
     links: {
       website: "https://webflow.com/",
       twitter: "https://x.com/webflow",
@@ -1056,7 +1056,7 @@ const cardData: UiCardData[] = [
       "Technologies",
       "Tools",
     ],
-    image: "/framer.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146933/framer_shvxpa.png",
     links: {
       website: "https://www.framer.com/",
       twitter: "https://x.com/framer",
@@ -1084,7 +1084,7 @@ const cardData: UiCardData[] = [
       "Technologies",
       "Tools",
     ],
-    image: "/figma.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146929/figma_kyjk4z.png",
     links: {
       website: "https://www.figma.com/",
       twitter: "https://x.com/figma",
@@ -1111,7 +1111,7 @@ const cardData: UiCardData[] = [
       "Inspiration",
       "Olivier Larose",
     ],
-    image: "/olivierlarose.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147004/olivierlarose_bilrq6.png",
     imageLink: "https://www.youtube.com/@olivierlarose1",
     links: {
       website: "https://www.olivierlarose.com/",
@@ -1136,7 +1136,7 @@ const cardData: UiCardData[] = [
       "Manu Arora",
       "Socials",
     ],
-    image: "/manuarora.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146993/manuarora_lsfr95.png",
     imageLink: "https://www.youtube.com/@manuarora",
     links: {
       website: "https://manuarora.in",
@@ -1161,7 +1161,7 @@ const cardData: UiCardData[] = [
       "Rauno Freiberg",
       "Socials",
     ],
-    image: "/raunofreiberg.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147012/raunofreiberg_kadnsr.png",
     links: {
       website: "https://raunofreiberg.com",
       twitter: "https://x.com/raunofreiberg",
@@ -1184,7 +1184,7 @@ const cardData: UiCardData[] = [
       "Huy Nguyen",
       "Socials",
     ],
-    image: "/huynguyen.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146988/huynguyen_hgwpnr.png",
     imageLink: "https://www.youtube.com/@by_huy",
     links: {
       twitter: "https://x.com/by__huy",
@@ -1209,7 +1209,7 @@ const cardData: UiCardData[] = [
       "CodeGrid",
       "Socials",
     ],
-    image: "/codegrid.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146927/codegrid_ayv57b.png",
     imageLink: "https://www.youtube.com/@codegrid",
     links: {
       twitter: "https://x.com/codegridweb",
@@ -1234,7 +1234,7 @@ const cardData: UiCardData[] = [
       "Socials",
       "Inspiration",
     ],
-    image: "/syntax.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147019/syntax_sa2aqh.png",
     imageLink: "https://www.youtube.com/@syntaxfm",
     links: {
       website: "https://syntax.fm/",
@@ -1259,7 +1259,7 @@ const cardData: UiCardData[] = [
       "Socials",
       "jhey",
     ],
-    image: "/jhey.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146988/jhey_gkgeux.png",
     imageLink: "https://x.com/jh3yy",
     links: {
       website: "https://www.jhey.dev/",
@@ -1280,7 +1280,7 @@ const cardData: UiCardData[] = [
       "Guri",
       "Socials",
     ],
-    image: "/guri.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146987/guri_aqsnvr.png",
     imageLink: "https://x.com/Gur__vi",
     links: {
       website: "https://gxuri.in",
@@ -1306,7 +1306,7 @@ const cardData: UiCardData[] = [
       "David Haz",
       "Inspiration",
     ],
-    image: "/davidhaz.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146929/davidhaz_w4q8f8.png",
     links: {
       website: "https://davidhaz.com",
       twitter: "https://x.com/davidhdev",
@@ -1331,7 +1331,7 @@ const cardData: UiCardData[] = [
       "Creator",
       "Socials",
     ],
-    image: "/legionsdev.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146988/legionsdev_ftadwv.png",
     links: {
       website: "https://legions.dev/",
       twitter: "https://x.com/legionsdev",
@@ -1356,7 +1356,7 @@ const cardData: UiCardData[] = [
       "Creator",
       "Socials",
     ],
-    image: "/nandafyi.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146999/nandafyi_me8pwi.png",
     links: {
       website: "https://nan.fyi/",
       twitter: "https://x.com/nandafyi",
@@ -1381,7 +1381,7 @@ const cardData: UiCardData[] = [
       "Social Media",
       "Socials",
     ],
-    image: "/samitkapoor.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147015/samitkapoor_p8odid.png",
     links: {
       website: "https://www.samitkapoor.com/",
       twitter: "https://x.com/samitkapoorr",
@@ -1408,7 +1408,7 @@ const cardData: UiCardData[] = [
       "App Development",
       "UI/UX",
     ],
-    image: "/makeitanimated.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146993/makeitanimated_gpg8zk.png",
     links: {
       website: "https://makeitanimated.dev/",
       twitter: "https://x.com/makeitanimated",
@@ -1434,7 +1434,7 @@ const cardData: UiCardData[] = [
       "Tools",
       "Animations",
     ],
-    image: "/unicornstudio.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147031/unicornstudio_z8q4vr.png",
     links: {
       website: "https://www.unicorn.studio/",
       twitter: "https://x.com/hiunicornstudio",
@@ -1459,7 +1459,7 @@ const cardData: UiCardData[] = [
       "Open Source",
       "Tools",
     ],
-    image: "/rive.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147013/rive_ojehja.png",
     links: {
       website: "https://rive.app/",
       twitter: "https://x.com/rive_app",
@@ -1485,7 +1485,7 @@ const cardData: UiCardData[] = [
       "Tools",
       "Animations",
     ],
-    image: "/jitter.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146988/jitter_zizxn5.png",
     links: {
       website: "https://jitter.video/",
       twitter: "",
@@ -1509,7 +1509,7 @@ const cardData: UiCardData[] = [
       "Open Source",
       "Designer Resource",
     ],
-    image: "/lottiefiles.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146993/lottiefiles_wymcv2.png",
     links: {
       website: "https://lottiefiles.com/",
       twitter: "https://x.com/LottieFiles",
@@ -1538,7 +1538,7 @@ const cardData: UiCardData[] = [
       "Social Networking",
       "Inspiration",
     ],
-    image: "/dribbble.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146928/dribbble_djyj09.png",
     links: {
       website: "https://www.dribbble.com/",
       twitter: "https://x.com/dribbble",
@@ -1563,7 +1563,7 @@ const cardData: UiCardData[] = [
       "Conference",
       "Competition",
     ],
-    image: "/awwwards.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146927/awwwards_u9vkqy.png",
     links: {
       website: "https://www.awwwards.com/",
       twitter: "https://x.com/awwwards",
@@ -1589,7 +1589,7 @@ const cardData: UiCardData[] = [
       "Inspiration",
       "Animation",
     ],
-    image: "/mobbin.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146998/mobbin_lgofqw.png",
     links: {
       website: "https://mobbin.com/",
       twitter: "",
@@ -1614,7 +1614,7 @@ const cardData: UiCardData[] = [
       "Design Library",
       "Inspiration",
     ],
-    image: "/404s.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146927/404s_wdgyqc.png",
     links: {
       website: "https://www.404s.design/",
       twitter: "",
@@ -1629,6 +1629,7 @@ export default function Home() {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const filterRef = useRef<HTMLDivElement>(null);
   const goUpButtonRef = useRef<HTMLDivElement>(null);
+  
 
   // Register GSAP ScrollToPlugin on mount
   useEffect(() => {
@@ -2326,7 +2327,7 @@ export default function Home() {
               autoComplete="off"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 w-full mt-3 sm:mt-4 outline-none"
+              className="pl-10 w-full mt-3 sm:mt-4 outline-none transition-all duration-300 ease-out focus:scale-[1.02] focus:shadow-lg"
             />
           </div>
 
