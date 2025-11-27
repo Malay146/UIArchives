@@ -770,6 +770,58 @@ export const cardData: UiCardData[] = [
       youtube: "",
     },
   },
+  {
+    title: "nuqs",
+    description:
+      "nuqs is a type-safe search-params state manager for React that lets you sync React state with the URL query string — like useState, but with URL support and serialization/parsing built in.",
+    tag: [
+      "React",
+      "State Management",
+      "URL Params",
+      "Query String",
+      "Type-Safe",
+      "Open Source",
+      "Web Development",
+      "Frontend Tool",
+      "Router Integration",
+      "Next.js",
+      "Search Params",
+      "Tools",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764242693/nuqs_qnmuja.png",
+    links: {
+      website: "https://nuqs.dev/",
+      twitter: "",
+      github: "https://github.com/47ng/nuqs",
+      youtube: "",
+    },
+  },
+  {
+    title: "Fumadocs",
+    description:
+      "Fumadocs is a flexible, React-based documentation framework for building beautiful, customizable docs sites — supporting Markdown/MDX, search, and seamless integration with popular React frameworks.",
+    tag: [
+      "Documentation Framework",
+      "React",
+      "MDX",
+      "Docs Site Generator",
+      "Open Source",
+      "Web Development",
+      "Developer Tools",
+      "Content Management",
+      "UI Components",
+      "Static Site",
+      "Tools",
+    ],
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764243041/fumadocs_q7vvmf.png",
+    links: {
+      website: "https://fumadocs.dev/",
+      twitter: "",
+      github: "https://github.com/fuma-nama/fumadocs",
+      youtube: "",
+    },
+  },
 
   //components
   {
