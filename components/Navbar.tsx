@@ -79,11 +79,11 @@ const Navbar = ({
           <Logo />
           <span className="sr-only">Home</span>
         </Link>
-        
+
         <Link
           href="https://www.producthunt.com/products/uiarchives?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-uiarchives"
           target="_blank"
-          className="Banner"
+          className="Banner hidden lg:inline-block"
         >
           <img
             src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1038113&theme=dark&t=1764408195700"

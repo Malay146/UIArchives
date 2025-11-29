@@ -8,7 +8,7 @@ const Background = () => {
         linear-gradient(to right, rgba(75, 85, 99, 0.3) 1px, transparent 1px),
         linear-gradient(to bottom, rgba(75, 85, 99, 0.3) 1px, transparent 1px)
       `,
-          backgroundSize: "40px 40px",
+          backgroundSize: "2vw 2vw",
           backgroundRepeat: "repeat",
         }}
       />        
