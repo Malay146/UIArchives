@@ -95,7 +95,7 @@ const Navbar = ({
           <span className="sr-only">Home</span>
         </Link>
 
-        <a
+        {/* <a
           href="https://peerlist.io/malayp/project/uiarchives"
           target="_blank"
           rel="noreferrer"
@@ -106,7 +106,7 @@ const Navbar = ({
             alt="UIArchives"
             style={{ width: "auto", height: "64px" }}
           />
-        </a>
+        </a> */}
 
         <div className="Links flex items-center gap-3">
           {showShareButton && (
