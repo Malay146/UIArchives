@@ -3,6 +3,8 @@ import { Inter, Inria_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 // -------------------------------
 // Fonts
@@ -159,9 +161,13 @@ export default function RootLayout({
         </Script>
       </head>
 
-      <body className={`${inter.variable} ${inriaSerif.variable} antialiased selection:bg-zinc-300 selection:text-zinc-950`}>
+      <body
+        className={`${inter.variable} ${inriaSerif.variable} antialiased selection:bg-zinc-300 selection:text-zinc-950`}
+      >
         <SmoothScroll>
           {children}
+          <Analytics />
+          <SpeedInsights />
         </SmoothScroll>
       </body>
     </html>
