@@ -79,21 +79,6 @@ const Navbar = ({
           <Logo />
           <span className="sr-only">Home</span>
         </Link>
-
-        <Link
-          href="https://www.producthunt.com/products/uiarchives?embed=true&utm_source=badge-featured&utm_medium=badge&utm_source=badge-uiarchives"
-          target="_blank"
-          className="Banner hidden lg:inline-block"
-        >
-          <img
-            src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1038113&theme=dark&t=1764408195700"
-            alt="UIArchives - Curated&#0032;ui&#0032;components&#0044;&#0032;design&#0032;tools&#0032;&#0038;&#0032;frontend&#0032;resources | Product Hunt"
-            style={{ width: "250px", height: "54px" }}
-            width="250"
-            height="54"
-          />
-        </Link>
-
         <div className="Links flex items-center gap-3">
           {showShareButton && (
             <Button1
