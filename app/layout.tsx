@@ -82,7 +82,8 @@ export const metadata: Metadata = {
     title: "UIArchives – Curated UI Components, Tools & Design Systems",
     description:
       "Find the best UI resources, design systems, and frontend components curated for modern developers and designers.",
-    creator: "@uiarchives",
+    creator: "@pmalay694",
+    site: "@pmalay694",
     images: [`${SITE_URL}/og-image.png`],
   },
 
