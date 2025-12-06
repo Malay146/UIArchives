@@ -69,7 +69,7 @@ export const metadata: Metadata = {
     siteName: "UIArchives",
     images: [
       {
-        url: `${SITE_URL}/og-image.png`,
+        url: `${SITE_URL}/ogImage.png`,
         width: 1200,
         height: 630,
         alt: "UIArchives – Curated UI Components and Design Tools",
@@ -84,13 +84,13 @@ export const metadata: Metadata = {
       "Find the best UI resources, design systems, and frontend components curated for modern developers and designers.",
     creator: "@pmalay694",
     site: "@pmalay694",
-    images: [`${SITE_URL}/og-image.png`],
+    images: [`${SITE_URL}/ogImage.png`],
   },
 
   icons: {
     icon: [
-      { url: "/favicon-light.png", media: "(prefers-color-scheme: light)" },
-      { url: "/favicon-dark.png", media: "(prefers-color-scheme: dark)" },
+      { url: "/faviconLight.png", media: "(prefers-color-scheme: light)" },
+      { url: "/faviconDark.png", media: "(prefers-color-scheme: dark)" },
     ],
     shortcut: "/favicon.ico",
     apple: "/apple-touch-icon.png",
@@ -130,12 +130,12 @@ export default function RootLayout({
         {/* Light & Dark Favicons */}
         <link
           rel="icon"
-          href="/favicon-light.png"
+          href="/faviconLight.png"
           media="(prefers-color-scheme: light)"
         />
         <link
           rel="icon"
-          href="/favicon-dark.png"
+          href="/faviconDark.png"
           media="(prefers-color-scheme: dark)"
         />
 
