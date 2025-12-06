@@ -127,6 +127,8 @@ export default function RootLayout({
         {/* Google Site Verification */}
         <meta name="google-site-verification" content={GOOGLE_VERIFICATION} />
 
+        <meta property="og:image" content="https://uiarchives.com/og.png" />
+        <meta name="twitter:image" content="https://uiarchives.com/og.png" />
 
         {/* JSON-LD Structured Data for Google */}
         <Script id="structured-data" type="application/ld+json">
