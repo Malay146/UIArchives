@@ -44,8 +44,8 @@ To run UI Archives locally:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/ui-archives.git
-cd ui-archives
+git clone https://github.com/Malay146/UIArchives.git
+cd UIArchives
 
 # Install dependencies
 npm install
