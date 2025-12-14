@@ -14,10 +14,10 @@ export default function SmoothScroll({
 
     // 1️⃣ Initialize Lenis
     const lenis = new Lenis({
-      duration: 0.2,
-      easing: (t) => t*t,
+      duration: 1.1,
+      easing: (t) => 1 - Math.pow(1 - t, 4), // smooth ease-out
       smoothWheel: true,
-      wheelMultiplier: 4.0,
+      wheelMultiplier: 1.1,
     });
 
     // 2️⃣ RAF loop
