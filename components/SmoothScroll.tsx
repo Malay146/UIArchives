@@ -4,16 +4,20 @@ import Lenis from "lenis";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-export default function SmoothScroll({ children }: { children: React.ReactNode }) {
+export default function SmoothScroll({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
 
     // 1️⃣ Initialize Lenis
     const lenis = new Lenis({
-      duration: 1,
-      easing: (t) => 1 - Math.pow(1 - t, 3),
+      duration: 0.2,
+      easing: (t) => t*t,
       smoothWheel: true,
-      wheelMultiplier: 1.2,
+      wheelMultiplier: 4.0,
     });
 
     // 2️⃣ RAF loop

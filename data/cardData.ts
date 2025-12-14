@@ -427,6 +427,106 @@ export const cardData: UiCardData[] = [
       youtube: "",
     },
   },
+  {
+    title: "Central Icons",
+    description:
+      "Central Icons is a modern, minimal icon library offering high-quality SVG icons designed for clarity, consistency, and ease of use across web and UI projects.",
+    tag: [
+      "Icons",
+      "SVG Icons",
+      "Minimal Icons",
+      "Design Assets",
+      "UI/UX",
+      "Web Development",
+      "Icon Library",
+      "Developer Tool",
+      "Open Source",
+      "Design System",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765697403/centralicons_sbcoui.png",
+    links: {
+      website: "https://centralicons.com/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "IconBuddy",
+    description:
+      "IconBuddy is an icon search and management platform that lets designers and developers browse, filter, and download icons from multiple popular icon libraries in one place.",
+    tag: [
+      "Icons",
+      "Icon Search",
+      "Design Assets",
+      "SVG Icons",
+      "UI/UX",
+      "Web Development",
+      "Icon Aggregator",
+      "Developer Tool",
+      "Design Resources",
+      "Productivity Tool",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765697640/iconbuddy_cyxq63.png",
+    links: {
+      website: "https://iconbuddy.com/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Meteor Icons",
+    description:
+      "Meteor Icons is a carefully crafted icon library featuring modern, rounded SVG icons designed for clean interfaces, fast integration, and consistent visual style.",
+    tag: [
+      "Icons",
+      "SVG Icons",
+      "Rounded Icons",
+      "Design Assets",
+      "UI/UX",
+      "Web Development",
+      "Icon Library",
+      "Minimal Design",
+      "Developer Tool",
+      "Design Resources",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765698128/metoricons_ec9riv.png",
+    links: {
+      website: "https://meteoricons.com/",
+      twitter: "",
+      github: "https://github.com/zkreations/icons",
+      youtube: "",
+    },
+  },
+  {
+    title: "Mage Icons",
+    description:
+      "Mage Icons is a modern open-source icon library offering clean, consistent SVG icons with multiple styles, built for scalable UI design and developer-friendly usage.",
+    tag: [
+      "Icons",
+      "SVG Icons",
+      "Open Source",
+      "Design Assets",
+      "UI/UX",
+      "Web Development",
+      "Icon Library",
+      "Minimal Icons",
+      "Developer Tool",
+      "Design Resources",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765698415/mageicons_ikclsi.png",
+    links: {
+      website: "https://mageicons.com/",
+      twitter: "",
+      github: "https://github.com/mage-icons/mage-icons",
+      youtube: "",
+    },
+  },
 
   // Fonts
   {
@@ -814,11 +914,38 @@ export const cardData: UiCardData[] = [
       "Static Site",
       "Tools",
     ],
-    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764243041/fumadocs_q7vvmf.png",
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764243041/fumadocs_q7vvmf.png",
     links: {
       website: "https://fumadocs.dev/",
       twitter: "",
       github: "https://github.com/fuma-nama/fumadocs",
+      youtube: "",
+    },
+  },
+  {
+    title: "Efecto",
+    description:
+      "Efecto is a curated collection of interactive UI effects and micro-interactions designed to help developers and designers add motion, depth, and delight to modern web interfaces.",
+    tag: [
+      "UI Effects",
+      "Micro Interactions",
+      "Animations",
+      "Design Assets",
+      "UI/UX",
+      "Web Development",
+      "Frontend",
+      "Motion Design",
+      "Developer Tool",
+      "Design Resources",
+      "Tools",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765698779/efecto_naagvj.png",
+    links: {
+      website: "https://efecto.app/",
+      twitter: "",
+      github: "",
       youtube: "",
     },
   },
@@ -1733,6 +1860,59 @@ export const cardData: UiCardData[] = [
       "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764146927/404s_wdgyqc.png",
     links: {
       website: "https://www.404s.design/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "21st.dev",
+    description:
+      "A community-driven collection of high-quality React and Tailwind CSS components, built to showcase modern UI patterns, best practices, and real-world frontend implementations.",
+    tag: [
+      "UI Components",
+      "Community",
+      "React",
+      "Tailwind CSS",
+      "Web Development",
+      "Frontend",
+      "Design Systems",
+      "Open Source",
+      "Developer Tool",
+      "Component Library",
+      "Inspiration",
+      "Animations",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765699317/21stdev_i28f79.png",
+    links: {
+      website: "https://21st.dev/community/components",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "60fps",
+    description:
+      "60fps is a curated gallery of smooth, high-performance UI animations and interactions, focused on motion design that feels fast, fluid, and responsive.",
+    tag: [
+      "UI Animations",
+      "Motion Design",
+      "Micro Interactions",
+      "UI/UX",
+      "Frontend",
+      "Web Performance",
+      "Design Inspiration",
+      "Animation Gallery",
+      "Developer Tool",
+      "Design Resources",
+      "Inspiration",
+      "Animations",
+    ],
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765699556/60fpsdesign_ydi0h6.png",
+    links: {
+      website: "https://60fps.design/",
       twitter: "",
       github: "",
       youtube: "",
