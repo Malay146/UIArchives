@@ -1164,7 +1164,7 @@ export const cardData: UiCardData[] = [
       "Developer Tools",
       "Component Library",
     ],
-    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1767784341/flyonui_vb8wyp.png",
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1767786931/flyonui_pt0n0w.png",
     links: {
       website: "https://flyonui.com/",
       twitter: "https://x.com/flyonui",
