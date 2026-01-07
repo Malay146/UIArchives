@@ -1120,6 +1120,58 @@ export const cardData: UiCardData[] = [
       youtube: "",
     },
   },
+  {
+    title: "shadcn/studio",
+    description:
+      "Accelerate your project development with ready-to-use, and fully customizable shadcn ui Components, Blocks, UI Kits, Boilerplates, Templates and Themes with AI Tools.",
+    tag: [
+      "UI Components",
+      "Design System",
+      "React",
+      "Tailwind CSS",
+      "Frontend",
+      "Templates",
+      "Theme Generator",
+      "AI Tools",
+      "Developer Tools",
+      "Design Resources",
+      "Customizable UI",
+      "Component Library",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1767783836/shadcnstudio_vlnmzs.png", // Replace with actual image URL if available
+    links: {
+      website: "https://shadcnstudio.com/",
+      twitter: "https://twitter.com/shadcnstudio",
+      github: "https://github.com/themeselection/shadcn-studio",
+      youtube: "",
+    },
+  },
+  {
+    title: "FlyonUI",
+    description:
+      "FlyonUI is a free, open-source Tailwind CSS UI components library with semantic classes, interactive JS plugins, and ready-to-use blocks and templates.",
+    tag: [
+      "Tailwind CSS",
+      "UI Components",
+      "Frontend",
+      "Semantic Classes",
+      "Interactive UI",
+      "Design System",
+      "Templates",
+      "Blocks",
+      "Open Source",
+      "Developer Tools",
+      "Component Library",
+    ],
+    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1767784341/flyonui_vb8wyp.png",
+    links: {
+      website: "https://flyonui.com/",
+      twitter: "https://x.com/flyonui",
+      github: "https://github.com/themeselection/flyonui",
+      youtube: "",
+    },
+  },
 
   //technologies
   {
@@ -1910,7 +1962,8 @@ export const cardData: UiCardData[] = [
       "Inspiration",
       "Animations",
     ],
-    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765699556/60fpsdesign_ydi0h6.png",
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765699556/60fpsdesign_ydi0h6.png",
     links: {
       website: "https://60fps.design/",
       twitter: "",
