@@ -20,6 +20,12 @@
   }
 } */
 
+@theme inline {
+  --font-sans: var(--font-inter);
+  --font-serif: var(--font-inria-serif);
+  --font-display: var(--font-instrument-serif);
+}
+
 html {
   scroll-behavior: smooth;
 }

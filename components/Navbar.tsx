@@ -6,7 +6,8 @@ import Button1 from "@/components/ui-components/Button1";
 import Image from "next/image";
 import { gsap } from "gsap";
 import { useEffect } from "react";
-import Logo from "./Logo";
+import Logo from "@/components/logo";
+
 
 type NavbarProps = {
   showShareButton?: boolean;

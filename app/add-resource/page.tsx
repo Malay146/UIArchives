@@ -1,12 +1,12 @@
 "use client";
 import React, { useRef, useState, useEffect } from "react";
-import Navbar from "@/components/Navbar";
+import Navbar from "@/components/navbar";
 import Button1 from "@/components/ui-components/Button1";
 import { Input } from "@/components/ui-components/Input";
 import { gsap } from "gsap";
 import { SplitText } from "gsap/SplitText";
-import Background from "@/components/Background";
-import SunEffect from "@/components/SunEffect";
+import Background from "@/components/background";
+import SunEffect from "@/components/sun-effect";
 
 const AddResourcePage = () => {
   const [value, setValue] = useState("");
@@ -140,16 +140,16 @@ const AddResourcePage = () => {
       <div className="max-w-7xl min-h-screen mx-auto px-4 sm:px-6 md:px-8 lg:px-10 xl:px-12">
         <Navbar showShareButton={true} showAddResourceButton={false} />
         <div className="w-full h-full mt-8 sm:mt-12 md:mt-16 lg:mt-24 xl:mt-32 2xl:mt-46 flex flex-col lg:flex-row gap-6 md:gap-8 lg:gap-6 xl:gap-8 items-center justify-center lg:items-start p-6">
-          <div className="w-full lg:w-[50%] shrink-0 ml-8">
+          <div className="w-full h-full flex flex-col items-center justify-center lg:w-[50%] shrink-0 ml-8">
             <h1
               ref={shareTitleRef}
-              className="text-white font-[Inria_Serif] font-bold text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] xl:text-[64px] 2xl:text-[80px] tracking-tighter leading-tight sm:leading-[1.1] md:leading-[1.15]"
+              className="text-white font-display text-[32px] sm:text-[40px] md:text-[48px] lg:text-[56px] xl:text-[64px] 2xl:text-[80px] tracking-tight leading-tight sm:leading-[1.1] md:leading-[1.15]"
             >
               Got Something Cool?
             </h1>
             <p
               ref={shareParaRef}
-              className="text-zinc-400 font-[Inria_Serif] font-light tracking-normal text-base sm:text-lg md:text-xl lg:text-2xl mt-4 sm:mt-6 md:mt-8 text-balance"
+              className="text-zinc-400 font-sans font-light tracking-normal text-base sm:text-lg md:text-xl lg:text-2xl mt-4 sm:mt-6 md:mt-8 text-balance"
             >
               Discovered an amazing frontend tool, library, or design
               inspiration? Share it with the community! Add your favorite
@@ -162,7 +162,7 @@ const AddResourcePage = () => {
             ref={formRef}
             className="w-full lg:w-[50%] shrink-0 noise bg-[#121212] rounded-2xl sm:rounded-3xl p-4 sm:p-5 md:p-6 sm:mx-8 shadow-[inset_5px_5px_22px_rgba(255,255,255,0.08),inset_-5px_-5px_22px_rgba(0,0,0,1)]"
           >
-            <h1 className="text-zinc-500 font-bold font-[Inria_Serif] tracking-tight text-2xl sm:text-3xl md:text-4xl border-b border-zinc-700 pb-2">
+            <h1 className="text-zinc-500 font-display text-2xl sm:text-3xl md:text-4xl border-b border-zinc-700 pb-2">
               Submit your Resource
             </h1>
 

@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
-import { Inter, Inria_Serif } from "next/font/google";
+import { Inter, Inria_Serif, Instrument_Serif } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
+import SmoothScroll from "@/components/smooth-scroll";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
@@ -19,6 +19,13 @@ const inriaSerif = Inria_Serif({
   subsets: ["latin"],
   variable: "--font-inria-serif",
   weight: ["300", "400", "700"],
+  display: "swap",
+});
+
+const instrumentSerif = Instrument_Serif({
+  subsets: ["latin"],
+  variable: "--font-instrument-serif",
+  weight: ["400"],
   display: "swap",
 });
 
@@ -154,13 +161,13 @@ export default function RootLayout({
       </head>
 
       <body
-        className={`${inter.variable} ${inriaSerif.variable} antialiased selection:bg-zinc-300 selection:text-zinc-950`}
+        className={`${inter.variable} ${inriaSerif.variable} ${instrumentSerif.variable} antialiased selection:bg-zinc-300 selection:text-zinc-950`}
       >
-        <SmoothScroll>
+        {/* <SmoothScroll> */}
           {children}
           <Analytics />
           <SpeedInsights />
-        </SmoothScroll>
+        {/* </SmoothScroll> */}
       </body>
     </html>
   );

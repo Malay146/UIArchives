@@ -1,4 +1,4 @@
-import type { UiCardData } from "@/components/UiCard";
+import type { UiCardData } from "@/components/ui-card";
 
 export const cardData: UiCardData[] = [
   {
@@ -527,6 +527,31 @@ export const cardData: UiCardData[] = [
       youtube: "",
     },
   },
+  {
+    title: "BnbIcons",
+    description:
+      "BnbIcons is an AI-powered icon generation tool that lets you create and animate custom Airbnb-style isometric icons in seconds using prompts, offering unique 3D visual assets for UI and design projects.",
+    tag: [
+      "Icons",
+      "AI Icons",
+      "Isometric Icons",
+      "Icon Generator",
+      "Design Tools",
+      "UI/UX",
+      "Creative Assets",
+      "Animation",
+      "Web Design",
+      "AI Tool",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770534447/bnbicons_tfww0s.png", // best guess preview URL
+    links: {
+      website: "https://bnbicons.com/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
 
   // Fonts
   {
@@ -949,6 +974,109 @@ export const cardData: UiCardData[] = [
       youtube: "",
     },
   },
+  {
+    title: "Khroma",
+    description:
+      "Khroma is an AI-powered color palette tool that learns your color preferences and generates personalized, limitless color combinations and palettes, helping designers and creatives explore, search, and save palettes tailored to their taste.",
+    tag: [
+      "AI Tool",
+      "Design Resources",
+      "Color Palette Generator",
+      "UI/UX",
+      "Web Design",
+      "Creative Tools",
+      "Color Theory",
+      "Personalized Colors",
+      "Design Inspiration",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770535071/khroma_czopgc.png",
+    links: {
+      website: "https://www.khroma.co/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Glow UI",
+    description:
+      "Glow UI is a comprehensive Figma UI kit and design system offering thousands of ready-made components, templates, styles, and variables to speed up web app design and product interfaces, with features like wireframe mode, theme support, and production-ready assets.",
+    tag: [
+      "UI Kit",
+      "Design System",
+      "Figma Resources",
+      "Web App Design",
+      "UI/UX",
+      "Design Assets",
+      "Components",
+      "Templates",
+      "Design Efficiency",
+      "Pro Designer Tool",
+      "Tools",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770536050/glowui_rihbrp.png",
+    links: {
+      website: "https://www.glowui.com/",
+      twitter: "https://x.com/glow_ui",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Aether CSS",
+    description:
+      "Aether CSS is a free online CSS effects generator that lets you create stunning liquid glass, glassmorphism, and neumorphism visual effects with live previews and instant code output for modern web interfaces.",
+    tag: [
+      "CSS Generator",
+      "Glassmorphism",
+      "Liquid Glass",
+      "Neumorphism",
+      "Web Design",
+      "UI/UX",
+      "CSS Effects",
+      "Front-End Tools",
+      "Design Resources",
+      "Developer Tool",
+      "Tools",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770537166/aether-css_cvvfrn.png",
+    links: {
+      website: "https://aethercss.lovable.app/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "ShadcnThemer",
+    description:
+      "ShadcnThemer is a web-based theme editor that lets developers and designers create, customize, preview, and export beautiful themes for shadcn/ui projects with an intuitive color editor and live component previews, making UI theming simple and visual.",
+    tag: [
+      "Theme Editor",
+      "shadcn/ui",
+      "Tailwind CSS",
+      "Design Tools",
+      "UI/UX",
+      "Web Development",
+      "Color Palette",
+      "Customization",
+      "Frontend",
+      "Developer Tool",
+      "Tools",
+      "Shacn Themer",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770537347/shadcn-themer_atev4p.png",
+    links: {
+      website: "https://shadcnthemer.com/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
 
   //components
   {
@@ -1032,7 +1160,7 @@ export const cardData: UiCardData[] = [
       "Open Source",
       "Web Development",
       "Simple & Lightweight",
-      "Component Library",
+      "Tools",
     ],
     image:
       "https://res.cloudinary.com/ddbpvv06y/image/upload/v1764147017/reacthaiku_mmzmrx.png",
@@ -1164,11 +1292,63 @@ export const cardData: UiCardData[] = [
       "Developer Tools",
       "Component Library",
     ],
-    image: "https://res.cloudinary.com/ddbpvv06y/image/upload/v1767786931/flyonui_pt0n0w.png",
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1767786931/flyonui_pt0n0w.png",
     links: {
       website: "https://flyonui.com/",
       twitter: "https://x.com/flyonui",
       github: "https://github.com/themeselection/flyonui",
+      youtube: "",
+    },
+  },
+  {
+    title: "Uiverse",
+    description:
+      "Uiverse is a massive open-source library of customizable UI elements — including buttons, inputs, cards, and more — that designers and developers can copy and reuse in their web projects, available in CSS, Tailwind, React, and Figma formats. Every component is free for personal and commercial use. ",
+    tag: [
+      "UI Library",
+      "Open Source",
+      "Design Resources",
+      "Web Development",
+      "CSS Components",
+      "Tailwind Components",
+      "React UI",
+      "Figma Assets",
+      "UI/UX",
+      "Front-End Tools",
+      "Component Library",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770535608/uiverse_gbbcly.png",
+    links: {
+      website: "https://uiverse.io/",
+      twitter: "",
+      github: "https://github.com/uiverse-io/galaxy",
+      youtube: "",
+    },
+  },
+  {
+    title: "ElevenLabs UI",
+    description:
+      "ElevenLabs UI is an open-source library of pre-built, customizable React components for building multimodal agent and audio interfaces — from voice agents and waveforms to interactive UI elements — helping developers assemble rich audio and AI-powered experiences faster.",
+    tag: [
+      "UI Library",
+      "Open Source",
+      "React Components",
+      "Audio UI",
+      "Agent Interfaces",
+      "Developer Tool",
+      "Web Development",
+      "AI Tools",
+      "Design Resources",
+      "Component Library",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770536873/ui-elevenlabs_kxq44n.png",
+    links: {
+      website: "https://ui.elevenlabs.io/",
+      twitter: "",
+      github: "https://github.com/elevenlabs/ui",
       youtube: "",
     },
   },
@@ -1966,6 +2146,81 @@ export const cardData: UiCardData[] = [
       "https://res.cloudinary.com/ddbpvv06y/image/upload/v1765699556/60fpsdesign_ydi0h6.png",
     links: {
       website: "https://60fps.design/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Design Spells",
+    description:
+      "Design Spells is a curated online collection showcasing magical micro-interactions, Easter eggs, animations, and delightful UI details that add personality and fun back into digital experiences.",
+    tag: [
+      "Design Inspiration",
+      "UI/UX",
+      "Micro-interactions",
+      "Easter Eggs",
+      "Animations",
+      "Design Resources",
+      "Web Design",
+      "Newsletter",
+      "Design Details",
+      "Creative UX",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770534937/designspells_euxsot.png",
+    links: {
+      website: "https://www.designspells.com/",
+      twitter: "https://x.com/designspells_",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "CTA.gallery",
+    description:
+      "CTA.gallery is a curated online gallery showcasing effective call-to-action (CTA) designs from across the web, offering inspiration and examples to help designers create high-impact, conversion-boosting CTAs.",
+    tag: [
+      "Design Inspiration",
+      "UI/UX",
+      "CTA Designs",
+      "Web Design",
+      "Conversion Optimization",
+      "Creative Resources",
+      "Design Gallery",
+      "Interaction Design",
+      "Visual Inspiration",
+      "Web Components",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770535260/cta-gallery_z69h9g.png",
+    links: {
+      website: "https://www.cta.gallery/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
+    title: "Supahero",
+    description:
+      "Supahero is a curated library of high-quality website hero section designs that helps web designers and developers find stunning, engaging hero inspirations for their next project, with examples across styles and niches.",
+    tag: [
+      "Design Inspiration",
+      "UI/UX",
+      "Website Hero Sections",
+      "Web Design",
+      "Creative Resources",
+      "Design Gallery",
+      "Front-End Design",
+      "Landing Page Inspiration",
+      "Visual Design",
+      "Design Components",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1770535401/supahero-io_zbwyql.png",
+    links: {
+      website: "https://www.supahero.io/",
       twitter: "",
       github: "",
       youtube: "",
