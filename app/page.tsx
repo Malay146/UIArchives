@@ -8,6 +8,7 @@ import FilterSearch from "@/components/filter-search";
 import CTA from "@/components/cta";
 import Metric from "@/components/metric";
 import Hero from "@/components/hero";
+import { BlogCTASection } from "@/components/blog-cta-section";
 
 export default function Home() {
   const filterRef = useRef<HTMLDivElement>(null);
@@ -43,6 +44,7 @@ export default function Home() {
           <Divider />
           <Metric />
           <FilterSearch ref={filterRef} />
+          <BlogCTASection />
         </div>
       </div>
     </div>

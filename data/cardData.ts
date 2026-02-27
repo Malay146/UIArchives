@@ -1353,32 +1353,59 @@ export const cardData: UiCardData[] = [
     },
   },
   {
-  title: "ShadcnSpace",
-  description:
-    "Shadcn Space is a curated collection of high-quality Shadcn UI blocks, components, and templates built with React and Tailwind CSS — enabling developers to preview, copy, and ship modern interfaces faster with production-ready, customizable code.",
-  tag: [
-    "UI Library",
-    "Shadcn UI",
-    "React Components",
-    "Tailwind CSS",
-    "Component Library",
-    "Web Development",
-    "Design Resources",
-    "Developer Tool",
-    "UI Blocks",
-    "Templates",
-    "Component Library",
-    "Shadcnspace"
-  ],
-  image:
-    "https://res.cloudinary.com/ddbpvv06y/image/upload/v1771602272/shadcnspace_ycbtgd.png",
-  links: {
-    website: "https://shadcnspace.com/",
-    twitter: "https://x.com/ShadcnSpace",
-    github: "https://github.com/shadcnspace/shadcnspace",
-    youtube: "",
+    title: "ShadcnSpace",
+    description:
+      "Shadcn Space is a curated collection of high-quality Shadcn UI blocks, components, and templates built with React and Tailwind CSS — enabling developers to preview, copy, and ship modern interfaces faster with production-ready, customizable code.",
+    tag: [
+      "UI Library",
+      "Shadcn UI",
+      "React Components",
+      "Tailwind CSS",
+      "Component Library",
+      "Web Development",
+      "Design Resources",
+      "Developer Tool",
+      "UI Blocks",
+      "Templates",
+      "Component Library",
+      "Shadcnspace",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1771602272/shadcnspace_ycbtgd.png",
+    links: {
+      website: "https://shadcnspace.com/",
+      twitter: "https://x.com/ShadcnSpace",
+      github: "https://github.com/shadcnspace/shadcnspace",
+      youtube: "",
+    },
   },
-},
+  {
+    title: "useLayouts",
+    description:
+      "Free premium animated React components and micro-interactions built with Framer Motion and Tailwind CSS",
+    tag: [
+      "UI Library",
+      "Shadcn UI",
+      "React Components",
+      "Tailwind CSS",
+      "Component Library",
+      "Web Development",
+      "Design Resources",
+      "Developer Tool",
+      "UI Blocks",
+      "Templates",
+      "Component Library",
+      "Shadcnspace",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1772177905/uselayouts_cgydkb.png",
+    links: {
+      website: "https://uselayouts.com/",
+      twitter: "",
+      github: "https://github.com/iurvish/uselayouts",
+      youtube: "",
+    },
+  },
 
   //technologies
   {

@@ -8,7 +8,6 @@ import { gsap } from "gsap";
 import { useEffect } from "react";
 import Logo from "@/components/logo";
 
-
 type NavbarProps = {
   showShareButton?: boolean;
   showAddResourceButton?: boolean;
@@ -82,13 +81,14 @@ const Navbar = ({
         </Link>
         <div className="Links flex items-center gap-3">
           {showShareButton && (
-            <Button1
-              onClick={handleShare}
-              className="font-extralight tracking-tighter text-xs sm:text-sm md:text-base px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 whitespace-nowrap"
-              aria-label="Share this page"
-            >
-              <span className="sm:inline">Share</span>
-            </Button1>
+            <Link href="/blog">
+              <Button1
+                className="font-light font-sans tracking-tighter text-xs sm:text-sm md:text-base px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 whitespace-nowrap"
+                aria-label="Blogs"
+              >
+                <span className="sm:inline">Blogs</span>
+              </Button1>
+            </Link>
           )}
 
           {showAddResourceButton && (
