@@ -62,16 +62,21 @@ export function getMdxComponents(): MDXComponents {
         {...props}
       />
     ),
-    a: ({ className, ...props }) => (
-      <Link
-        href={props.href as string}
-        className={cn(
-          "font-medium transition-colors text-foreground no-underline",
-          className,
-        )}
-        {...props}
-      />
-    ),
+    a: ({ className, ...props }) => {
+      const isExternal = (props.href as string)?.startsWith("http");
+      return (
+        <Link
+          href={props.href as string}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          className={cn(
+            "font-medium transition-colors text-foreground no-underline",
+            className,
+          )}
+          {...props}
+        />
+      );
+    },
     p: ({ className, ...props }) => (
       <p
         className={cn(
