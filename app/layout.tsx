@@ -100,7 +100,7 @@ export const metadata: Metadata = {
       { url: "/favicondark.png", media: "(prefers-color-scheme: dark)" },
     ],
     shortcut: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
+    apple: "/favicon.ico",
   },
 
   category: "Web Development",
@@ -164,9 +164,9 @@ export default function RootLayout({
         className={`${inter.variable} ${inriaSerif.variable} ${instrumentSerif.variable} antialiased selection:bg-zinc-300 selection:text-zinc-950`}
       >
         {/* <SmoothScroll> */}
-          {children}
-          <Analytics />
-          <SpeedInsights />
+        {children}
+        <Analytics />
+        <SpeedInsights />
         {/* </SmoothScroll> */}
       </body>
     </html>
