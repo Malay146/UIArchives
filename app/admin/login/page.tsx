@@ -33,8 +33,9 @@ export default function AdminLogin() {
 
       if (res.ok && data.success) {
         // Success! Cookie set HTTP-only.
-        // Triggers middleware to re-evaluate auth status natively
-        window.location.reload();
+        // Redirect to the dashboard
+        router.push("/admin/add-resource");
+        router.refresh();
       } else {
         setError(data.error || "Incorrect password");
       }
@@ -46,7 +47,8 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="w-full relative min-h-screen bg-black text-white selection:bg-zinc-300 selection:text-zinc-950 flex items-center justify-center">
+    <div className="w-full relative min-h-screen bg-black text-white selection:bg-zinc-800 flex items-center justify-center">
+      <Background />
 
       <main className="relative z-10 w-full max-w-md px-4 sm:px-6">
         <div className="bg-[#121212] rounded-3xl p-8 border border-zinc-800/50 shadow-2xl relative overflow-hidden">

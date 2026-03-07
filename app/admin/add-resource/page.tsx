@@ -95,11 +95,12 @@ export default function AdminResourceGenerator() {
 
   const handleLogout = async () => {
     await fetch("/api/auth/logout", { method: "POST" });
-    window.location.reload();
+    router.push("/admin/login");
+    router.refresh();
   };
 
   return (
-    <div className="w-full relative min-h-screen bg-black selection:bg-zinc-300 selection:text-zinc-950">
+    <div className="w-full relative min-h-screen bg-black text-white selection:bg-zinc-800">
       <Background />
       <main className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 sm:py-32 z-10">
         <div className="mb-10 flex flex-col sm:flex-row justify-between items-center sm:items-start border-b border-zinc-800/50 pb-6">
