@@ -4,6 +4,15 @@ import type { NextRequest } from "next/server";
 export function middleware(request: NextRequest) {
   const currentPath = request.nextUrl.pathname;
 
+  // Completely block the admin dashboard and generation tools in production environments
+  if (
+    process.env.NODE_ENV === "production" &&
+    (currentPath.startsWith("/admin") ||
+      currentPath.startsWith("/api/generate-resource"))
+  ) {
+    return NextResponse.redirect(new URL("/", request.url));
+  }
+
   // Only protect /admin and subroutes
   if (currentPath.startsWith("/admin")) {
     // Let the login page flow through without cookie check, to avoid redirect loops
@@ -23,7 +32,7 @@ export function middleware(request: NextRequest) {
   return NextResponse.next();
 }
 
-// Config to explicitly target only /admin routes matching for performance
+// Config to explicitly target routes matching for performance
 export const config = {
-  matcher: ["/admin/:path*"],
+  matcher: ["/admin/:path*", "/api/generate-resource"],
 };
