@@ -47,7 +47,7 @@ export default function AdminLogin() {
   };
 
   return (
-    <div className="w-full relative min-h-screen bg-black text-white selection:bg-zinc-800 flex items-center justify-center">
+    <div className="w-full relative min-h-screen bg-black text-white selection:bg-zinc-300 selection:text-zinc-950 flex items-center justify-center">
       <Background />
 
       <main className="relative z-10 w-full max-w-md px-4 sm:px-6">
