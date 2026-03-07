@@ -1406,7 +1406,35 @@ export const cardData: UiCardData[] = [
       youtube: "",
     },
   },
-
+  {
+    title: "Magic UI",
+    description:
+      "Beautiful UI components and templates to make your landing page look stunning.",
+    tag: [
+      "Compoenent Library",
+      "Templates",
+      "UI Library",
+      "Shadcn UI",
+      "React Components",
+      "Tailwind CSS",
+      "Component Library",
+      "Web Development",
+      "Design Resources",
+      "Developer Tool",
+      "UI Blocks",
+      "Templates",
+      "Component Library",
+      "Shadcnspace",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1772881558/resources/sqcpz8cydx6uhh6h5gqh.png",
+    links: {
+      website: "https://magicui.design/",
+      twitter: "https://twitter.com/dillionverma",
+      github: "https://github.com/magicuidesign/magicui",
+      youtube: "",
+    },
+  },
   //technologies
   {
     title: "React",
@@ -1543,6 +1571,32 @@ export const cardData: UiCardData[] = [
     },
   },
   {
+    title: "Mockuuups Studio",
+    description:
+      "Drag-and-drop tool for creating beautiful app previews or any marketing materials. Easily insert your screenshot into device and print mockups for free.",
+    tag: [
+      "Tools",
+      "mockup generator",
+      "device mockups",
+      "app mockups",
+      "ui mockups",
+      "presentation mockups",
+      "design tools",
+      "product mockups",
+      "screenshot mockups",
+      "device frames",
+      "design resources",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1772882609/resources/cerbkpoh45hpysrmjlrc.png",
+    links: {
+      website: "https://mockuuups.studio/",
+      twitter: "",
+      github: "",
+      youtube: "",
+    },
+  },
+  {
     title: "Framer",
     description:
       "Framer is a no-code website builder and design tool for creating responsive, interactive sites with built-in CMS and hosting.",
@@ -1653,6 +1707,31 @@ export const cardData: UiCardData[] = [
       twitter: "https://x.com/mannupaaji",
       github: "https://github.com/manuarora700",
       youtube: "https://www.youtube.com/@manuarora",
+    },
+  },
+  {
+    title: "Viewport",
+    description:
+      "ViewportUI offers curated experiences for your inspiration across web, desktop, and mobile platforms.",
+    tag: [
+      "UI Design",
+      "Web Design",
+      "Mobile Design",
+      "iOS",
+      "Android",
+      "Inspiration",
+      "User Interface",
+      "Design Templates",
+      "UX",
+      "Interaction",
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1772883156/resources/gvretvx0ztwlltzvprch.png",
+    links: {
+      website: "https://viewport-ui.design/",
+      twitter: "https://x.com/viewportUI",
+      github: "",
+      youtube: "",
     },
   },
   {

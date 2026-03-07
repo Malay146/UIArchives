@@ -53,7 +53,7 @@ export default function CardGrid({ cards, isSearching }: CardGridProps) {
             <UiCard key={`${card.title}-${index}`} {...card} />
           ))
         ) : !isSearching ? (
-          <p className="text-zinc-500 text-center text-balance col-span-1 sm:col-span-2 lg:col-span-3 mt-5 mb-14 py-3 bg-zinc-900 rounded-2xl mx-auto px-5 w-full">
+          <p className="text-zinc-500 text-center text-balance col-span-1 sm:col-span-2 lg:col-span-3 mt-5 mb-14 py-3 bg-zinc-900 rounded-2xl mx-auto px-5 w-fit">
             No results found. Try a different keyword or filter.
           </p>
         ) : (
