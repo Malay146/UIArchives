@@ -13,7 +13,7 @@ const CTA = ({ onExploreClick }: CTAProps) => {
     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mt-4 sm:mt-5 w-full sm:w-auto px-4 sm:px-0">
             <Button1
               onClick={onExploreClick}
-              className="tracking-tighter w-full sm:w-auto text-center"
+              className="tracking-tighter w-full sm:w-auto text-center font-sans"
             >
               Explore Resources
             </Button1>

@@ -110,7 +110,7 @@ const FilterSearch = forwardRef<HTMLDivElement>((props, ref) => {
               className={
                 selectedTag === tag
                   ? "shadow-[inset_-4px_-4px_4px_rgba(255,255,255,0.08),inset_4px_4px_4px_rgba(0,0,0,0.5)] text-zinc-200 font-normal whitespace-nowrap shrink-0"
-                  : "whitespace-nowrap shrink-0"
+                  : "whitespace-nowrap shrink-0 font-sans"
               }
             >
               {tag}
