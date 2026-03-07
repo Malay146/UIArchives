@@ -33,9 +33,8 @@ export default function AdminLogin() {
 
       if (res.ok && data.success) {
         // Success! Cookie set HTTP-only.
-        // Redirect to the dashboard
-        router.push("/admin/add-resource");
-        router.refresh();
+        // Triggers middleware to re-evaluate auth status natively
+        window.location.reload();
       } else {
         setError(data.error || "Incorrect password");
       }
