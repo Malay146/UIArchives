@@ -1276,6 +1276,33 @@ export const cardData: UiCardData[] = [
     },
   },
   {
+    title: "Shadcnblocks",
+    description:
+      "Shadcn Blocks offers premium blocks, components, and templates for Shadcn UI, Tailwind, and React projects. Copy, paste, or install high-quality, responsive designs.",
+    tag: [
+      "UI Components",
+      "Shadcn UI",
+      "Tailwind CSS",
+      "React",
+      "Components",
+      "Blocks",
+      "Templates",
+      "UI Library",
+      "Next.js",
+      "Frontend Development",
+      "Figma Kit",
+      "Component Library"
+    ],
+    image:
+      "https://res.cloudinary.com/ddbpvv06y/image/upload/v1773301116/resources/zgdnslnm3gswnhtdhq2r.png",
+    links: {
+      website: "https://www.shadcnblocks.com/",
+      twitter: "https://x.com/ausrobdev",
+      github: "https://github.com/shadcnblocks/shadcn-ui-blocks",
+      youtube: "",
+    },
+  },
+  {
     title: "FlyonUI",
     description:
       "FlyonUI is a free, open-source Tailwind CSS UI components library with semantic classes, interactive JS plugins, and ready-to-use blocks and templates.",
