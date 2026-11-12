@@ -2,79 +2,70 @@
 
 import { useState } from "react";
 import { type Post } from "@/types/blog";
-import { PostCard } from "@/components/blog/post-card";
-import { Badge } from "@/components/blog/badge";
-import Button1 from "@/components/ui-components/Button1";
-import GoUpArrowIcon from "@/components/Icons/GoUpArrowIcon";
-import Link from "next/link";
+import { PostRow, POST_GRID } from "./post-row";
 
-interface BlogListingClientProps {
-  posts: Post[];
-  categories: string[];
-}
+const ALL = "All";
 
 export function BlogListingClient({
   posts,
   categories,
-}: BlogListingClientProps) {
-  const [activeCategory, setActiveCategory] = useState<string>("All Topics");
-
-  const filteredPosts =
-    activeCategory === "All Topics"
+}: {
+  posts: Post[];
+  categories: string[];
+}) {
+  const [active, setActive] = useState(ALL);
+  const shown =
+    active === ALL
       ? posts
-      : posts.filter((post) => post.frontmatter.category === activeCategory);
+      : posts.filter((p) => p.frontmatter.category === active);
 
   return (
-    <div className="container mx-auto py-12 xl:max-w-7xl font-sans relative border-x border-zinc-800 bg-zinc-950">
-      <Link href="/">
-        <Button1 className="mx-6 mb-12 flex items-center gap-2 tracking-tighter font-sans font-light">
-          <GoUpArrowIcon className="size-4 text-zinc-300 rotate-270" />
-          Back Home
-        </Button1>
-      </Link>
-      <header className="mb-16 md:mb-16 flex flex-col items-start gap-4 max-w-3xl px-6">
-        <Badge
-          variant="outline"
-          className="px-4 py-1.5 text-sm tracking-tight bg-zinc-900 border-zinc-600"
+    <div className="mx-auto max-w-[1200px]">
+      <header className="px-4 pt-16 pb-12 sm:px-6 sm:pt-24">
+        <h1 className="rise font-medium">Journal</h1>
+        <p
+          className="rise mt-3 max-w-[460px] text-fg-2"
+          style={{ "--i": 1 } as React.CSSProperties}
         >
-          UI Archives Journal
-        </Badge>
-        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground font-display">
-          Engineering & Design
-        </h1>
-        <p className="text-lg md:text-xl text-muted-foreground leading-[24px] tracking-tight">
-          Deep dives into modern web development, sophisticated system
-          architecture, and building excellent user interfaces.
+          Notes on interface design, frontend tooling and the resources worth
+          knowing. Written slowly, kept short.
         </p>
       </header>
 
-      <section className="mb-16">
-        <div className="flex flex-wrap gap-2 py-8 border-y border-zinc-800 px-6">
-          <Button1
-            className="text-sm px-4 py-1"
-            isActive={activeCategory === "All Topics"}
-            onClick={() => setActiveCategory("All Topics")}
+      <nav
+        aria-label="Topics"
+        className="scrollbar-none flex gap-1 overflow-x-auto border-y px-4 py-3 sm:px-6"
+      >
+        {[ALL, ...categories].map((cat) => (
+          <button
+            key={cat}
+            type="button"
+            aria-pressed={active === cat}
+            onClick={() => setActive(cat)}
+            className={`press shrink-0 rounded-md px-2 py-1 whitespace-nowrap transition-colors duration-150 ${
+              active === cat ? "bg-hover text-fg" : "text-fg-2 hover:text-fg"
+            }`}
           >
-            All Topics
-          </Button1>
-          {categories.map((cat) => (
-            <Button1
-              key={cat}
-              className="hover:bg-secondary/80 cursor-pointer transition-colors text-sm px-4 py-1"
-              isActive={activeCategory === cat}
-              onClick={() => setActiveCategory(cat)}
-            >
-              {cat}
-            </Button1>
-          ))}
-        </div>
+            {cat}
+          </button>
+        ))}
+      </nav>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 p-6">
-          {filteredPosts.map((post) => (
-            <PostCard key={post.slug} post={post} />
-          ))}
-        </div>
-      </section>
+      <div
+        className={`hidden border-b px-6 py-2 text-fg-3 md:grid ${POST_GRID}`}
+        aria-hidden="true"
+      >
+        <span>Date</span>
+        <span>Title</span>
+        <span>Topic</span>
+        <span className="text-right">Read</span>
+      </div>
+
+      <ul>
+        {shown.map((post) => (
+          <PostRow key={post.slug} post={post} />
+        ))}
+      </ul>
     </div>
   );
 }

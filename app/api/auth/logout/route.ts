@@ -1,19 +1,8 @@
 import { NextResponse } from "next/server";
+import { SESSION_COOKIE } from "@/lib/server/auth";
 
-export async function POST() {
-  const response = NextResponse.json({
-    success: true,
-    message: "Logged out successfully",
-  });
-
-  // Clear the admin-auth cookie
-  response.cookies.set({
-    name: "admin-auth",
-    value: "",
-    httpOnly: true,
-    expires: new Date(0), // expire immediately
-    path: "/",
-  });
-
-  return response;
+export async function POST(req: Request) {
+  const res = NextResponse.redirect(new URL("/", req.url), 303);
+  res.cookies.delete({ name: SESSION_COOKIE, path: "/" });
+  return res;
 }

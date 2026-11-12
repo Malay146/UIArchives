@@ -1,20 +1,22 @@
 import { Metadata } from "next";
+import { Header } from "@/components/site/header";
+import { Footer } from "@/components/site/footer";
 
 export const metadata: Metadata = {
-  title: "Engineering Blog | Modern Next.js 14",
+  title: "Journal — UIArchives",
   description:
-    "Read the latest engineering articles on web development, system architecture, and modern scalable applications.",
+    "Notes on interface design, frontend tooling and the resources worth knowing.",
   openGraph: {
-    title: "Engineering Blog | Modern Next.js 14",
+    title: "Journal — UIArchives",
     description:
-      "Read the latest engineering articles on web development, system architecture, and modern scalable applications.",
+      "Notes on interface design, frontend tooling and the resources worth knowing.",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Engineering Blog | Modern Next.js 14",
+    title: "Journal — UIArchives",
     description:
-      "Read the latest engineering articles on web development, system architecture, and modern scalable applications.",
+      "Notes on interface design, frontend tooling and the resources worth knowing.",
   },
 };
 
@@ -23,5 +25,11 @@ export default function BlogLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return (
+    <>
+      <Header />
+      <main>{children}</main>
+      <Footer />
+    </>
+  );
 }

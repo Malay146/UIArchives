@@ -1,69 +1,65 @@
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
+import type { ComponentType } from "react";
+import { load as parseYaml } from "js-yaml";
 import readingTime from "reading-time";
 import type { Post, PostFrontmatter } from "../types/blog";
 
-const postsDirectory = path.join(process.cwd(), "content/blog");
+/**
+ * Blog posts are bundled at build time — Cloudflare Workers have no file
+ * system at runtime, and MDX is compiled ahead of time (no eval at the edge).
+ *
+ *  - `?raw` gives the source, for frontmatter and reading time;
+ *  - the plain import is the compiled MDX component (see vite.config.ts).
+ */
+const SOURCES = import.meta.glob("/content/blog/*.mdx", {
+  query: "?raw",
+  import: "default",
+  eager: true,
+}) as Record<string, string>;
 
-export function getPostBySlug(slug: string): Post | null {
-  try {
-    const realSlug = slug.replace(/\.mdx$/, "");
-    const fullPath = path.join(postsDirectory, `${realSlug}.mdx`);
+const COMPONENTS = import.meta.glob("/content/blog/*.mdx", { eager: true }) as Record<
+  string,
+  { default: ComponentType<{ components?: Record<string, unknown> }> }
+>;
 
-    if (!fs.existsSync(fullPath)) {
-      return null;
-    }
-
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data, content } = matter(fileContents);
-    const timeToRead = readingTime(content).text;
-
-    return {
-      slug: realSlug,
-      frontmatter: data as PostFrontmatter,
-      content,
-      readingTime: timeToRead,
-    };
-  } catch (error) {
-    console.error(`Error reading blog post: ${slug}`, error);
-    return null;
-  }
+/** `---\nyaml\n---\nbody` → { data, content }. Pure JS, safe on Workers (no Buffer). */
+function matter(source: string): { data: Record<string, unknown>; content: string } {
+  const m = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/.exec(source);
+  if (!m) return { data: {}, content: source };
+  return { data: (parseYaml(m[1]) as Record<string, unknown>) ?? {}, content: m[2] };
 }
 
+const slugOf = (path: string) => path.split("/").pop()!.replace(/\.mdx$/, "");
+
+const POSTS: Post[] = Object.entries(SOURCES)
+  .map(([path, source]) => {
+    const { data, content } = matter(source);
+    return {
+      slug: slugOf(path),
+      frontmatter: data as unknown as PostFrontmatter,
+      content,
+      readingTime: readingTime(content).text,
+    };
+  })
+  .sort((a, b) => new Date(b.frontmatter.date).getTime() - new Date(a.frontmatter.date).getTime());
+
 export function getAllPosts(): Post[] {
-  if (!fs.existsSync(postsDirectory)) {
-    return [];
-  }
+  return POSTS;
+}
 
-  const slugs = fs.readdirSync(postsDirectory);
-  const posts = slugs
-    .filter((slug) => slug.endsWith(".mdx"))
-    .map((slug) => getPostBySlug(slug))
-    .filter((post): post is Post => post !== null)
-    .sort((post1, post2) => {
-      // Sort posts by date in descending order
-      return (
-        new Date(post2.frontmatter.date).getTime() -
-        new Date(post1.frontmatter.date).getTime()
-      );
-    });
+export function getPostBySlug(slug: string): Post | null {
+  return POSTS.find((p) => p.slug === slug.replace(/\.mdx$/, "")) ?? null;
+}
 
-  return posts;
+/** The compiled MDX body for a post (server-only — components can't cross to the client). */
+export function getPostComponent(slug: string) {
+  const hit = Object.entries(COMPONENTS).find(([path]) => slugOf(path) === slug);
+  return hit?.[1].default ?? null;
 }
 
 export function getAllCategories(): string[] {
-  const posts = getAllPosts();
-  const categories = new Set(
-    posts.map((post) => post.frontmatter.category).filter(Boolean),
-  );
-  return Array.from(categories);
+  return [...new Set(POSTS.map((p) => p.frontmatter.category).filter(Boolean))];
 }
 
 export function getAllTags(): string[] {
-  const posts = getAllPosts();
-  const tags = new Set(
-    posts.flatMap((post) => post.frontmatter.tags || []).filter(Boolean),
-  );
-  return Array.from(tags);
+  return [...new Set(POSTS.flatMap((p) => p.frontmatter.tags || []).filter(Boolean))];
 }

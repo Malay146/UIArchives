@@ -4,174 +4,106 @@ import { cn } from "@/utlis/cn";
 import type { MDXComponents } from "mdx/types";
 import { CodeBlock } from "./CodeBlock";
 
+type P<T = HTMLElement> = React.HTMLAttributes<T>;
+
+const heading = "scroll-mt-20 font-medium tracking-[-0.01em] text-fg [&_a]:text-inherit [&_a]:no-underline";
+
 export function getMdxComponents(): MDXComponents {
   return {
-    h1: ({ className, ...props }) => (
-      // Enforce the rule: Only ONE H1 per page (The post title).
-      // If authors use # in markdown, it downgrades to H2 automatically.
-      <h2
-        className={cn(
-          "mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0",
-          className,
-        )}
-        {...props}
-      />
+    // Only one h1 per page (the post title) — authored h1s become h2.
+    h1: ({ className, ...props }: P) => (
+      <h2 className={cn(heading, "mt-14 text-[17px]", className)} {...props} />
     ),
-    h2: ({ className, ...props }) => (
-      <h2
-        className={cn(
-          "mt-10 scroll-m-20 border-b pb-1 text-3xl font-semibold tracking-tight first:mt-0",
-          className,
-        )}
-        {...props}
-      />
+    h2: ({ className, ...props }: P) => (
+      <h2 className={cn(heading, "mt-14 text-[17px]", className)} {...props} />
     ),
-    h3: ({ className, ...props }) => (
-      <h3
-        className={cn(
-          "mt-8 scroll-m-20 text-2xl font-semibold tracking-tight",
-          className,
-        )}
-        {...props}
-      />
+    h3: ({ className, ...props }: P) => (
+      <h3 className={cn(heading, "mt-10 text-[15px]", className)} {...props} />
     ),
-    h4: ({ className, ...props }) => (
-      <h4
-        className={cn(
-          "mt-8 scroll-m-20 text-xl font-semibold tracking-tight",
-          className,
-        )}
-        {...props}
-      />
+    h4: ({ className, ...props }: P) => (
+      <h4 className={cn(heading, "mt-8 text-[15px] text-fg-2", className)} {...props} />
     ),
-    h5: ({ className, ...props }) => (
-      <h5
-        className={cn(
-          "mt-8 scroll-m-20 text-lg font-semibold tracking-tight",
-          className,
-        )}
-        {...props}
-      />
+    h5: ({ className, ...props }: P) => (
+      <h5 className={cn(heading, "mt-8 text-fg-2", className)} {...props} />
     ),
-    h6: ({ className, ...props }) => (
-      <h6
-        className={cn(
-          "mt-8 scroll-m-20 text-base font-semibold tracking-tight",
-          className,
-        )}
-        {...props}
-      />
+    h6: ({ className, ...props }: P) => (
+      <h6 className={cn(heading, "mt-8 text-fg-2", className)} {...props} />
     ),
-    a: ({ className, ...props }) => {
-      const isExternal = (props.href as string)?.startsWith("http");
+    a: ({ className, href = "", ...props }: React.AnchorHTMLAttributes<HTMLAnchorElement>) => {
+      const external = href.startsWith("http");
       return (
         <Link
-          href={props.href as string}
-          target={isExternal ? "_blank" : undefined}
-          rel={isExternal ? "noopener noreferrer" : undefined}
+          href={href}
+          target={external ? "_blank" : undefined}
+          rel={external ? "noopener noreferrer" : undefined}
           className={cn(
-            "font-medium transition-colors text-foreground no-underline",
+            "text-fg underline decoration-line-strong decoration-1 underline-offset-[3px] transition-colors hover:decoration-fg",
             className,
           )}
           {...props}
         />
       );
     },
-    p: ({ className, ...props }) => (
+    p: ({ className, ...props }: P<HTMLParagraphElement>) => (
       <p
-        className={cn(
-          "leading-8 not-first:mt-6 text-muted-foreground/90 text-lg",
-          className,
-        )}
+        className={cn("mt-5 text-[15px] leading-[1.75] text-fg-2 first:mt-0", className)}
         {...props}
       />
     ),
-    ul: ({ className, ...props }) => (
+    strong: ({ className, ...props }: P) => (
+      <strong className={cn("font-medium text-fg", className)} {...props} />
+    ),
+    ul: ({ className, ...props }: P<HTMLUListElement>) => (
       <ul
-        className={cn("my-6 ml-6 list-disc [&>li]:mt-2", className)}
+        className={cn("mt-5 ml-5 list-disc marker:text-fg-3 [&>li]:mt-2", className)}
         {...props}
       />
     ),
-    ol: ({ className, ...props }) => (
+    ol: ({ className, ...props }: P<HTMLOListElement>) => (
       <ol
-        className={cn("my-6 ml-6 list-decimal [&>li]:mt-2", className)}
+        className={cn("mt-5 ml-5 list-decimal marker:text-fg-3 [&>li]:mt-2", className)}
         {...props}
       />
     ),
-    li: ({ className, ...props }) => (
+    li: ({ className, ...props }: P<HTMLLIElement>) => (
       <li
-        className={cn("text-muted-foreground/90 text-lg", className)}
+        className={cn("pl-1 text-[15px] leading-[1.75] text-fg-2", className)}
         {...props}
       />
     ),
-    blockquote: ({ className, ...props }) => (
+    blockquote: ({ className, ...props }: P) => (
       <blockquote
-        className={cn(
-          "mt-6 border-l-4 border-primary pl-6 italic text-foreground bg-muted/40 py-4 pr-4 rounded-r-lg",
-          className,
-        )}
+        className={cn("mt-6 border-l pl-5 text-fg [&_p]:text-fg", className)}
         {...props}
       />
     ),
-    img: ({
-      className,
-      alt,
-      ...props
-    }: React.ImgHTMLAttributes<HTMLImageElement>) => (
-      <div className="my-10 overflow-hidden rounded-xl border bg-muted w-full relative min-h-[400px]">
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          className={cn(
-            "absolute inset-0 w-full h-full object-cover",
-            className,
-          )}
-          alt={alt}
-          {...props}
-        />
-      </div>
-    ),
-    hr: ({ ...props }) => <hr className="my-10 border-muted" {...props} />,
-    table: ({
-      className,
-      ...props
-    }: React.HTMLAttributes<HTMLTableElement>) => (
-      <div className="my-6 w-full overflow-y-auto rounded-lg border">
-        <table
-          className={cn("w-full overflow-hidden rounded-lg", className)}
-          {...props}
-        />
-      </div>
-    ),
-    tr: ({
-      className,
-      ...props
-    }: React.HTMLAttributes<HTMLTableRowElement>) => (
-      <tr
-        className={cn("m-0 border-t bg-card p-0 even:bg-muted/50", className)}
+    img: ({ className, alt, ...props }: React.ImgHTMLAttributes<HTMLImageElement>) => (
+      // eslint-disable-next-line @next/next/no-img-element
+      <img
+        className={cn("my-10 w-full rounded-lg border grayscale", className)}
+        alt={alt}
+        loading="lazy"
         {...props}
       />
     ),
-    th: ({
-      className,
-      ...props
-    }: React.HTMLAttributes<HTMLTableCellElement>) => (
+    hr: (props: P<HTMLHRElement>) => <hr className="my-12" {...props} />,
+    table: ({ className, ...props }: P<HTMLTableElement>) => (
+      <div className="my-8 w-full overflow-x-auto border-y">
+        <table className={cn("w-full text-left", className)} {...props} />
+      </div>
+    ),
+    tr: ({ className, ...props }: P<HTMLTableRowElement>) => (
+      <tr className={cn("border-b last:border-b-0", className)} {...props} />
+    ),
+    th: ({ className, ...props }: P<HTMLTableCellElement>) => (
       <th
-        className={cn(
-          "border border-muted bg-muted py-3 px-4 text-left font-bold [[align=center]]:text-center [[align=right]]:text-right",
-          className,
-        )}
+        className={cn("px-3 py-2.5 font-medium text-fg-3 first:pl-0", className)}
         {...props}
       />
     ),
-    td: ({
-      className,
-      ...props
-    }: React.HTMLAttributes<HTMLTableCellElement>) => (
+    td: ({ className, ...props }: P<HTMLTableCellElement>) => (
       <td
-        className={cn(
-          "border border-muted py-3 px-4 text-left [[align=center]]:text-center [[align=right]]:text-right text-muted-foreground",
-          className,
-        )}
+        className={cn("px-3 py-2.5 align-top text-fg-2 first:pl-0", className)}
         {...props}
       />
     ),
@@ -182,7 +114,7 @@ export function getMdxComponents(): MDXComponents {
       </CodeBlock>
     ),
     Image: (props: ImageProps) => (
-      <Image className="rounded-xl border my-8" {...props} />
+      <Image className="my-10 rounded-lg border grayscale" {...props} />
     ),
   };
 }

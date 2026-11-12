@@ -1,17 +1,12 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Image from "next/image";
-import { MDXRemote } from "next-mdx-remote/rsc";
-import remarkGfm from "remark-gfm";
-import rehypeSlug from "rehype-slug";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import { getPostBySlug, getAllPosts } from "@/lib/blog";
+import { getPostBySlug, getAllPosts, getPostComponent } from "@/lib/blog";
 import { getMdxComponents } from "@/components/blog/mdx-components";
-import { Badge } from "@/components/blog/badge";
-import Button1 from "@/components/ui-components/Button1";
 import Link from "next/link";
-import GoUpArrowIcon from "@/components/Icons/GoUpArrowIcon";
-import { PostCard } from "@/components/blog/post-card";
+import { PostRow } from "@/components/blog/post-row";
+import { ArrowLeftGlyph18 } from "@/components/icons";
+import { formatDate } from "@/components/blog/format";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://uiarchives.com";
 
@@ -139,6 +134,7 @@ export default async function PostPage({ params }: PostPageProps) {
     coverImage,
   } = post.frontmatter;
   const metaDesc = description || excerpt || "";
+  const Body = getPostComponent(post.slug);
 
   const allPosts = getAllPosts();
   let suggestions = allPosts.filter((p) => p.slug !== post.slug);
@@ -150,11 +146,7 @@ export default async function PostPage({ params }: PostPageProps) {
   );
   suggestions = [...sameCategory, ...otherCategory].slice(0, 2);
 
-  const formattedDate = new Intl.DateTimeFormat("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  }).format(new Date(date));
+  const formattedDate = formatDate(date, "long");
 
   // Article JSON-LD
   const articleJsonLd = {
@@ -228,120 +220,84 @@ export default async function PostPage({ params }: PostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
-      <article className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 xl:max-w-4xl font-sans border-x border-zinc-800">
-        <Link href="/blog">
-          <Button1 className="mb-12 flex items-center gap-2 tracking-tighter font-sans font-light">
-            <GoUpArrowIcon className="size-4 text-zinc-300 rotate-270" />
-            Back to Blogs
-          </Button1>
+      <article className="mx-auto max-w-[680px] px-4 pt-12 sm:px-6 sm:pt-16">
+        <Link
+          href="/blog"
+          className="press -ml-1 inline-flex items-center gap-1.5 p-1 text-fg-2 transition-colors hover:text-fg"
+        >
+          <ArrowLeftGlyph18 aria-hidden="true" className="size-3" /> Journal
         </Link>
-        <header className="mb-14 flex flex-col items-center text-center">
-          <div className="flex flex-wrap items-center justify-center gap-3 mb-6">
-            <time
-              dateTime={date}
-              className="text-sm font-medium text-muted-foreground tabular-nums"
-            >
+
+        <header className="mt-12 border-b pb-10">
+          <p className="flex flex-wrap items-center gap-x-2 text-fg-3">
+            <time dateTime={date} className="tabular-nums">
               {formattedDate}
             </time>
-            <span className="text-muted-foreground/50 text-sm">•</span>
-            <span className="text-sm font-medium text-muted-foreground">
-              {post.readingTime}
-            </span>
-            <span className="text-muted-foreground/50 text-sm">•</span>
-            <Badge variant="default" className="text-xs px-3">
-              {category}
-            </Badge>
-          </div>
-
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-semibold  text-foreground leading-tight max-w-3xl font-display border-b border-zinc-500">
+            <span aria-hidden="true">·</span>
+            <span>{post.readingTime}</span>
+            <span aria-hidden="true">·</span>
+            <span>{category}</span>
+          </p>
+          <h1 className="mt-3 text-[20px] leading-snug font-medium tracking-[-0.015em] text-balance">
             {title}
           </h1>
-
+          {metaDesc && (
+            <p className="mt-3 text-[15px] text-fg-2 text-pretty">{metaDesc}</p>
+          )}
           {author && (
-            <div className="flex items-center gap-4 mb-4">
-              <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-muted bg-muted shadow-sm">
+            <div className="mt-6 flex items-center gap-2.5">
+              <span className="relative grid size-6 place-items-center overflow-hidden rounded-full border bg-hover text-[11px] font-medium">
                 {author.image ? (
                   <Image
                     src={author.image}
-                    alt={author.name}
+                    alt=""
                     fill
-                    className="object-cover"
-                    priority
+                    sizes="24px"
+                    className="object-cover grayscale"
                   />
                 ) : (
-                  <div className="flex h-full w-full flex-col items-center justify-center bg-primary/10 text-primary font-bold text-lg">
-                    {author.name.charAt(0)}
-                  </div>
+                  author.name.charAt(0)
                 )}
-              </div>
-              <div className="flex flex-col items-start leading-tight">
-                <span className="text-sm font-bold text-foreground">
-                  {author.name}
-                </span>
-                <span className="text-xs font-medium text-muted-foreground">
-                  Author
-                </span>
-              </div>
+              </span>
+              <span>{author.name}</span>
             </div>
           )}
         </header>
 
         {coverImage && (
-          <div className="relative mb-16 aspect-video w-full overflow-hidden rounded-2xl border bg-muted shadow-xl">
+          <div className="relative mt-10 aspect-video w-full overflow-hidden rounded-lg border bg-hover">
             <Image
               src={coverImage}
-              alt={`Cover Image for ${title}`}
+              alt={`Cover image for ${title}`}
               fill
-              className="object-cover"
+              sizes="(max-width: 680px) 100vw, 680px"
+              className="object-cover grayscale"
               priority
             />
           </div>
         )}
 
-        <div className="prose prose-zinc dark:prose-invert max-w-none text-lg prose-a:no-underline">
-          <MDXRemote
-            source={post.content}
-            components={getMdxComponents()}
-            options={{
-              mdxOptions: {
-                remarkPlugins: [remarkGfm],
-                rehypePlugins: [
-                  rehypeSlug,
-                  [rehypeAutolinkHeadings, { behavior: "wrap" }],
-                ],
-              },
-            }}
-          />
+        <div className="mt-10">
+          {Body ? <Body components={getMdxComponents()} /> : null}
         </div>
 
         {tags && tags.length > 0 && (
-          <div className="mt-16 pt-8 border-t border-muted flex flex-wrap gap-2 items-center">
-            <span className="text-sm font-medium text-muted-foreground mr-2">
-              Tags:
-            </span>
+          <div className="mt-16 flex flex-wrap gap-x-3 gap-y-1 border-t pt-6 text-fg-3">
             {tags.map((tag) => (
-              <Badge
-                key={tag}
-                variant="secondary"
-                className="px-3 py-1 text-xs"
-              >
-                #{tag}
-              </Badge>
+              <span key={tag}>#{tag}</span>
             ))}
           </div>
         )}
       </article>
 
       {suggestions.length > 0 && (
-        <section className="container mx-auto px-4 py-16 sm:px-6 lg:px-8 xl:max-w-4xl font-sans border-x border-t border-zinc-800">
-          <h2 className="text-2xl font-bold tracking-tight text-foreground mb-8">
-            You might also like
-          </h2>
-          <div className="grid gap-6 sm:grid-cols-2">
-            {suggestions.map((suggestion) => (
-              <PostCard key={suggestion.slug} post={suggestion} />
+        <section className="mx-auto mt-24 max-w-[1200px]">
+          <h2 className="border-b px-4 pb-3 text-fg-3 sm:px-6">Keep reading</h2>
+          <ul>
+            {suggestions.map((s) => (
+              <PostRow key={s.slug} post={s} />
             ))}
-          </div>
+          </ul>
         </section>
       )}
     </>

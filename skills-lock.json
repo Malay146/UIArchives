@@ -1,0 +1,41 @@
+{
+  "version": 2,
+  "skills": {
+    "apple-hig": {
+      "source": "nexu-io/open-design",
+      "sourceType": "github",
+      "skillPath": "skills/apple-hig/SKILL.md",
+      "computedHash": "cbca0dcc4e8481dc2be14f7891d4978ab6363baee96cd1759cf8f09dc2bd2669"
+    },
+    "emil-design-eng": {
+      "source": "emilkowalski/skills",
+      "sourceType": "github",
+      "skillPath": "skills/emil-design-eng/SKILL.md",
+      "computedHash": "55735a70a886326ee8ba1dd4d1ee040e4e9503a536891467e4ed7e114a69b0dd"
+    },
+    "hig-components-search": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-components-search/SKILL.md",
+      "computedHash": "f2552213936ba57201bd2a200e6f68c787967e0f4513e8dd13e656ca2509ec29"
+    },
+    "hig-foundations": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-foundations/SKILL.md",
+      "computedHash": "1ab8083cc9c920c8d7c7707da07a3fdb8076da7e313040d0650ac22aab26e1ce"
+    },
+    "hig-patterns": {
+      "source": "raintree-technology/hig-doctor",
+      "sourceType": "github",
+      "skillPath": "skills/hig-patterns/SKILL.md",
+      "computedHash": "e53db49f557ab481b5c1280593b432ca2c32a1afcc9e1548a4c1a521449d7baf"
+    },
+    "migrate-to-vinext": {
+      "source": "cloudflare/vinext",
+      "sourceType": "github",
+      "skillPath": ".agents/skills/migrate-to-vinext/SKILL.md",
+      "computedHash": "a989206e5d67f43fc45d4b0c845c802a331d70417bacb3b8c1eed0c14e61a09f"
+    }
+  }
+}

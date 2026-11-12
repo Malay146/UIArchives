@@ -1,0 +1,662 @@
+{
+  "21st-dev": {
+    "src": "/logos/21st-dev.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "manifest"
+  },
+  "3dicons": {
+    "src": "/logos/3dicons.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "apple-touch-icon"
+  },
+  "404s": {
+    "src": "/logos/404s.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "60fps": {
+    "src": "/logos/60fps.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "8bitcn": {
+    "src": "/logos/8bitcn.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "aceternity-ui": {
+    "src": "/logos/aceternity-ui.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "aether-css": {
+    "src": "/logos/aether-css.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "aether-ui": {
+    "src": "/logos/aether-ui.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "apple-touch-icon"
+  },
+  "atipo-foundry": {
+    "src": "/logos/atipo-foundry.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "awwwards": {
+    "src": "/logos/awwwards.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "bnbicons": {
+    "src": "/logos/bnbicons.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "box-shadows": {
+    "src": "/logos/box-shadows.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "central-icons": {
+    "src": "/logos/central-icons.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "codegrid": {
+    "src": "/logos/codegrid.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "coolshapes": {
+    "src": "/logos/coolshapes.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "cotype-foundry": {
+    "src": "/logos/cotype-foundry.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "icon"
+  },
+  "cta-gallery": {
+    "src": "/logos/cta-gallery.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "daisyui": {
+    "src": "/logos/daisyui.webp",
+    "mode": "glyph",
+    "tone": "light",
+    "from": "manifest"
+  },
+  "david-haz": {
+    "src": "/logos/david-haz.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "design-spells": {
+    "src": "/logos/design-spells.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "google"
+  },
+  "dribbble": {
+    "src": "/logos/dribbble.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "google"
+  },
+  "efecto": {
+    "src": "/logos/efecto.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "manifest"
+  },
+  "elevenlabs-ui": {
+    "src": "/logos/elevenlabs-ui.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "google"
+  },
+  "evil-charts": {
+    "src": "/logos/evil-charts.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "f37-foundry": {
+    "src": "/logos/f37-foundry.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "figma": {
+    "src": "/logos/figma.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "flaticon": {
+    "src": "/logos/flaticon.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "/favicon.ico"
+  },
+  "flyonui": {
+    "src": "/logos/flyonui.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "font-awesome": {
+    "src": "/logos/font-awesome.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "manifest"
+  },
+  "fontshare": {
+    "src": "/logos/fontshare.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "icon"
+  },
+  "framer": {
+    "src": "/logos/framer.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "framer-motion": {
+    "src": "/logos/framer-motion.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "free-faces": {
+    "src": "/logos/free-faces.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "icon"
+  },
+  "fumadocs": {
+    "src": "/logos/fumadocs.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "glow-ui": {
+    "src": "/logos/glow-ui.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "google-fonts": {
+    "src": "/logos/google-fonts.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "gsap": {
+    "src": "/logos/gsap.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "gurbinder-legionsdev": {
+    "src": "/logos/gurbinder-legionsdev.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "guri": {
+    "src": "/logos/guri.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "huy-nguyen": {
+    "src": "/logos/huy-nguyen.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "iconbuddy": {
+    "src": "/logos/iconbuddy.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "icons8": {
+    "src": "/logos/icons8.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "/favicon.ico"
+  },
+  "iconscout": {
+    "src": "/logos/iconscout.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "google"
+  },
+  "jhey": {
+    "src": "/logos/jhey.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "jitter": {
+    "src": "/logos/jitter.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "khroma": {
+    "src": "/logos/khroma.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "lighthouse": {
+    "src": "/logos/lighthouse.webp",
+    "mode": "glyph",
+    "tone": "light",
+    "from": "icon"
+  },
+  "lineicons": {
+    "src": "/logos/lineicons.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "lottiefiles": {
+    "src": "/logos/lottiefiles.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "lucide": {
+    "src": "/logos/lucide.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "/apple-touch-icon.png"
+  },
+  "mage-icons": {
+    "src": "/logos/mage-icons.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "manifest"
+  },
+  "magic-ui": {
+    "src": "/logos/magic-ui.webp",
+    "mode": "glyph",
+    "tone": "light",
+    "from": "icon"
+  },
+  "make-it-animated": {
+    "src": "/logos/make-it-animated.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "manifest"
+  },
+  "manu-arora": {
+    "src": "/logos/manu-arora.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "meteor-icons": {
+    "src": "/logos/meteor-icons.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "svg icon"
+  },
+  "minimal-gallery": {
+    "src": "/logos/minimal-gallery.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "mobbin": {
+    "src": "/logos/mobbin.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "apple-touch-icon"
+  },
+  "mockuuups-studio": {
+    "src": "/logos/mockuuups-studio.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "apple-touch-icon"
+  },
+  "motion-primitives": {
+    "src": "/logos/motion-primitives.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "mui": {
+    "src": "/logos/mui.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "nanda-fyi": {
+    "src": "/logos/nanda-fyi.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "next-js": {
+    "src": "/logos/next-js.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "noisy-gradients": {
+    "src": "/logos/noisy-gradients.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "nucleo-app": {
+    "src": "/logos/nucleo-app.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "nuqs": {
+    "src": "/logos/nuqs.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "svg icon"
+  },
+  "olivier-larose": {
+    "src": "/logos/olivier-larose.webp",
+    "mode": "tile",
+    "tone": "light",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "open-doodles": {
+    "src": "/logos/open-doodles.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "pangram-pangram-foundry": {
+    "src": "/logos/pangram-pangram-foundry.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "svg icon"
+  },
+  "pattern-craft": {
+    "src": "/logos/pattern-craft.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "svg icon"
+  },
+  "pinterest": {
+    "src": "/logos/pinterest.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "radix-ui": {
+    "src": "/logos/radix-ui.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "svg icon"
+  },
+  "rauno-freiberg": {
+    "src": "/logos/rauno-freiberg.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "react": {
+    "src": "/logos/react.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "apple-touch-icon"
+  },
+  "react-haiku": {
+    "src": "/logos/react-haiku.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "svg icon"
+  },
+  "react-scan": {
+    "src": "/logos/react-scan.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "reactbits": {
+    "src": "/logos/reactbits.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "recipes-build-ui": {
+    "src": "/logos/recipes-build-ui.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "remix-icon": {
+    "src": "/logos/remix-icon.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "svg icon"
+  },
+  "rive": {
+    "src": "/logos/rive.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "samit-kapoor": {
+    "src": "/logos/samit-kapoor.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "shadcn": {
+    "src": "/logos/shadcn.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "manifest"
+  },
+  "shadcn-studio": {
+    "src": "/logos/shadcn-studio.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "shadcnblocks": {
+    "src": "/logos/shadcnblocks.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "shadcnspace": {
+    "src": "/logos/shadcnspace.webp",
+    "mode": "glyph",
+    "tone": "light",
+    "from": "icon"
+  },
+  "shadcnthemer": {
+    "src": "/logos/shadcnthemer.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "shader-gradient": {
+    "src": "/logos/shader-gradient.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "skiper-ui": {
+    "src": "/logos/skiper-ui.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "spline": {
+    "src": "/logos/spline.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "stackbits": {
+    "src": "/logos/stackbits.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "stacksorted": {
+    "src": "/logos/stacksorted.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "supahero": {
+    "src": "/logos/supahero.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "syntax": {
+    "src": "/logos/syntax.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "shape": "circle",
+    "from": "x avatar"
+  },
+  "tabler-icons": {
+    "src": "/logos/tabler-icons.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "tailwind-css": {
+    "src": "/logos/tailwind-css.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "apple-touch-icon"
+  },
+  "the-noun-project": {
+    "src": "/logos/the-noun-project.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "three-js": {
+    "src": "/logos/three-js.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "tweakcn": {
+    "src": "/logos/tweakcn.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "tympanus-codrops": {
+    "src": "/logos/tympanus-codrops.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "typescale": {
+    "src": "/logos/typescale.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "icon"
+  },
+  "uibrik": {
+    "src": "/logos/uibrik.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "apple-touch-icon"
+  },
+  "uiverse": {
+    "src": "/logos/uiverse.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "/apple-touch-icon.png"
+  },
+  "uncut-wtf": {
+    "src": "/logos/uncut-wtf.webp",
+    "mode": "glyph",
+    "tone": "dark",
+    "from": "svg icon"
+  },
+  "unicorn-studio": {
+    "src": "/logos/unicorn-studio.webp",
+    "mode": "glyph",
+    "tone": "light",
+    "from": "icon"
+  },
+  "unlighthouse": {
+    "src": "/logos/unlighthouse.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "uselayouts": {
+    "src": "/logos/uselayouts.webp",
+    "mode": "tile",
+    "tone": "light",
+    "from": "manifest"
+  },
+  "vercel": {
+    "src": "/logos/vercel.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "viewport": {
+    "src": "/logos/viewport.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  },
+  "webflow": {
+    "src": "/logos/webflow.webp",
+    "mode": "tile",
+    "tone": "dark",
+    "from": "apple-touch-icon"
+  }
+}
