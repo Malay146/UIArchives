@@ -1,0 +1,566 @@
+{
+  "21st-dev": {
+    "src": "/snapshots/21st-dev.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "3dicons": {
+    "src": "/snapshots/3dicons.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "404s": {
+    "src": "/snapshots/404s.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "60fps": {
+    "src": "/snapshots/60fps.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "8bitcn": {
+    "src": "/snapshots/8bitcn.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "aceternity-ui": {
+    "src": "/snapshots/aceternity-ui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "aether-css": {
+    "src": "/snapshots/aether-css.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "aether-ui": {
+    "src": "/snapshots/aether-ui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "atipo-foundry": {
+    "src": "/snapshots/atipo-foundry.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "bnbicons": {
+    "src": "/snapshots/bnbicons.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "box-shadows": {
+    "src": "/snapshots/box-shadows.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "central-icons": {
+    "src": "/snapshots/central-icons.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "coolshapes": {
+    "src": "/snapshots/coolshapes.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "cotype-foundry": {
+    "src": "/snapshots/cotype-foundry.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "cta-gallery": {
+    "src": "/snapshots/cta-gallery.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "daisyui": {
+    "src": "/snapshots/daisyui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "design-spells": {
+    "src": "/snapshots/design-spells.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "dribbble": {
+    "src": "/snapshots/dribbble.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "efecto": {
+    "src": "/snapshots/efecto.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "elevenlabs-ui": {
+    "src": "/snapshots/elevenlabs-ui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "evil-charts": {
+    "src": "/snapshots/evil-charts.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "f37-foundry": {
+    "src": "/snapshots/f37-foundry.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "figma": {
+    "src": "/snapshots/figma.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "flaticon": {
+    "src": "/snapshots/flaticon.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "flyonui": {
+    "src": "/snapshots/flyonui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "font-awesome": {
+    "src": "/snapshots/font-awesome.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "fontshare": {
+    "src": "/snapshots/fontshare.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "framer": {
+    "src": "/snapshots/framer.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "framer-motion": {
+    "src": "/snapshots/framer-motion.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "free-faces": {
+    "src": "/snapshots/free-faces.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "fumadocs": {
+    "src": "/snapshots/fumadocs.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "glow-ui": {
+    "src": "/snapshots/glow-ui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "google-fonts": {
+    "src": "/snapshots/google-fonts.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "gsap": {
+    "src": "/snapshots/gsap.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "iconbuddy": {
+    "src": "/snapshots/iconbuddy.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "icons8": {
+    "src": "/snapshots/icons8.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "iconscout": {
+    "src": "/snapshots/iconscout.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "jitter": {
+    "src": "/snapshots/jitter.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "khroma": {
+    "src": "/snapshots/khroma.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "lighthouse": {
+    "src": "/snapshots/lighthouse.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "lineicons": {
+    "src": "/snapshots/lineicons.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "lottiefiles": {
+    "src": "/snapshots/lottiefiles.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "lucide": {
+    "src": "/snapshots/lucide.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "mage-icons": {
+    "src": "/snapshots/mage-icons.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "magic-ui": {
+    "src": "/snapshots/magic-ui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "make-it-animated": {
+    "src": "/snapshots/make-it-animated.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "meteor-icons": {
+    "src": "/snapshots/meteor-icons.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "minimal-gallery": {
+    "src": "/snapshots/minimal-gallery.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "mobbin": {
+    "src": "/snapshots/mobbin.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "mockuuups-studio": {
+    "src": "/snapshots/mockuuups-studio.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "motion-primitives": {
+    "src": "/snapshots/motion-primitives.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "mui": {
+    "src": "/snapshots/mui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "next-js": {
+    "src": "/snapshots/next-js.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "noisy-gradients": {
+    "src": "/snapshots/noisy-gradients.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "nucleo-app": {
+    "src": "/snapshots/nucleo-app.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "nuqs": {
+    "src": "/snapshots/nuqs.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "open-doodles": {
+    "src": "/snapshots/open-doodles.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "pangram-pangram-foundry": {
+    "src": "/snapshots/pangram-pangram-foundry.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "pattern-craft": {
+    "src": "/snapshots/pattern-craft.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "radix-ui": {
+    "src": "/snapshots/radix-ui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "react": {
+    "src": "/snapshots/react.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "react-haiku": {
+    "src": "/snapshots/react-haiku.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "react-scan": {
+    "src": "/snapshots/react-scan.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "reactbits": {
+    "src": "/snapshots/reactbits.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "recipes-build-ui": {
+    "src": "/snapshots/recipes-build-ui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "remix-icon": {
+    "src": "/snapshots/remix-icon.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "rive": {
+    "src": "/snapshots/rive.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "shadcn": {
+    "src": "/snapshots/shadcn.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "shadcn-studio": {
+    "src": "/snapshots/shadcn-studio.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "shadcnblocks": {
+    "src": "/snapshots/shadcnblocks.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "shadcnspace": {
+    "src": "/snapshots/shadcnspace.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "shadcnthemer": {
+    "src": "/snapshots/shadcnthemer.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "shader-gradient": {
+    "src": "/snapshots/shader-gradient.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "skiper-ui": {
+    "src": "/snapshots/skiper-ui.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "spline": {
+    "src": "/snapshots/spline.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "stackbits": {
+    "src": "/snapshots/stackbits.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "stacksorted": {
+    "src": "/snapshots/stacksorted.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "supahero": {
+    "src": "/snapshots/supahero.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "tabler-icons": {
+    "src": "/snapshots/tabler-icons.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "tailwind-css": {
+    "src": "/snapshots/tailwind-css.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "the-noun-project": {
+    "src": "/snapshots/the-noun-project.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "three-js": {
+    "src": "/snapshots/three-js.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "tweakcn": {
+    "src": "/snapshots/tweakcn.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "tympanus-codrops": {
+    "src": "/snapshots/tympanus-codrops.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "typescale": {
+    "src": "/snapshots/typescale.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "uibrik": {
+    "src": "/snapshots/uibrik.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "uiverse": {
+    "src": "/snapshots/uiverse.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "uncut-wtf": {
+    "src": "/snapshots/uncut-wtf.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "unicorn-studio": {
+    "src": "/snapshots/unicorn-studio.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "unlighthouse": {
+    "src": "/snapshots/unlighthouse.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "uselayouts": {
+    "src": "/snapshots/uselayouts.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "vercel": {
+    "src": "/snapshots/vercel.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "viewport": {
+    "src": "/snapshots/viewport.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  },
+  "webflow": {
+    "src": "/snapshots/webflow.webp",
+    "width": 1440,
+    "height": 900,
+    "checked": "2026-11-12"
+  }
+}

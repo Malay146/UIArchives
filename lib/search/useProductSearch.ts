@@ -1,12 +1,11 @@
-import { useState, useEffect, useRef, useMemo } from "react";
-import MiniSearch from "minisearch";
+import { useEffect, useMemo, useState } from "react";
+import MiniSearch, { type SearchOptions } from "minisearch";
 
 export interface BaseProduct {
   title?: string;
   description?: string;
   tag?: string | string[];
-  image?: string;
-  links?: any;
+  links?: { website?: string; [key: string]: string | undefined };
   [key: string]: any;
 }
 
@@ -17,99 +16,123 @@ export interface UseProductSearchReturn<T> {
   isSearching: boolean;
 }
 
+/** Lowercase, strip accents and possessives so "Café's" matches "cafe". */
+const normalize = (s: string) =>
+  s
+    .toLowerCase()
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/['’]s\b/g, "");
+
+const hostOf = (url?: string) => {
+  if (!url) return "";
+  try {
+    return new URL(url).hostname.replace(/^www\./, "").replace(/\.[a-z]+$/, "");
+  } catch {
+    return "";
+  }
+};
+
+type SearchDoc = {
+  id: number;
+  title: string;
+  host: string;
+  tag: string;
+  description: string;
+};
+
+const BOOST = { title: 6, host: 3, tag: 2, description: 1 };
+
+/** Typos are forgiven only on longer words, where they are unambiguous. */
+const fuzzy = (term: string) => (term.length >= 5 ? 0.2 : false);
+
+/**
+ * Ranked, client-side search. Precision first: every word must match
+ * (title, tags, domain or description). Only when that finds nothing does it
+ * forgive typos, and only then does it accept partial matches.
+ */
+export function createSearch<T extends BaseProduct>(products: T[]) {
+  const ms = new MiniSearch<SearchDoc>({
+    fields: ["title", "host", "tag", "description"],
+    processTerm: (term) => {
+      const t = normalize(term);
+      return t.length > 0 ? t : null;
+    },
+  });
+  ms.addAll(
+    products.map((p, id) => ({
+      id,
+      title: p.title ?? "",
+      // Domain for products, X handle for people.
+      host: [hostOf(p.links?.website), p.links?.twitter?.split("/").filter(Boolean).pop() ?? ""]
+        .join(" ")
+        .trim(),
+      tag: (Array.isArray(p.tag) ? p.tag : [p.tag ?? ""]).join(" "),
+      description: p.description ?? "",
+    })),
+  );
+
+  return (query: string): T[] => {
+    const q = query.trim();
+    if (!q) return products;
+
+    const nq = normalize(q);
+    const base: SearchOptions = {
+      boost: BOOST,
+      prefix: (term, i, terms) => i === terms.length - 1 || term.length >= 3,
+    };
+
+    // Title matches outrank everything: exact, then leading, then any word.
+    const tier = (title: string) => {
+      const t = normalize(title);
+      if (t === nq) return 0;
+      if (t.startsWith(nq)) return 1;
+      if (t.split(/[\s/._-]+/).some((w) => w.startsWith(nq))) return 2;
+      return 3;
+    };
+
+    const attempts: SearchOptions[] = [
+      { ...base, combineWith: "AND" },
+      { ...base, combineWith: "AND", fuzzy },
+      { ...base, combineWith: "OR", fuzzy },
+    ];
+
+    for (const opts of attempts) {
+      const hits = ms.search(q, opts);
+      if (hits.length) {
+        return hits
+          .map((h, rank) => {
+            const p = products[h.id];
+            const title = p?.title ?? "";
+            return { p, rank, tier: tier(title), len: title.length };
+          })
+          .sort(
+            (x, y) =>
+              x.tier - y.tier ||
+              (x.tier === 1 ? x.len - y.len : 0) ||
+              x.rank - y.rank,
+          )
+          .map((x) => x.p)
+          .filter((p): p is T => !!p);
+      }
+    }
+    return [];
+  };
+}
+
 export function useProductSearch<T extends BaseProduct>(
   products: T[],
 ): UseProductSearchReturn<T> {
   const [query, setQuery] = useState("");
-  const [debouncedQuery, setDebouncedQuery] = useState("");
-  const [isSearching, setIsSearching] = useState(false);
-  const miniSearchRef = useRef<MiniSearch<T & { _id: number }> | null>(null);
+  const [debounced, setDebounced] = useState("");
 
-  // We assign a stable _id to each product for MiniSearch since they might not have one.
-  const productsWithId = useMemo(() => {
-    return products.map((p, i) => ({ ...p, _id: i }));
-  }, [products]);
-
-  // Debounce the query input (300ms)
   useEffect(() => {
-    if (query !== debouncedQuery) {
-      setIsSearching(true);
-    }
+    const id = setTimeout(() => setDebounced(query), 80);
+    return () => clearTimeout(id);
+  }, [query]);
 
-    const handler = setTimeout(() => {
-      setDebouncedQuery(query);
-      setIsSearching(false);
-    }, 300);
+  const search = useMemo(() => createSearch(products), [products]);
+  const results = useMemo(() => search(debounced), [search, debounced]);
 
-    return () => clearTimeout(handler);
-  }, [query, debouncedQuery]);
-
-  // Derive results using MiniSearch, initializing lazily
-  const results = useMemo(() => {
-    const trimmedQuery = debouncedQuery.trim();
-
-    // If query is empty, return all products
-    if (!trimmedQuery) {
-      return products;
-    }
-
-    // Initialize index ONLY when search is first used
-    if (!miniSearchRef.current) {
-      miniSearchRef.current = new MiniSearch<T & { _id: number }>({
-        idField: "_id",
-        fields: ["title", "tag", "description"],
-        storeFields: ["title", "description", "tag", "image", "links"],
-        extractField: (document, fieldName) => {
-          // Enhance tag extraction to properly join arrays (if tag is an array)
-          if (fieldName === "tag" && Array.isArray(document.tag)) {
-            return document.tag.join(" ");
-          }
-          return document[fieldName];
-        },
-        searchOptions: {
-          boost: { title: 3, tag: 2, description: 2 },
-          prefix: true,
-          fuzzy: 0.2, // use fuzzy search as fallback and main search
-        },
-      });
-
-      // Build index in memory from the products array
-      if (productsWithId.length > 0) {
-        miniSearchRef.current.addAll(productsWithId);
-      }
-    }
-
-    // Execute strict search first (main search)
-    let searchResults = miniSearchRef.current.search(trimmedQuery, {
-      prefix: true,
-      boost: { title: 3, tag: 2, description: 2 },
-    });
-
-    // Use fuzzy search as fallback if no results are found
-    if (searchResults.length === 0) {
-      searchResults = miniSearchRef.current.search(trimmedQuery, {
-        prefix: true,
-        fuzzy: 0.2,
-        boost: { title: 3, tag: 2, description: 2 },
-      });
-    }
-
-    // Map search results back to original product objects
-    // Using an array look up since we used numerical index as _id
-    return searchResults
-      .map((res) => products[res.id])
-      .filter((p): p is T => p !== undefined);
-  }, [debouncedQuery, products, productsWithId]);
-
-  // Clean up if products change significantly
-  useEffect(() => {
-    // Relying on the ref to hold the singleton indefinitely unless unmounted.
-  }, [products]);
-
-  return {
-    query,
-    setQuery,
-    results,
-    isSearching,
-  };
+  return { query, setQuery, results, isSearching: query !== debounced };
 }

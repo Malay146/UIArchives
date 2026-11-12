@@ -1,33 +1,37 @@
-import type { Metadata } from "next";
-import { Inter, Inria_Serif, Instrument_Serif } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
-import SmoothScroll from "@/components/smooth-scroll";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
+import { SoundProvider } from "@/components/site/sound-provider";
+import { CommandMenu } from "@/components/command/command-menu";
+import { getAllPosts } from "@/lib/blog";
 
 // -------------------------------
-// Fonts
+// Fonts — Geist only
 // -------------------------------
-const inter = Inter({
+const geistSans = Geist({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-geist-sans",
+  weight: ["400", "500"],
   display: "swap",
 });
 
-const inriaSerif = Inria_Serif({
+const geistMono = Geist_Mono({
   subsets: ["latin"],
-  variable: "--font-inria-serif",
-  weight: ["300", "400", "700"],
+  variable: "--font-geist-mono",
+  weight: ["400", "500"],
   display: "swap",
 });
 
-const instrumentSerif = Instrument_Serif({
-  subsets: ["latin"],
-  variable: "--font-instrument-serif",
-  weight: ["400"],
-  display: "swap",
-});
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#ffffff" },
+    { media: "(prefers-color-scheme: dark)", color: "#000000" },
+  ],
+};
+
+// Applies the saved or system theme before first paint, so there is no flash.
+const themeScript = `(function(){try{var t=localStorage.getItem("theme");if(t!=="light"&&t!=="dark"){t=matchMedia("(prefers-color-scheme: dark)").matches?"dark":"light"}document.documentElement.dataset.theme=t}catch(e){document.documentElement.dataset.theme="light"}})()`;
 
 // -------------------------------
 // Environment Variables
@@ -40,7 +44,7 @@ const GOOGLE_VERIFICATION = process.env.NEXT_PUBLIC_GOOGLE_VERIFICATION;
 // -------------------------------
 export const metadata: Metadata = {
   title:
-    "UIArchives – Curated UI Components, Design Tools & Frontend Resources",
+    "UIArchives — An index for people who make interfaces",
   description:
     "Discover the best UI components, frameworks, and design tools for modern developers and designers. Explore curated resources to build beautiful, responsive, and consistent interfaces faster.",
 
@@ -96,8 +100,8 @@ export const metadata: Metadata = {
 
   icons: {
     icon: [
-      { url: "/faviconlight.png", media: "(prefers-color-scheme: light)" },
-      { url: "/favicondark.png", media: "(prefers-color-scheme: dark)" },
+      { url: "/faviconLight.png", media: "(prefers-color-scheme: light)" },
+      { url: "/faviconDark.png", media: "(prefers-color-scheme: dark)" },
     ],
     shortcut: "/favicon.ico",
     apple: "/favicon.ico",
@@ -123,8 +127,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" data-scroll-behavior="smooth" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
+        <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         {/* ✅ Manual Meta Description (Visible to Lighthouse) */}
         <meta
           name="description"
@@ -160,14 +165,19 @@ export default function RootLayout({
         </Script>
       </head>
 
-      <body
-        className={`${inter.variable} ${inriaSerif.variable} ${instrumentSerif.variable} antialiased selection:bg-zinc-300 selection:text-zinc-950`}
-      >
-        {/* <SmoothScroll> */}
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
-        <Analytics />
-        <SpeedInsights />
-        {/* </SmoothScroll> */}
+        <SoundProvider />
+        <CommandMenu
+          posts={getAllPosts().map((p) => ({
+            slug: p.slug,
+            title: p.frontmatter.title,
+            category: p.frontmatter.category,
+            date: p.frontmatter.date,
+            description: p.frontmatter.description || p.frontmatter.excerpt || "",
+            readingTime: p.readingTime,
+          }))}
+        />
       </body>
     </html>
   );

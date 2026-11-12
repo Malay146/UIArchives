@@ -5,7 +5,7 @@ export default function robots(): MetadataRoute.Robots {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/api/", "/admin/", "/private/"], // Common private routes
+      disallow: ["/api/"],
     },
     sitemap: "https://uiarchives.com/sitemap.xml",
   };
