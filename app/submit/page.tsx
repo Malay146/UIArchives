@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
-import { ArrowUpRightGlyph18, CheckGlyph18 } from "@/components/icons";
+import { ArrowUpRightGlyph18, CheckGlyph18, EnvelopeCheckGlyph18, EyeGlyph18, LinkGlyph18 } from "@/components/icons";
 import { SectionIcon } from "@/components/site/section-icon";
 import { SECTION_ORDER, SECTION_SCHEMAS } from "@/lib/section-schemas";
 
@@ -22,9 +22,9 @@ const NEEDS: Record<string, string> = {
 };
 
 const STEPS = [
-  { title: "Submit", body: "Pick a section and share the link. It takes a minute." },
-  { title: "Reviewed by hand", body: "Every entry is opened, checked and described in plain words." },
-  { title: "Hear back", body: "You get an email when it's published — or why it wasn't." },
+  { title: "Share the link", body: "Pick a section and paste the link. It takes a minute.", Icon: LinkGlyph18 },
+  { title: "Reviewed by hand", body: "Every entry is opened, checked and described in plain words.", Icon: EyeGlyph18 },
+  { title: "Hear back", body: "You get an email when it's published — or a note on why it wasn't.", Icon: EnvelopeCheckGlyph18 },
 ];
 
 export default function Page() {
@@ -71,14 +71,21 @@ export default function Page() {
         </ul>
 
         <section className="mt-14">
-          <h2 className="mb-4 text-fg-3">How it works</h2>
-          <ol className="border-t">
-            {STEPS.map((step, i) => (
-              <li key={step.title} className="flex items-start gap-4 border-b py-4 sm:px-3">
-                <span className="mt-px grid size-6 shrink-0 place-items-center rounded-full bg-fg text-[12px] font-medium text-bg tabular-nums">{i + 1}</span>
-                <span className="min-w-0">
-                  <span className="block font-medium">{step.title}</span>
-                  <span className="mt-0.5 block text-fg-2">{step.body}</span>
+          <h2 className="mb-5 text-fg-3">How it works</h2>
+          <ol>
+            {STEPS.map(({ title, body, Icon }, i) => (
+              <li key={title} className="relative flex gap-4 pb-7 last:pb-0">
+                {/* The line joining this step to the next. */}
+                {i < STEPS.length - 1 && (
+                  <span aria-hidden="true" className="absolute top-10 bottom-1 left-[17px] w-px bg-[var(--line-strong)]" />
+                )}
+                <span className="relative grid size-9 shrink-0 place-items-center rounded-full bg-hover text-fg shadow-[0_0_0_1px_var(--line-strong)]">
+                  <Icon aria-hidden="true" className="size-4" />
+                </span>
+                <span className="min-w-0 pt-0.5">
+                  <span className="block text-[12px] text-fg-3 tabular-nums">Step {i + 1}</span>
+                  <span className="block font-medium">{title}</span>
+                  <span className="mt-0.5 block text-fg-2">{body}</span>
                 </span>
               </li>
             ))}

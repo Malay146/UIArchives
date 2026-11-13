@@ -26,3 +26,6 @@ export { ChevronDownGlyph18 } from "./ChevronDownGlyph18";
 export { CheckGlyph18 } from "./CheckGlyph18";
 export { GlobeGlyph18 } from "./GlobeGlyph18";
 export { XTwitterGlyph32 } from "./XTwitterGlyph32";
+export { LinkGlyph18 } from "./LinkGlyph18";
+export { EyeGlyph18 } from "./EyeGlyph18";
+export { EnvelopeCheckGlyph18 } from "./EnvelopeCheckGlyph18";

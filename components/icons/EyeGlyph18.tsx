@@ -1,0 +1,9 @@
+import type { SVGProps } from "react";
+
+export type EyeGlyph18Props = SVGProps<SVGSVGElement>;
+
+export function EyeGlyph18(props: EyeGlyph18Props) {
+  return (
+    <svg xmlns="http://www.w3.org/2000/svg" width={18} height={18} viewBox="0 0 18 18" {...props}><path d="M16.6085 7.51709C15.547 5.64359 13.1476 3 9.00008 3C4.85258 3 2.45318 5.64359 1.39218 7.51709C0.865777 8.44579 0.865777 9.55421 1.39168 10.4829C2.45318 12.3564 4.85258 15 9.00008 15C13.1476 15 15.547 12.3564 16.608 10.4829C17.1344 9.55471 17.1344 8.44579 16.6085 7.51709ZM9.00008 12C7.34328 12 6.00008 10.6569 6.00008 9C6.00008 7.3431 7.34328 6 9.00008 6C10.6569 6 12.0001 7.3431 12.0001 9C12.0001 10.6569 10.657 12 9.00008 12Z" fill="currentColor"></path></svg>
+  );
+}
