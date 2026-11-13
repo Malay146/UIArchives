@@ -4,8 +4,11 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { type Facet, useCollection } from "@/lib/use-collection";
 import { FilterBar } from "./filter-bar";
+import { Masonry, type MasonryColumns } from "./masonry";
 import { Sheet } from "@/components/ui/sheet";
 import { MagnifierGlyph18 } from "@/components/icons";
+
+const ALL = "All";
 
 type Props<T> = {
   items: T[];
@@ -17,8 +20,12 @@ type Props<T> = {
   noun: [string, string];
   layout:
     | { kind: "grid"; columns: string; tile: (item: T) => React.ReactNode }
+    /** Row-first masonry: tiles keep their own height (see Masonry). */
+    | { kind: "masonry"; columns: MasonryColumns; ratio: (item: T) => number; tile: (item: T) => React.ReactNode }
     | { kind: "list"; header: React.ReactNode; row: (item: T) => React.ReactNode };
   detail: (item: T, helpers: { list: T[]; open: (item: T) => void }) => React.ReactNode;
+  /** Media-first viewer: rendered centred on a dark stage, with `detail` in a right sidebar. */
+  stage?: (item: T) => React.ReactNode;
   /** Shown when the collection has nothing in it yet. */
   empty: { title: string; body: string };
 };
@@ -28,7 +35,7 @@ type Props<T> = {
  * content in the middle, details in a sheet. One structure everywhere, so
  * moving between sections never asks people to relearn anything.
  */
-export function CollectionView<T>({ items, facets, text, getKey, noun, layout, detail, empty }: Props<T>) {
+export function CollectionView<T>({ items, facets, text, getKey, noun, layout, detail, stage, empty }: Props<T>) {
   const c = useCollection({ items, facets, text });
   const [open, setOpen] = useState<T | null>(null);
   const [frozen, setFrozen] = useState<T[]>([]);
@@ -122,9 +129,12 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
           <FilterBar
             groups={c.groups.map((g) => ({
               ...g,
-              options: g.options.map((o) => ({ ...o, disabled: !o.active && o.count === 0 })),
+              options: [
+                ...(g.exclusive ? [{ value: ALL, count: g.total, active: g.active === 0 }] : []),
+                ...g.options.map((o) => ({ ...o, disabled: !o.active && o.count === 0 })),
+              ],
             }))}
-            onToggle={c.toggle}
+            onToggle={(key, value) => (value === ALL ? c.clearGroup(key) : c.toggle(key, value))}
             onClear={c.clearGroup}
           />
         )}
@@ -145,6 +155,23 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
               Reset search and filters
             </button>
           </div>
+        ) : layout.kind === "masonry" ? (
+          <Masonry
+            items={c.results}
+            columns={layout.columns}
+            ratio={layout.ratio}
+            getKey={getKey}
+            render={(item) => (
+              <button
+                type="button"
+                aria-haspopup="dialog"
+                onClick={() => openItem(item)}
+                className="group block w-full text-left outline-none"
+              >
+                {layout.tile(item)}
+              </button>
+            )}
+          />
         ) : layout.kind === "grid" ? (
           <ul className={`grid gap-x-4 gap-y-8 px-4 py-6 sm:px-6 ${layout.columns}`}>
             {c.results.map((item) => (
@@ -182,7 +209,7 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
         )}
       </section>
 
-      <Sheet item={open} list={frozen} onSelect={openItem} onClose={close}>
+      <Sheet item={open} list={frozen} onSelect={openItem} onClose={close} stage={stage}>
         {(item) => detail(item, { list: frozen, open: openItem })}
       </Sheet>
     </div>

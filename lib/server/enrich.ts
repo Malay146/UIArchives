@@ -26,8 +26,9 @@ async function json<T>(url: string, init?: RequestInit): Promise<T | null> {
 type XVariant = { content_type: string; url: string; bitrate?: number };
 type XTweet = {
   text?: string;
-  user?: { name: string; screen_name: string };
-  mediaDetails?: { type: string; media_url_https: string; video_info?: { variants: XVariant[] } }[];
+  created_at?: string;
+  user?: { name: string; screen_name: string; profile_image_url_https?: string };
+  mediaDetails?: { type: string; media_url_https: string; original_info?: { width: number; height: number }; video_info?: { variants: XVariant[] } }[];
 };
 
 /** The token embeds use for a status id (same scheme as Vercel's react-tweet). */
@@ -48,8 +49,13 @@ export async function xPost(url: string) {
     authorName: t.user.name,
     authorHandle: `@${t.user.screen_name}`,
     text: t.text ?? "",
+    postedAt: t.created_at ? new Date(t.created_at).toISOString().slice(0, 10) : undefined,
+    // Full-size avatar rather than the 48 px "_normal" one.
+    avatar: t.user.profile_image_url_https?.replace("_normal.", "_400x400."),
     video: mp4?.url,
     poster: media?.media_url_https,
+    width: media?.original_info?.width,
+    height: media?.original_info?.height,
   };
 }
 
@@ -116,14 +122,24 @@ export async function enrich(section: SectionKey, data: ItemData, id: string): P
     if ((d[k] === undefined || d[k] === "" || (Array.isArray(d[k]) && !d[k]!.length)) && v) d[k] = v as string;
   };
 
-  if (section === "motion" && d.post) {
+  if (section === "designs" && d.post) {
     const x = await xPost(String(d.post));
     if (x) {
       fill("authorName", x.authorName);
       fill("authorHandle", x.authorHandle);
-      fill("title", x.text.replace(/https:\/\/t\.co\/\S+/g, "").trim().slice(0, 80));
-      if (!d.video && x.video) d.video = x.video; // streamed from X's CDN, credited and linked
-      if (x.poster) fill("poster", x.poster);
+      const caption = x.text.replace(/https:\/\/t\.co\/\S+/g, "").trim();
+      fill("title", caption.slice(0, 80));
+      fill("caption", caption);
+      fill("postedAt", x.postedAt);
+      if (x.width && x.height) {
+        fill("width", String(x.width));
+        fill("height", String(x.height));
+      }
+      // X's CDN refuses playback embedded on other sites, so keep our own copy
+      // (credited and linked to the post). Fall back to X's URL if copying fails.
+      if (!d.video && x.video) d.video = await storeRemote(`designs/${id}`, x.video, 20).catch(() => x.video);
+      if (!d.poster && x.poster) d.poster = await storeRemote(`designs/${id}`, x.poster).catch(() => x.poster);
+      if (!d.authorAvatar && x.avatar) d.authorAvatar = await storeRemote(`designs/${id}`, x.avatar).catch(() => x.avatar);
     }
   }
 

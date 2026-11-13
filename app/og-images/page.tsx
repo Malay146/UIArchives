@@ -28,7 +28,9 @@ export default async function Page() {
               { label: "Light / Dark", value: `${light} / ${ogImages.length - light}` },
             ]}
           >
-            <Link href="/submit/og-images" className="link text-fg-2 hover:text-fg">
+            <Link href="/submit/og-images"
+              className="press inline-flex h-8 items-center rounded-md bg-fg px-3 font-medium text-bg transition-opacity hover:opacity-85"
+            >
               Submit an OG image
             </Link>
           </SectionIntro>

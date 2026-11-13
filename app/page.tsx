@@ -16,7 +16,7 @@ export default async function Home() {
         <ArchiveShell active="resources">
           <SectionIntro
             title="An archive for people who make interfaces."
-            blurb="Resources, motion studies, OG images, app icons and agent skills — the things designers and engineers reach for, kept in one quiet place. Every entry is chosen by hand."
+            blurb="Resources, design videos, OG images, app icons and agent skills — the things designers and engineers reach for, kept in one quiet place. Every entry is chosen by hand."
             facts={[
               { label: "Resources", value: cardData.length },
               { label: "Categories", value: CATEGORIES.length },

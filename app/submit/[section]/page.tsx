@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { SubmitForm } from "@/components/submit/submit-form";
@@ -17,12 +17,13 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { section } = await params;
+  if (section === "motion") redirect("/submit/designs"); // old name
   if (!isSectionKey(section)) notFound();
   const schema = SECTION_SCHEMAS[section];
   return (
     <>
       <Header />
-      <main className="mx-auto grid max-w-[1200px] gap-14 px-4 pt-12 sm:px-6 sm:pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-24">
+      <main className="mx-auto grid max-w-[1600px] gap-14 px-4 pt-12 sm:px-6 sm:pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-24">
         <div className="max-w-[400px]">
           <Link href="/submit" className="press -ml-1 inline-flex items-center gap-1.5 p-1 text-fg-2 transition-colors hover:text-fg">
             <ArrowLeftGlyph18 aria-hidden="true" className="size-3" /> All sections

@@ -1,5 +1,6 @@
 "use client";
 
+import { shortAppName } from "@/lib/app-name";
 import { CollectionView } from "@/components/collection/collection-view";
 import { PrimaryLink, CopyButton } from "@/components/collection/copy-button";
 import { SheetRow, SheetSection, SheetTags } from "@/components/ui/sheet";
@@ -21,7 +22,7 @@ const SQUIRCLE = "rounded-[22.37%]";
 
 function Icon({ icon, className }: { icon: AppIcon; className: string }) {
   return (
-    <span className={`relative block overflow-hidden ${SQUIRCLE} shadow-[0_0_0_0.5px_var(--line-strong)] ${className}`}>
+    <span className={`relative block aspect-square overflow-hidden bg-hover ${SQUIRCLE} ${className}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={icon.image} alt="" loading="lazy" decoding="async" className="block size-full object-cover" />
     </span>
@@ -38,11 +39,11 @@ export function AppIcons({ items }: { items: AppIcon[] }) {
       noun={["icon", "icons"]}
       layout={{
         kind: "grid",
-        columns: "grid-cols-3 sm:grid-cols-4 md:grid-cols-5 xl:grid-cols-7",
+        columns: "grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-6 xl:grid-cols-8",
         tile: (i) => (
           <span className="flex flex-col items-center gap-2 text-center">
             <Icon icon={i} className="w-full max-w-[96px] transition-transform duration-200 ease-out group-hover:-translate-y-0.5" />
-            <span className="w-full truncate text-[13px]">{i.name}</span>
+            <span className="w-full truncate text-[13px]">{shortAppName(i.name)}</span>
           </span>
         ),
       }}
@@ -55,7 +56,7 @@ export function AppIcons({ items }: { items: AppIcon[] }) {
           <div className="grid place-items-center rounded-lg bg-hover py-14">
             <Icon icon={i} className="size-40" />
           </div>
-          <h2 id="sheet-title" className="mt-6 text-[17px] font-medium tracking-[-0.01em]">{i.name}</h2>
+          <h2 id="sheet-title" className="mt-6 text-[17px] font-medium tracking-[-0.01em]">{shortAppName(i.name)}</h2>
           <p className="mt-1 text-fg-2">{i.developer}</p>
           <div className="mt-6 flex flex-wrap gap-2">
             <PrimaryLink href={i.link}>
@@ -77,6 +78,7 @@ export function AppIcons({ items }: { items: AppIcon[] }) {
           </SheetSection>
           <SheetSection title="Details">
             <dl className="border-t">
+              {shortAppName(i.name) !== i.name && <SheetRow label="App Store name">{i.name}</SheetRow>}
               <SheetRow label="Style"><SheetTags tags={i.style} /></SheetRow>
               <SheetRow label="Colour"><SheetTags tags={i.color} /></SheetRow>
               <SheetRow label="Category">{i.category}</SheetRow>

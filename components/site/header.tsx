@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 import { SoundToggle } from "./sound-toggle";
+import { GithubStar } from "./github-star";
 import { CommandTrigger } from "@/components/command/command-menu";
 import { SECTIONS } from "@/lib/sections";
 
@@ -35,7 +36,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 border-b bg-bg/85 backdrop-blur-md backdrop-saturate-150">
-      <div className="mx-auto flex h-12 max-w-[1200px] items-center gap-8 px-4 sm:px-6">
+      <div className="mx-auto flex h-12 max-w-[1600px] items-center gap-8 px-4 sm:px-6">
         <Logo />
         <div className="ml-auto flex items-center gap-3.5 sm:gap-5">
           <Link
@@ -46,6 +47,7 @@ export function Header() {
             Journal
           </Link>
           <CommandTrigger />
+          <GithubStar />
           <span className="hidden h-3.5 w-px bg-line-strong sm:block" aria-hidden="true" />
           <div className="flex items-center gap-3.5 sm:gap-4">
             <SoundToggle />

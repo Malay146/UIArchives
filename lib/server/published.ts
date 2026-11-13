@@ -1,6 +1,6 @@
 import { approvedItems } from "./db";
 import { resources as staticResources } from "@/lib/resources";
-import { motionClips, type MotionClip } from "@/data/collections/motion";
+import { designClips, type DesignClip } from "@/data/collections/designs";
 import { ogImages, type OgImage } from "@/data/collections/og-images";
 import { appIcons, type AppIcon } from "@/data/collections/app-icons";
 import { skills, type Skill } from "@/data/collections/skills";
@@ -35,13 +35,17 @@ export async function getResources(): Promise<UiCardData[]> {
   return [...staticResources, ...extra.filter((r) => !seen.has(r.title.toLowerCase()))];
 }
 
-export async function getMotion(): Promise<MotionClip[]> {
-  const extra = (await approvedItems("motion")).map((it): MotionClip => {
+export async function getDesigns(): Promise<DesignClip[]> {
+  const extra = (await approvedItems("designs")).map((it): DesignClip => {
     const d = it.data;
     return {
       id: `m-${it.id}`,
       title: s(d, "title"),
-      author: { name: s(d, "authorName") || s(d, "authorHandle"), handle: s(d, "authorHandle").replace(/^@/, "") },
+      author: {
+        name: s(d, "authorName") || s(d, "authorHandle"),
+        handle: s(d, "authorHandle").replace(/^@/, ""),
+        avatar: s(d, "authorAvatar") || undefined,
+      },
       post: s(d, "post"),
       video: s(d, "video"),
       poster: s(d, "poster"),
@@ -49,10 +53,14 @@ export async function getMotion(): Promise<MotionClip[]> {
       platform: a(d, "platform"),
       stack: a(d, "stack"),
       added: iso(it.reviewed_at),
+      posted: s(d, "postedAt") || undefined,
+      width: Number(s(d, "width")) || undefined,
+      height: Number(s(d, "height")) || undefined,
+      caption: s(d, "caption") || undefined,
       note: s(d, "note") || undefined,
     };
   });
-  return [...extra, ...motionClips];
+  return [...extra, ...designClips];
 }
 
 export async function getOgImages(): Promise<OgImage[]> {
@@ -118,6 +126,6 @@ export async function getSkills(): Promise<Skill[]> {
 }
 
 export async function getSectionCounts(): Promise<Record<SectionKey, number>> {
-  const [r, m, o, ai, sk] = await Promise.all([getResources(), getMotion(), getOgImages(), getAppIcons(), getSkills()]);
-  return { resources: r.length, motion: m.length, "og-images": o.length, "app-icons": ai.length, skills: sk.length };
+  const [r, m, o, ai, sk] = await Promise.all([getResources(), getDesigns(), getOgImages(), getAppIcons(), getSkills()]);
+  return { resources: r.length, designs: m.length, "og-images": o.length, "app-icons": ai.length, skills: sk.length };
 }

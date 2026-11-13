@@ -7,11 +7,11 @@
  * Client-safe: no server imports.
  */
 import { CATEGORIES } from "@/types/resource";
-import { MOTION_KINDS, MOTION_PLATFORMS } from "@/data/collections/motion";
+import { DESIGN_TYPES, DESIGN_PLATFORMS } from "@/data/collections/designs";
 import { ICON_COLORS, ICON_STYLES } from "@/data/collections/app-icons";
 import { OG_STYLES, OG_THEMES } from "@/data/collections/og-images";
 
-export type SectionKey = "resources" | "motion" | "og-images" | "app-icons" | "skills";
+export type SectionKey = "resources" | "designs" | "og-images" | "app-icons" | "skills";
 
 export type FieldType = "text" | "url" | "textarea" | "select" | "multiselect" | "tags" | "file";
 
@@ -59,21 +59,21 @@ export const SECTION_SCHEMAS: Record<SectionKey, SectionSchema> = {
       { key: "tags", label: "Tags", type: "tags", hint: "Comma separated, e.g. React, Open Source" },
     ],
   },
-  motion: {
-    key: "motion",
-    label: "Motion",
-    noun: "clip",
-    intro: "An interaction or animation worth studying. Paste the X post — the video and maker are pulled in for you.",
+  designs: {
+    key: "designs",
+    label: "Designs",
+    noun: "design",
+    intro: "A design video worth studying — a component, exploration, landing page and more. Paste the X post — the video and maker are pulled in for you.",
     dedupeField: "post",
     titleField: "title",
     fields: [
       { key: "post", label: "X post", type: "url", required: true, placeholder: "https://x.com/…/status/…" },
-      { key: "title", label: "What it shows", type: "text", required: true, placeholder: "e.g. Morphing toolbar" },
+      { key: "title", label: "What it shows", type: "text", required: true, placeholder: "e.g. Pricing page exploration" },
       { key: "authorName", label: "Maker", type: "text", placeholder: "Filled from the post if empty" },
       { key: "authorHandle", label: "Maker's X handle", type: "text", placeholder: "@handle" },
-      { key: "kind", label: "Interaction", type: "multiselect", required: true, options: MOTION_KINDS },
-      { key: "platform", label: "Platform", type: "multiselect", required: true, options: MOTION_PLATFORMS },
-      { key: "stack", label: "Built with", type: "tags", hint: "If known, e.g. Motion, GSAP, SwiftUI" },
+      { key: "kind", label: "Category", type: "multiselect", required: true, options: DESIGN_TYPES, hint: "Pick one or two" },
+      { key: "platform", label: "Platform", type: "multiselect", required: true, options: DESIGN_PLATFORMS },
+      { key: "stack", label: "Built with", type: "tags", hint: "If known, e.g. Figma, Framer, SwiftUI" },
       { key: "note", label: "Why it works", type: "textarea", placeholder: "Optional — what makes it good" },
       { key: "video", label: "Video file", type: "file", accept: "video/mp4,video/webm", maxMb: 10, hint: "Optional if the X post has the video" },
     ],
@@ -132,7 +132,7 @@ export const SECTION_SCHEMAS: Record<SectionKey, SectionSchema> = {
   },
 };
 
-export const SECTION_ORDER: SectionKey[] = ["resources", "motion", "og-images", "app-icons", "skills"];
+export const SECTION_ORDER: SectionKey[] = ["resources", "designs", "og-images", "app-icons", "skills"];
 
 export const isSectionKey = (v: unknown): v is SectionKey =>
   typeof v === "string" && v in SECTION_SCHEMAS;

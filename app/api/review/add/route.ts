@@ -5,7 +5,7 @@ import { SECTION_SCHEMAS, dedupeKey } from "@/lib/section-schemas";
 
 /**
  * Admin-only quick add: paste a link, the section is inferred (X post →
- * Motion, App Store → App Icons, GitHub → Skills, anything else → Resources),
+ * Designs, App Store → App Icons, GitHub → Skills, anything else → Resources),
  * details are filled from official sources, and it lands in the queue.
  */
 export async function POST(req: Request) {
@@ -18,7 +18,7 @@ export async function POST(req: Request) {
     return Response.json({ error: "Paste a full link." }, { status: 400 });
   }
   const key = dedupeKey(u.href);
-  const section = key.startsWith("x:") ? "motion" : key.startsWith("appstore:") ? "app-icons" : u.hostname === "github.com" ? "skills" : "resources";
+  const section = key.startsWith("x:") ? "designs" : key.startsWith("appstore:") ? "app-icons" : u.hostname === "github.com" ? "skills" : "resources";
   const field = SECTION_SCHEMAS[section].dedupeField;
   const data = await enrich(section, { [field]: u.href }, crypto.randomUUID().slice(0, 8));
   const item = await createItem({ section, data, source: "automation", origin: "manual" });

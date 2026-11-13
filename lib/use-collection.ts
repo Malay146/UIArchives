@@ -12,10 +12,15 @@ export type Facet<T> = {
   get: (item: T) => string[];
   /** Fixed display order; values not listed are appended alphabetically. */
   order?: string[];
+  /**
+   * One choice at a time, with an "All" option and every value in `order`
+   * always listed (even before anything is filed under it).
+   */
+  exclusive?: boolean;
 };
 
 export type FacetOption = { value: string; count: number; active: boolean };
-export type FacetGroup = { key: string; label: string; options: FacetOption[]; active: number };
+export type FacetGroup = { key: string; label: string; options: FacetOption[]; active: number; exclusive?: boolean; total: number };
 
 const norm = (s: string) =>
   s.toLowerCase().normalize("NFKD").replace(/[̀-ͯ]/g, "");
@@ -98,6 +103,7 @@ export function useCollection<T>({
       facets.map((f) => {
         const pool = items.filter((i) => matchesQuery(i) && matchesFacets(i, f.key));
         const counts = new Map<string, number>();
+        if (f.exclusive) for (const v of f.order ?? []) counts.set(v, 0);
         for (const i of items) for (const v of f.get(i)) if (!counts.has(v)) counts.set(v, 0);
         for (const i of pool) for (const v of new Set(f.get(i))) counts.set(v, (counts.get(v) ?? 0) + 1);
         const order = f.order ?? [];
@@ -112,6 +118,8 @@ export function useCollection<T>({
           key: f.key,
           label: f.label,
           active: active.length,
+          exclusive: f.exclusive,
+          total: pool.length,
           options: values.map((value) => ({
             value,
             count: counts.get(value) ?? 0,
@@ -122,13 +130,19 @@ export function useCollection<T>({
     [facets, items, matchesQuery, matchesFacets, selected],
   );
 
-  const toggle = useCallback((key: string, value: string) => {
-    setSelected((s) => {
-      const cur = s[key] ?? [];
-      const next = cur.includes(value) ? cur.filter((v) => v !== value) : [...cur, value];
-      return { ...s, [key]: next };
-    });
-  }, []);
+  const toggle = useCallback(
+    (key: string, value: string) => {
+      const exclusive = facets.find((f) => f.key === key)?.exclusive;
+      setSelected((s) => {
+        const cur = s[key] ?? [];
+        const next = exclusive
+          ? cur.includes(value) ? [] : [value]
+          : cur.includes(value) ? cur.filter((v) => v !== value) : [...cur, value];
+        return { ...s, [key]: next };
+      });
+    },
+    [facets],
+  );
 
   const clearGroup = useCallback((key: string) => setSelected((s) => ({ ...s, [key]: [] })), []);
   const clearAll = useCallback(() => {
