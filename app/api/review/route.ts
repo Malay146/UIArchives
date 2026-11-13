@@ -2,6 +2,7 @@ import { env } from "@/lib/server/env";
 import { getAdmin, sameOrigin } from "@/lib/server/auth";
 import { getItem, reviewItem } from "@/lib/server/db";
 import { storeRemote } from "@/lib/server/media";
+import { resourceMedia } from "@/lib/server/enrich";
 import { layout, sendMail } from "@/lib/server/email";
 import { SECTION_SCHEMAS, validate } from "@/lib/section-schemas";
 
@@ -34,6 +35,10 @@ export async function POST(req: Request) {
     if (errors.length) return fail(errors[0]);
     // Keep extra enrichment fields (poster, pageTitle, …) that aren't form fields.
     data = { ...item.data, ...clean };
+    // Resources: make sure the logo and preview were fetched (older or hand-added entries).
+    if (item.section === "resources" && (!data.logo || !data.image)) {
+      Object.assign(data, await resourceMedia(data, item.id).catch(() => ({})));
+    }
     for (const k of ["image"]) {
       const v = data[k];
       if (typeof v === "string" && /^https?:\/\//.test(v)) {

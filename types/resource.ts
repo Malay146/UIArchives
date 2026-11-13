@@ -4,6 +4,10 @@ export interface UiCardData {
   tag: string | string[];
   image?: string;
   imageLink?: string;
+  /** Approved entries: logo, headline and description fetched from the site. */
+  logo?: string;
+  headline?: string;
+  metaDescription?: string;
   links?: {
     website?: string;
     github?: string;

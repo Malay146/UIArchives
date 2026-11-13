@@ -90,7 +90,11 @@ function Details({
   const social = isSocial(r);
   const href = primaryHref(r);
   const label = linkLabel(r);
-  const meta = META[logoKey(r)];
+  const meta =
+    META[logoKey(r)] ??
+    (r.headline || r.metaDescription
+      ? { title: r.headline ?? "", description: r.metaDescription ?? "", headline: r.headline ?? "", checked: "" }
+      : undefined);
   const snap = SNAPS[logoKey(r)];
   // Landing snapshot first; otherwise the preview image stored with the entry.
   const preview = snap

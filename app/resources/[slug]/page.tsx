@@ -59,8 +59,13 @@ export default async function Page({ params }: Props) {
   if (!hit) notFound();
   const r = hit.item;
   const key = logoKey(r);
-  const meta = META[key];
-  const snap = SNAPS[key];
+  const meta =
+    META[key] ??
+    (r.headline || r.metaDescription
+      ? { title: r.headline ?? "", description: r.metaDescription ?? "", headline: r.headline ?? "", checked: "" }
+      : undefined);
+  // Built-in entries have a landing-page snapshot; approved ones use the site's preview image.
+  const snap = SNAPS[key] ?? (r.image ? { src: r.image, width: 1200, height: 630 } : undefined);
   const social = isSocial(r);
   const primary = primaryCategory(r);
   const cats = categoriesOf(r);

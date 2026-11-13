@@ -25,12 +25,22 @@ export function Logo({
   resource,
   className = "size-5",
 }: {
-  resource: Pick<UiCardData, "title">;
+  resource: Pick<UiCardData, "title" | "logo">;
   className?: string;
 }) {
   const info = MANIFEST[logoKey(resource)];
   const round = info?.shape === "circle" ? "rounded-full" : "rounded-[4px]";
   const frame = `${className} relative shrink-0 overflow-hidden ${round} shadow-[0_0_0_0.5px_var(--line-strong)]`;
+
+  // Approved entries carry a logo fetched from their site.
+  if (!info && resource.logo) {
+    return (
+      <span aria-hidden="true" className={`${frame} bg-white`}>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={resource.logo} alt="" width={20} height={20} loading="lazy" decoding="async" draggable={false} className="block size-full object-contain" />
+      </span>
+    );
+  }
 
   if (!info) {
     return (

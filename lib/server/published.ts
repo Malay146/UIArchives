@@ -28,6 +28,10 @@ export async function getResources(): Promise<UiCardData[]> {
         description: s(d, "description"),
         tag: [category, ...a(d, "tags")].filter(Boolean),
         links: social ? { twitter: s(d, "url") } : { website: s(d, "url") },
+        ...(s(d, "image") ? { image: s(d, "image") } : {}),
+        ...(s(d, "logo") ? { logo: s(d, "logo") } : {}),
+        ...(s(d, "headline") ? { headline: s(d, "headline") } : {}),
+        ...(s(d, "metaDescription") ? { metaDescription: s(d, "metaDescription") } : {}),
       });
     })
     .filter((r): r is UiCardData => !!r);

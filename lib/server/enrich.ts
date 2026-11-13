@@ -92,10 +92,25 @@ export async function pageMeta(url: string) {
       html.match(new RegExp(`<meta[^>]+content=["']([^"']+)["'][^>]+(?:property|name)=["']${p}["']`, "i"))?.[1];
     const title = html.match(/<title[^>]*>([^<]+)<\/title>/i)?.[1]?.trim();
     const image = meta("og:image") ?? meta("twitter:image");
+    // Icons, best first: apple-touch-icon (large PNG), then the largest <link rel=icon> PNG.
+    const icons = [...html.matchAll(/<link[^>]+>/gi)]
+      .map((m) => m[0])
+      .filter((tag) => /rel=["'][^"']*icon[^"']*["']/i.test(tag))
+      .map((tag) => {
+        const href = tag.match(/href=["']([^"']+)/i)?.[1];
+        const size = Number(tag.match(/sizes=["'](\d+)/i)?.[1] ?? 0);
+        const apple = /apple-touch-icon/i.test(tag);
+        return href ? { href: new URL(href, r.url).href, score: (apple ? 1000 : 0) + size } : null;
+      })
+      .filter((x): x is { href: string; score: number } => !!x && !/\.svg(\?|$)/i.test(x.href))
+      .sort((a, b) => b.score - a.score)
+      .map((x) => x.href);
     return {
       title: meta("og:title") ?? title,
       description: meta("description") ?? meta("og:description"),
       image: image ? new URL(image, r.url).href : undefined,
+      icons,
+      host: new URL(r.url).hostname,
     };
   } catch {
     return null;
@@ -112,6 +127,47 @@ export async function githubRepo(url: string) {
   return json<Repo>(`https://api.github.com/repos/${m[1]}/${m[2].replace(/\.git$/, "")}`, {
     headers: env.GITHUB_TOKEN ? { authorization: `Bearer ${env.GITHUB_TOKEN}` } : {},
   });
+}
+
+/**
+ * A resource's logo, preview image and the site's own headline/description,
+ * copied into storage so they never break. Fills only what's missing.
+ *  - People (X profiles): their X profile picture as the logo.
+ *  - Sites: apple-touch-icon → largest PNG icon → Google's favicon service.
+ *  - Preview: the site's og:image.
+ */
+export async function resourceMedia(data: ItemData, id: string): Promise<ItemData> {
+  const out: ItemData = {};
+  const url = String(data.url ?? "");
+  if (!url) return out;
+  const handle = url.match(/^https?:\/\/(?:www\.)?(?:x|twitter)\.com\/([^/?#]+)/i)?.[1];
+
+  if (handle) {
+    if (!data.logo) {
+      out.logo = await storeRemote(`resources/${id}`, `https://unavatar.io/x/${handle}?fallback=false`).catch(() => undefined);
+    }
+    return out;
+  }
+
+  const m = await pageMeta(url);
+  if (m) {
+    if (!data.description && m.description) out.description = m.description;
+    if (!data.headline && m.title) out.headline = m.title;
+    if (!data.metaDescription && m.description) out.metaDescription = m.description;
+    if (!data.image && m.image) out.image = await storeRemote(`resources/${id}`, m.image).catch(() => undefined);
+  }
+  if (!data.logo) {
+    const host = m?.host ?? new URL(url).hostname;
+    const candidates = [...(m?.icons ?? []), `https://www.google.com/s2/favicons?domain=${host}&sz=128`];
+    for (const src of candidates) {
+      const stored = await storeRemote(`resources/${id}`, src, 2).catch(() => undefined);
+      if (stored) {
+        out.logo = stored;
+        break;
+      }
+    }
+  }
+  return out;
 }
 
 /* ---------- Per section ---------- */
@@ -164,10 +220,7 @@ export async function enrich(section: SectionKey, data: ItemData, id: string): P
     fill("pageDescription", m?.description);
   }
 
-  if (section === "resources" && d.url) {
-    const m = await pageMeta(String(d.url));
-    fill("description", m?.description);
-  }
+  if (section === "resources" && d.url) Object.assign(d, await resourceMedia(d, id));
 
   if (section === "skills" && d.repo) {
     const r = await githubRepo(String(d.repo));

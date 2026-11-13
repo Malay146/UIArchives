@@ -69,7 +69,7 @@ export function ItemPage({
             </nav>
 
             <header className="mt-8 flex items-start gap-4">
-              {visual && <div className="shrink-0">{visual}</div>}
+              {visual && <div className="flex shrink-0">{visual}</div>}
               <div className="min-w-0">
                 <h1 className="text-[22px] leading-tight font-medium tracking-[-0.02em] text-balance">{title}</h1>
                 {subtitle && <p className="mt-1 text-fg-2">{subtitle}</p>}
