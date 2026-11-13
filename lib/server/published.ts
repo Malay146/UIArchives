@@ -1,16 +1,22 @@
 import { approvedItems } from "./db";
+import { identityOf, norm, uniqueBy } from "./dedupe";
 import { resources as staticResources } from "@/lib/resources";
 import { designClips, type DesignClip } from "@/data/collections/designs";
 import { ogImages, type OgImage } from "@/data/collections/og-images";
 import { appIcons, type AppIcon } from "@/data/collections/app-icons";
 import { skills, type Skill } from "@/data/collections/skills";
 import { normalizeResource, type UiCardData } from "@/types/resource";
-import type { ItemData, SectionKey } from "@/lib/section-schemas";
+import { dedupeKey, type ItemData, type SectionKey } from "@/lib/section-schemas";
 
 /**
  * What each public section shows: the hand-curated data files plus
  * everything approved on /review (newest approvals last, so catalogue
  * numbers for existing entries never shift).
+ *
+ * Every list is de-duplicated by the same identity used on submit and
+ * approval (website, X post, page, App Store id, repo), so nothing appears
+ * twice even if it ends up in both the data files and the database. The
+ * hand-curated copy wins.
  */
 const s = (d: ItemData, k: string) => (typeof d[k] === "string" ? (d[k] as string) : "");
 const a = (d: ItemData, k: string) => (Array.isArray(d[k]) ? (d[k] as string[]) : d[k] ? [String(d[k])] : []);
@@ -35,8 +41,8 @@ export async function getResources(): Promise<UiCardData[]> {
       });
     })
     .filter((r): r is UiCardData => !!r);
-  const seen = new Set(staticResources.map((r) => r.title.toLowerCase()));
-  return [...staticResources, ...extra.filter((r) => !seen.has(r.title.toLowerCase()))];
+  // Full link (not just the domain) so two curated pages on one site both show.
+  return uniqueBy([...staticResources, ...extra], (r) => [dedupeKey(r.links?.website || r.links?.twitter || ""), norm(r.title)]);
 }
 
 export async function getDesigns(): Promise<DesignClip[]> {
@@ -65,7 +71,8 @@ export async function getDesigns(): Promise<DesignClip[]> {
       note: s(d, "note") || undefined,
     };
   });
-  return [...extra, ...designClips];
+  const kept = new Set(uniqueBy([...designClips, ...extra], (d) => [identityOf(d.post)]));
+  return [...extra, ...designClips].filter((d) => kept.has(d));
 }
 
 export async function getOgImages(): Promise<OgImage[]> {
@@ -86,7 +93,8 @@ export async function getOgImages(): Promise<OgImage[]> {
       added: iso(it.reviewed_at),
     };
   });
-  return [...extra, ...ogImages];
+  const kept = new Set(uniqueBy([...ogImages, ...extra], (o) => [identityOf(o.url)]));
+  return [...extra, ...ogImages].filter((o) => kept.has(o));
 }
 
 export async function getAppIcons(): Promise<AppIcon[]> {
@@ -105,7 +113,8 @@ export async function getAppIcons(): Promise<AppIcon[]> {
       added: iso(it.reviewed_at),
     };
   });
-  return [...extra, ...appIcons];
+  const kept = new Set(uniqueBy([...appIcons, ...extra], (a) => [identityOf(a.link)]));
+  return [...extra, ...appIcons].filter((a) => kept.has(a));
 }
 
 export async function getSkills(): Promise<Skill[]> {
@@ -127,7 +136,11 @@ export async function getSkills(): Promise<Skill[]> {
         .map(([name, ...rest]) => ({ name: name.trim(), summary: rest.join(" — ").trim() })),
     };
   });
-  return [...skills, ...extra];
+  return uniqueBy([...skills, ...extra], (k) => [identityOf(k.repo)]).map((k) => ({
+    ...k,
+    // A pack never lists the same skill twice.
+    skills: uniqueBy(k.skills, (x) => [norm(x.name)]),
+  }));
 }
 
 export async function getSectionCounts(): Promise<Record<SectionKey, number>> {

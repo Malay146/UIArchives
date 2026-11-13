@@ -29,7 +29,7 @@ export function identityOf(value: string): string {
     if (host === "apps.apple.com" && app) return `appstore:${app[1]}`;
     if (PATH_IS_IDENTITY.test(host)) {
       // First two path segments: github.com/owner/repo, x.com/handle, npmjs.com/package/name
-      const parts = u.pathname.split("/").filter(Boolean).slice(0, 2).join("/").toLowerCase();
+      const parts = u.pathname.split("/").filter(Boolean).slice(0, 2).join("/").toLowerCase().replace(/\.git$/, "");
       return `${host}/${parts}`;
     }
     return host;
@@ -38,7 +38,7 @@ export function identityOf(value: string): string {
   }
 }
 
-const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "");
+export const norm = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "");
 
 /** Identities and names of everything already in the built-in data files. */
 function staticIndex(section: SectionKey): { ids: Set<string>; names: Set<string> } {
@@ -50,8 +50,8 @@ function staticIndex(section: SectionKey): { ids: Set<string>; names: Set<string
   };
   if (section === "resources") for (const r of resources) add(r.links?.website || r.links?.twitter, r.title);
   if (section === "designs") for (const d of designClips) add(d.post);
-  if (section === "og-images") for (const o of ogImages) add(o.url, o.title);
-  if (section === "app-icons") for (const a of appIcons) add(a.link, a.name);
+  if (section === "og-images") for (const o of ogImages) add(o.url);
+  if (section === "app-icons") for (const a of appIcons) add(a.link);
   if (section === "skills") for (const s of skills) add(s.repo, s.name);
   return { ids, names };
 }
@@ -62,14 +62,40 @@ export function identityFor(section: SectionKey, data: ItemData): string {
 }
 
 /**
- * Is this candidate already in the archive? Checks the built-in data by
- * identity and by name (for resources, a different URL for the same named
- * product still counts). The database check happens on insert, by identity.
+ * Sections where the name alone also identifies the thing: a resource under a
+ * second link is still the same product. (Not skills — many unrelated repos
+ * are simply called "skills"; their repo is the identity.)
+ */
+export const NAME_IS_IDENTITY: readonly SectionKey[] = ["resources"];
+
+/** The normalised name, for sections where a name is an identity ("" otherwise). */
+export function nameFor(section: SectionKey, data: ItemData): string {
+  if (!NAME_IS_IDENTITY.includes(section)) return "";
+  return norm(String(data[SECTION_SCHEMAS[section].titleField] ?? ""));
+}
+
+/**
+ * Is this candidate already in the built-in data files? Checks by identity
+ * and, for resources, by name. The database check lives in db.ts.
  */
 export function inStaticArchive(section: SectionKey, data: ItemData): boolean {
   const { ids, names } = staticIndex(section);
   const id = identityFor(section, data);
   if (id && ids.has(id)) return true;
-  const name = String(data[SECTION_SCHEMAS[section].titleField] ?? "");
-  return section === "resources" && !!name && names.has(norm(name));
+  const name = nameFor(section, data);
+  return !!name && names.has(name);
+}
+
+/**
+ * Drop repeats from a list that is about to be shown, keeping the first
+ * occurrence. An item is a repeat when any of its keys was already seen.
+ */
+export function uniqueBy<T>(items: T[], keys: (item: T) => (string | undefined)[]): T[] {
+  const seen = new Set<string>();
+  return items.filter((item) => {
+    const ks = keys(item).filter((k): k is string => !!k);
+    if (ks.some((k) => seen.has(k))) return false;
+    for (const k of ks) seen.add(k);
+    return true;
+  });
 }

@@ -1,8 +1,7 @@
 import { env } from "./env";
 import { type ItemData, type SectionKey, SECTION_SCHEMAS, dedupeKey } from "@/lib/section-schemas";
 
-const normName = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "");
-import { identityFor, inStaticArchive } from "./dedupe";
+import { identityFor, inStaticArchive, nameFor, norm } from "./dedupe";
 
 export type ItemStatus = "pending" | "approved" | "rejected";
 
@@ -27,8 +26,34 @@ const parse = (r: Row): Item => ({ ...r, data: JSON.parse(r.data) as ItemData })
 const newId = () => crypto.randomUUID().replace(/-/g, "").slice(0, 16);
 
 /**
- * Queue a candidate. Returns null when the same thing (same section and
- * normalised URL / store id) is already queued, approved or rejected.
+ * Is this thing already on the site or in the queue? True when the built-in
+ * data has it, or another row in the database (any status) shares its
+ * identity — or, for resources, its name. `excludeId` skips the
+ * row being reviewed, so it never clashes with itself.
+ */
+export async function findsDuplicate(section: SectionKey, data: ItemData, excludeId = ""): Promise<boolean> {
+  if (inStaticArchive(section, data)) return true;
+  const key = identityFor(section, data);
+  if (!key) return false;
+  const legacyKey = dedupeKey(String(data[SECTION_SCHEMAS[section].dedupeField] ?? ""));
+  const clash = await env.DB.prepare("SELECT 1 FROM items WHERE section = ? AND dedupe_key IN (?, ?) AND id != ? LIMIT 1")
+    .bind(section, key, legacyKey, excludeId)
+    .first();
+  if (clash) return true;
+  const name = nameFor(section, data);
+  if (name) {
+    const field = SECTION_SCHEMAS[section].titleField;
+    const { results } = await env.DB.prepare(`SELECT json_extract(data, '$.${field}') AS t FROM items WHERE section = ? AND id != ?`)
+      .bind(section, excludeId)
+      .all<{ t: string | null }>();
+    if (results.some((r) => r.t && norm(r.t) === name)) return true;
+  }
+  return false;
+}
+
+/**
+ * Queue a candidate. Returns null when it's a duplicate (see findsDuplicate)
+ * or has nothing to identify it by.
  */
 export async function createItem(input: {
   section: SectionKey;
@@ -38,24 +63,9 @@ export async function createItem(input: {
   submitterName?: string;
   submitterEmail?: string;
 }): Promise<Item | null> {
-  // Never queue something the archive already has (built-in data files)…
-  if (inStaticArchive(input.section, input.data)) return null;
-  // …or anything already in the database, whatever its status (unique key).
   const key = identityFor(input.section, input.data);
   if (!key) return null;
-  const legacyKey = dedupeKey(String(input.data[SECTION_SCHEMAS[input.section].dedupeField] ?? ""));
-  const clash = await env.DB.prepare("SELECT 1 FROM items WHERE section = ? AND dedupe_key IN (?, ?) LIMIT 1")
-    .bind(input.section, key, legacyKey)
-    .first();
-  if (clash) return null;
-  // Resources: the same named product under a different link is still a duplicate.
-  if (input.section === "resources") {
-    const name = normName(String(input.data.title ?? ""));
-    if (name) {
-      const { results } = await env.DB.prepare("SELECT json_extract(data, '$.title') AS t FROM items WHERE section = 'resources'").all<{ t: string | null }>();
-      if (results.some((r) => r.t && normName(r.t) === name)) return null;
-    }
-  }
+  if (await findsDuplicate(input.section, input.data)) return null;
   const id = newId();
   const now = Date.now();
   const res = await env.DB.prepare(
@@ -91,10 +101,13 @@ export async function countByStatus(): Promise<Record<string, number>> {
 }
 
 export async function reviewItem(id: string, status: Exclude<ItemStatus, "pending">, data: ItemData | null, note: string | null) {
+  // Keep the identity in step with edits made during review (e.g. a corrected link).
+  const item = data ? await getItem(id) : null;
+  const key = item && data ? identityFor(item.section, data) || null : null;
   await env.DB.prepare(
-    "UPDATE items SET status = ?, data = COALESCE(?, data), review_note = ?, reviewed_at = ? WHERE id = ?",
+    "UPDATE items SET status = ?, data = COALESCE(?, data), dedupe_key = COALESCE(?, dedupe_key), review_note = ?, reviewed_at = ? WHERE id = ?",
   )
-    .bind(status, data ? JSON.stringify(data) : null, note, Date.now(), id)
+    .bind(status, data ? JSON.stringify(data) : null, key, note, Date.now(), id)
     .run();
   return getItem(id);
 }
