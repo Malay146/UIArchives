@@ -35,6 +35,10 @@ export async function POST(req: Request) {
     if (errors.length) return fail(errors[0]);
     // Keep extra enrichment fields (poster, pageTitle, …) that aren't form fields.
     data = { ...item.data, ...clean };
+    // Every published design says why it's worth studying.
+    if (item.section === "designs" && !String(data.note ?? "").trim()) {
+      return fail("Add “Why it works” before approving — every design shows it.");
+    }
     // Never publish the same thing twice: it may have landed in the data files
     // or been approved under another entry since it was queued, or been edited here.
     if (await findsDuplicate(item.section, data, item.id)) {
