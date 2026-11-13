@@ -40,6 +40,16 @@ export async function POST(req: Request) {
       results.push({ section: it.section, status: "invalid", error: `Skills need ${MIN_SKILL_STARS.toLocaleString("en-US")}+ GitHub stars` });
       continue;
     }
+    // Never queue an item whose media couldn't be fetched: it would publish
+    // as an empty tile. The caller can simply send it again.
+    const missing =
+      (it.section === "app-icons" && !enriched.image) ||
+      (it.section === "og-images" && !enriched.image) ||
+      (it.section === "designs" && !enriched.video);
+    if (missing) {
+      results.push({ section: it.section, status: "invalid", error: "Couldn't fetch its media right now. Try again." });
+      continue;
+    }
     const created = await createItem({ section: it.section, data: enriched, source: "automation", origin });
     results.push({ section: it.section, status: created ? "queued" : "duplicate" });
   }

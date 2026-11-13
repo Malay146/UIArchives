@@ -67,8 +67,21 @@ type AppLookup = { results: { trackName: string; artistName: string; primaryGenr
 export async function appStore(link: string) {
   const id = link.match(/id(\d+)/)?.[1];
   if (!id) return null;
-  const r = await json<AppLookup>(`https://itunes.apple.com/lookup?id=${id}`);
-  const app = r?.results?.[0];
+  // Ask the link's own storefront first (some apps only exist there), then the
+  // default one; Apple occasionally refuses a request, so each gets one retry.
+  const country = link.match(/apps\.apple\.com\/([a-z]{2})\//)?.[1];
+  const urls = [
+    ...(country ? [`https://itunes.apple.com/lookup?id=${id}&country=${country}`] : []),
+    `https://itunes.apple.com/lookup?id=${id}`,
+  ];
+  let app: AppLookup["results"][number] | undefined;
+  for (const url of urls) {
+    for (let attempt = 0; attempt < 2 && !app; attempt++) {
+      if (attempt) await new Promise((r) => setTimeout(r, 600));
+      app = (await json<AppLookup>(url))?.results?.[0];
+    }
+    if (app) break;
+  }
   if (!app) return null;
   return {
     name: app.trackName,
