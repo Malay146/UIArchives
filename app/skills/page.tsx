@@ -29,7 +29,9 @@ export default async function Page() {
               { label: "Skills", value: total },
             ]}
           >
-            <Link href="/submit/skills" className="link text-fg-2 hover:text-fg">
+            <Link href="/submit/skills"
+              className="press inline-flex h-8 items-center rounded-md bg-fg px-3 font-medium text-bg transition-opacity hover:opacity-85"
+            >
               Submit a skill
             </Link>
           </SectionIntro>

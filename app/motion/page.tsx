@@ -29,7 +29,9 @@ export default async function Page() {
               { label: "Makers", value: authors },
             ]}
           >
-            <Link href="/submit/motion" className="link text-fg-2 hover:text-fg">
+            <Link href="/submit/motion"
+              className="press inline-flex h-8 items-center rounded-md bg-fg px-3 font-medium text-bg transition-opacity hover:opacity-85"
+            >
               Submit a clip
             </Link>
           </SectionIntro>

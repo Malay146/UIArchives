@@ -28,7 +28,9 @@ export default async function Page() {
               { label: "Platforms", value: "iOS · macOS" },
             ]}
           >
-            <Link href="/submit/app-icons" className="link text-fg-2 hover:text-fg">
+            <Link href="/submit/app-icons"
+              className="press inline-flex h-8 items-center rounded-md bg-fg px-3 font-medium text-bg transition-opacity hover:opacity-85"
+            >
               Submit an app icon
             </Link>
           </SectionIntro>
