@@ -43,6 +43,8 @@ export type DesignClip = {
   stack?: string[];
   /** ISO date it was added. */
   added: string;
+  /** Video length in seconds. */
+  duration?: number;
   /** ISO date of the original post. */
   posted?: string;
   /** The post's own text. */

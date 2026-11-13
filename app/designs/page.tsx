@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { designsWithSlugs, itemPath } from "@/lib/server/items";
+import { JsonLd, collectionPage } from "@/lib/seo";
 import { getDesigns } from "@/lib/server/published";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
@@ -8,9 +10,11 @@ import { ArchiveShell } from "@/components/site/archive-shell";
 import { Designs } from "@/components/sections/designs";
 
 export const metadata: Metadata = {
-  title: "Designs — UIArchives",
+  title: "UI Design Inspiration Videos — components & interactions",
   description:
-    "Interaction and animation clips from designers and engineers, filterable by what they show.",
+    "Hand-picked UI design videos from designers on X: components, micro-interactions, landing pages, mobile apps, dashboards and 3D. Filter by category and see who made each one.",
+  alternates: { canonical: "/designs" },
+  openGraph: { url: "/designs", title: "Design inspiration videos — UIArchives" },
 };
 
 export default async function Page() {
@@ -18,6 +22,14 @@ export default async function Page() {
   const authors = new Set(designs.map((c) => c.author.handle)).size;
   return (
     <>
+      <JsonLd
+        data={collectionPage({
+          name: "Design inspiration videos",
+          description: "UI design videos from designers on X: components, interactions, landing pages and more.",
+          path: "/designs",
+          items: (await designsWithSlugs()).map((r) => ({ name: r.item.title, path: itemPath.designs(r.slug) })),
+        })}
+      />
       <Header />
       <main>
         <ArchiveShell active="designs">

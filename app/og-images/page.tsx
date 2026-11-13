@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { ogImagesWithSlugs, itemPath } from "@/lib/server/items";
+import { JsonLd, collectionPage } from "@/lib/seo";
 import { getOgImages } from "@/lib/server/published";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
@@ -8,8 +10,11 @@ import { ArchiveShell } from "@/components/site/archive-shell";
 import { OgImages } from "@/components/sections/og-images";
 
 export const metadata: Metadata = {
-  title: "OG Images — UIArchives",
-  description: "Hand-picked Open Graph images — how great products present themselves when a link is shared.",
+  title: "OG Image Examples — Open Graph image inspiration",
+  description:
+    "A gallery of the best Open Graph image examples: how great products present their links when shared. Filter by style, theme and industry for OG image inspiration.",
+  alternates: { canonical: "/og-images" },
+  openGraph: { url: "/og-images", title: "OG image examples — UIArchives" },
 };
 
 export default async function Page() {
@@ -17,6 +22,14 @@ export default async function Page() {
   const light = ogImages.filter((i) => i.theme === "Light").length;
   return (
     <>
+      <JsonLd
+        data={collectionPage({
+          name: "OG image examples",
+          description: "A gallery of Open Graph image examples from great products.",
+          path: "/og-images",
+          items: (await ogImagesWithSlugs()).map((r) => ({ name: `${r.item.title} OG image`, path: itemPath["og-images"](r.slug) })),
+        })}
+      />
       <Header />
       <main>
         <ArchiveShell active="og-images">

@@ -10,7 +10,8 @@ export function Tile({
   round = "rounded-md",
 }: {
   media: React.ReactNode;
-  title: string;
+  /** Leave out to render the media only (the caption lives outside, e.g. with a link). */
+  title?: string;
   meta?: string;
   aspect?: string;
   round?: string;
@@ -22,10 +23,12 @@ export function Tile({
       >
         {media}
       </span>
-      <span className="mt-2.5 flex items-baseline justify-between gap-3">
-        <span className="truncate font-medium">{title}</span>
-        {meta && <span className="shrink-0 truncate text-[12px] text-fg-3">{meta}</span>}
-      </span>
+      {title && (
+        <span className="mt-2.5 flex items-baseline justify-between gap-3">
+          <span className="truncate font-medium">{title}</span>
+          {meta && <span className="shrink-0 truncate text-[12px] text-fg-3">{meta}</span>}
+        </span>
+      )}
     </>
   );
 }

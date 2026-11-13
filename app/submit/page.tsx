@@ -5,7 +5,11 @@ import { Footer } from "@/components/site/footer";
 import { ArrowUpRightGlyph18 } from "@/components/icons";
 import { SECTION_ORDER, SECTION_SCHEMAS } from "@/lib/section-schemas";
 
-export const metadata: Metadata = { title: "Submit — UIArchives", description: "Suggest a resource, design, OG image, app icon or skill." };
+export const metadata: Metadata = {
+  title: "Submit a design resource",
+  description: "Suggest a UI resource, design video, OG image, app icon or agent skill for the UIArchives collection. Every submission is reviewed by hand.",
+  alternates: { canonical: "/submit" },
+};
 
 export default function Page() {
   return (

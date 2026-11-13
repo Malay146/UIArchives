@@ -1,5 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
+import { skillsWithSlugs, itemPath } from "@/lib/server/items";
+import { JsonLd, collectionPage } from "@/lib/seo";
 import { getSkills } from "@/lib/server/published";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
@@ -8,9 +10,11 @@ import { ArchiveShell } from "@/components/site/archive-shell";
 import { Skills } from "@/components/sections/skills";
 
 export const metadata: Metadata = {
-  title: "Skills — UIArchives",
+  title: "Agent Skills for Design — Claude Code, Cursor & Codex",
   description:
-    "Agent skills that teach coding agents design and frontend craft.",
+    "Curated agent skills that teach coding agents UI design, animation, accessibility and frontend craft. Install commands and what each skill does, for Claude Code, Cursor and Codex.",
+  alternates: { canonical: "/skills" },
+  openGraph: { url: "/skills", title: "Agent skills for design — UIArchives" },
 };
 
 export default async function Page() {
@@ -18,6 +22,14 @@ export default async function Page() {
   const total = skills.reduce((n, s) => n + s.skills.length, 0);
   return (
     <>
+      <JsonLd
+        data={collectionPage({
+          name: "Agent skills for design",
+          description: "Agent skills that teach coding agents UI design and frontend craft.",
+          path: "/skills",
+          items: (await skillsWithSlugs()).map((r) => ({ name: r.item.name, path: itemPath.skills(r.slug) })),
+        })}
+      />
       <Header />
       <main>
         <ArchiveShell active="skills">

@@ -28,7 +28,7 @@ type XTweet = {
   text?: string;
   created_at?: string;
   user?: { name: string; screen_name: string; profile_image_url_https?: string };
-  mediaDetails?: { type: string; media_url_https: string; original_info?: { width: number; height: number }; video_info?: { variants: XVariant[] } }[];
+  mediaDetails?: { type: string; media_url_https: string; original_info?: { width: number; height: number }; video_info?: { variants: XVariant[]; duration_millis?: number } }[];
 };
 
 /** The token embeds use for a status id (same scheme as Vercel's react-tweet). */
@@ -54,6 +54,7 @@ export async function xPost(url: string) {
     avatar: t.user.profile_image_url_https?.replace("_normal.", "_400x400."),
     video: mp4?.url,
     poster: media?.media_url_https,
+    durationMs: media?.video_info?.duration_millis,
     width: media?.original_info?.width,
     height: media?.original_info?.height,
   };
@@ -131,6 +132,7 @@ export async function enrich(section: SectionKey, data: ItemData, id: string): P
       fill("title", caption.slice(0, 80));
       fill("caption", caption);
       fill("postedAt", x.postedAt);
+      if (x.durationMs) fill("durationMs", String(x.durationMs));
       if (x.width && x.height) {
         fill("width", String(x.width));
         fill("height", String(x.height));

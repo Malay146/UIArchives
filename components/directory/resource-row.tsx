@@ -17,13 +17,15 @@ type Props = {
   number: number;
   selected?: boolean;
   onOpen?: (resource: UiCardData) => void;
+  /** The resource's own page; the title becomes a real link to it. */
+  page?: string;
 };
 
 /**
  * One line of the index. The whole row opens the detail drawer; the link at
  * the end goes straight to the website (or X profile) in a new tab.
  */
-function ResourceRowBase({ resource, number, selected, onOpen }: Props) {
+function ResourceRowBase({ resource, number, selected, onOpen, page }: Props) {
   const { title, description } = resource;
   const href = primaryHref(resource);
   const label = linkLabel(resource);
@@ -42,15 +44,20 @@ function ResourceRowBase({ resource, number, selected, onOpen }: Props) {
 
       <div className="flex min-w-0 items-center gap-2.5">
         <Logo resource={resource} />
-        <button
-          type="button"
-          onClick={() => onOpen?.(resource)}
+        <a
+          href={page}
+          onClick={(e) => {
+            // ⌘/ctrl/shift-click keeps the browser's behaviour (new tab); a plain click opens the drawer.
+            if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+            e.preventDefault();
+            onOpen?.(resource);
+          }}
           aria-haspopup="dialog"
           className="truncate text-left font-medium outline-none after:absolute after:inset-0 after:content-[''] focus-visible:after:outline focus-visible:after:outline-1 focus-visible:after:-outline-offset-1 focus-visible:after:outline-fg"
         >
           {title}
           <span className="sr-only">, show details</span>
-        </button>
+        </a>
         <span className="ml-auto shrink-0 text-fg-3 md:hidden">{category}</span>
       </div>
 

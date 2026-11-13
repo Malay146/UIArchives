@@ -2,6 +2,8 @@
 
 import { Highlight, type PrismTheme } from "prism-react-renderer";
 import { cn } from "@/utlis/cn";
+import { CommandCopy } from "@/components/collection/command-copy";
+import { CopyButton } from "@/components/collection/copy-button";
 
 // Monochrome syntax theme: structure comes from grey value, not hue.
 const mono: PrismTheme = {
@@ -35,12 +37,22 @@ export function CodeBlock({ children, className, ...props }: any) {
     );
   }
 
+  // A one-line shell command reads best as a command, with its copy button.
+  if (/^(bash|sh|shell|zsh|console)$/.test(language) && !code.includes("\n")) {
+    return (
+      <div className="my-6">
+        <CommandCopy command={code.replace(/^\$\s*/, "")} size="md" prompt />
+      </div>
+    );
+  }
+
   return (
     <Highlight theme={mono} code={code} language={language}>
       {({ className: prismClassName, style, tokens, getLineProps, getTokenProps }) => (
         <figure className="my-8 overflow-hidden rounded-lg border">
-          <figcaption className="border-b px-4 py-2 text-[12px] text-fg-3">
+          <figcaption className="flex items-center justify-between border-b py-1.5 pr-1.5 pl-4 text-[12px] text-fg-3">
             {language}
+            <CopyButton value={code} label="Copy" className="h-6 px-2 text-[12px] shadow-none" />
           </figcaption>
           <pre
             className={cn("overflow-x-auto py-4 font-mono text-[13px] leading-[1.7]", prismClassName)}

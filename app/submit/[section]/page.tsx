@@ -11,8 +11,8 @@ type Props = { params: Promise<{ section: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { section } = await params;
-  if (!isSectionKey(section)) return { title: "Submit — UIArchives" };
-  return { title: `Submit a ${SECTION_SCHEMAS[section].noun} — UIArchives` };
+  if (!isSectionKey(section)) return { title: "Submit", robots: { index: false } };
+  return { title: `Submit a ${SECTION_SCHEMAS[section].noun}`, alternates: { canonical: `/submit/${section}` } };
 }
 
 export default async function Page({ params }: Props) {

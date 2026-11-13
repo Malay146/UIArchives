@@ -3,6 +3,8 @@ import Link from "next/link";
 import { cn } from "@/utlis/cn";
 import type { MDXComponents } from "mdx/types";
 import { CodeBlock } from "./CodeBlock";
+import { Faq, FaqItem } from "./faq";
+import { Explore } from "./explore";
 
 type P<T = HTMLElement> = React.HTMLAttributes<T>;
 
@@ -113,6 +115,9 @@ export function getMdxComponents(): MDXComponents {
         {children}
       </CodeBlock>
     ),
+    Faq,
+    FaqItem,
+    Explore,
     Image: (props: ImageProps) => (
       <Image className="my-10 rounded-lg border grayscale" {...props} />
     ),

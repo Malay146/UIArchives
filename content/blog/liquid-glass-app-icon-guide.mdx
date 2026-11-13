@@ -1,0 +1,168 @@
+---
+title: "How to Design a Liquid Glass App Icon in Icon Composer (iOS 26)"
+description: "A step-by-step guide to designing a Liquid Glass app icon for iOS 26: canvas sizes, layers and groups, Icon Composer settings, dark, clear and tinted appearances, and Xcode setup."
+excerpt: "Canvas sizes, layers, groups, Liquid Glass settings and every appearance — the whole Icon Composer workflow, with Apple's own rules and the mistakes to avoid."
+date: "2026-11-12"
+category: "Design"
+tags: ["App Icons", "Liquid Glass", "Icon Composer", "iOS 26", "Apple"]
+coverImage: "/blogs/liquid-glass-app-icon-guide.png"
+---
+
+**Short answer:** design your icon in layers on a **1024 × 1024 px** canvas (1088 × 1088 for Apple Watch), remove shadows, blurs and background gradients, export each layer as **SVG**, then import them into **Icon Composer**, organise them into **up to four groups**, tune the Liquid Glass material, check the **default, dark and mono** (clear and tinted) appearances, and add the single `.icon` file to Xcode. The system renders every size and appearance from that one file.
+
+This guide walks through each step using Apple's own documentation and design guidelines, with the details that make the difference between an icon that looks native and one that looks pasted on.
+
+## What changed with Liquid Glass
+
+Before iOS 26, an app icon was a single flat image. You baked every highlight and shadow into the pixels and exported a set of sizes.
+
+With Liquid Glass, an icon is a **stack of layers** that the system renders as glass. It adds the specular highlights, blur, translucency and shadows itself, and adjusts them for lighting, the wallpaper behind the icon and the appearance a person chooses. You design the shapes; the system supplies the material.
+
+Apple's tool for this is **Icon Composer**. It produces one multilayer `.icon` file that covers iPhone, iPad, Mac, Apple Watch and the App Store.
+
+## Before you start
+
+- **Get the template.** Apple publishes app icon templates with the current grid, shape and canvas size in [Apple Design Resources](https://developer.apple.com/design/resources/). Start there.
+- **Set the canvas size** if you start from scratch: **1024 × 1024 px** for iPhone, iPad and Mac, and **1088 × 1088 px** for Apple Watch.
+- **Get Icon Composer.** It ships with Xcode (Xcode › Open Developer Tool › Icon Composer), or you can [download it on its own](https://developer.apple.com/icon-composer).
+- **Use a vector tool.** Any editor that exports SVG works. Vector layers stay sharp at every size the system renders.
+
+## Step 1: Design in layers, back to front
+
+The system renders your layers along the z-axis, from the back to the front. Plan the icon as a few simple shapes stacked in depth, not a detailed illustration.
+
+Apple's [app icon guidelines](https://developer.apple.com/design/human-interface-guidelines/app-icons) give the rules that matter most:
+
+- **Build around filled, overlapping shapes.** They read clearly at small sizes and give the glass something to work with.
+- **Give foreground layers clearly defined edges.** Soft, feathered edges turn muddy under the material.
+- **Vary opacity in foreground layers** to add depth and a sense of life.
+- **Design a background that stands out** and pushes the foreground forward.
+- **Keep the main content centred.** The system adjusts corners and masks the icon differently per platform.
+- **Use text only when it's essential** to your brand. Prefer illustration to photos, and don't replicate UI components or Apple hardware.
+
+Separate anything you'll want to change per appearance, such as a colour you'll swap for dark mode, into its own layer now. Splitting layers later is far more work.
+
+## Step 2: Strip out the effects
+
+This is the step most people miss. Icon Composer adds the glass, so your artwork should arrive without it. Apple's documentation is explicit. Before exporting, **remove**:
+
+- blurs and shadows,
+- specular, opacity and translucency settings,
+- background colours and gradients.
+
+You'll add the background colour or gradient back inside Icon Composer, where it can change per appearance. Baked-in shadows fight the system's lighting and look wrong the moment the light angle changes.
+
+## Step 3: Export each layer
+
+- **Export as SVG wherever possible.** Use PNG only for layers with features SVG can't represent.
+- **Convert text to outlines.** SVG doesn't keep fonts.
+- **Name layers with numbers, back to front** (`1-background-shape`, `2-glyph`, `3-highlight`). Icon Composer sorts them alphabetically, so numbers keep the order you designed.
+- **Don't export the rounded mask.** The system applies it for a perfect crop.
+
+Tip: put layers that belong together in a folder. When you drag a folder into Icon Composer, it becomes a group automatically.
+
+## Step 4: Build the icon in Icon Composer
+
+1. Open Icon Composer and save the file with the name you'll use in Xcode, such as `AppIcon`.
+2. Drag your exported files into the sidebar. Each file becomes a layer in a default group; folders become groups.
+3. **Organise the layers into a maximum of four groups.** Groups are what the system treats as the icon's depth layers, so this is where the 3D feel is decided. Fewer, well-chosen groups look better than many thin ones.
+4. Open the **Document inspector** and turn off platforms you don't ship, such as watchOS, so the interface only shows what you need.
+
+## Step 5: Tune the Liquid Glass material
+
+Select a group and open the **Appearance inspector**. Under Liquid Glass:
+
+- **Mode — Individual or Combined.** *Individual* treats every layer in the group as its own piece of glass. *Combined* treats the group as one object. Use Combined for shapes that should read as a single form.
+- **Specular** is on by default and adds the light edge highlight and a slight background blur. Turn it off for flatter elements.
+- **Blur, Translucency and Shadow** fine-tune how much of the background shows through and how the group sits above the layers below.
+
+To keep one layer flat, such as a small mark that should stay crisp, select it and turn **Effects** off under Liquid Glass.
+
+Use the toolbar to stress-test the material: rotate the **lighting angle**, switch the **background image** to a busy wallpaper, and preview at small sizes. Icons that look great at 1024 px often fall apart at Spotlight size.
+
+## Step 6: Design every appearance
+
+People choose how their Home Screen looks, and your icon has to hold up in each mode. In Icon Composer you preview three appearances for iOS and macOS:
+
+- **Default:** your full-colour icon.
+- **Dark:** a version that sits comfortably on a dark Home Screen.
+- **Mono:** the basis for the **clear** and **tinted** looks, each in light and dark.
+
+To see clear and tinted variants, choose **Mono › Options**, pick Light or Dark, and toggle **Tinted**. Use the Background Image menu to preview the clear look over a real wallpaper.
+
+Apple's guidance for appearances:
+
+- **Keep the icon's features consistent** across all of them. People should recognise it instantly in every mode.
+- **Base the dark icon on the light one.** Shift colours and backgrounds; don't redesign.
+- **Make dark and tinted icons feel at home** beside the system's own icons and widgets.
+
+To change a setting for one appearance only, choose that appearance in the canvas, then use **Vary for [appearance]** next to the setting in the Appearance inspector. The custom value appears under the main one and only applies there.
+
+## Step 7: Add the icon to Xcode
+
+1. Drag the `.icon` file into your project in the Project navigator.
+2. Select your target, open the **General** tab, and under **App Icons and Launch Screen**, make sure the **App Icon** name matches the file name without the extension.
+3. Build and run on Simulator and a real device, and switch appearances in Settings to check each one. On iPhone, you can also long-press the Home Screen, tap **Edit › Customize**, and try Dark, Clear and Tinted.
+
+Two things to know:
+
+- **The `.icon` file replaces your old AppIcon asset catalog.** Xcode generates a similar-looking version for older OS releases automatically.
+- **If you want your existing icon on older releases**, keep using an asset catalog instead.
+
+## Liquid Glass icon checklist
+
+- [ ] 1024 × 1024 canvas (1088 × 1088 for Watch), started from Apple's template
+- [ ] A few filled, overlapping shapes with clear edges
+- [ ] Main content centred, text only if essential
+- [ ] No baked-in shadows, blurs, highlights or background gradients
+- [ ] Layers exported as SVG, text outlined, names numbered back to front
+- [ ] Four groups or fewer
+- [ ] Checked at small sizes, with the lighting angle rotated and over a busy wallpaper
+- [ ] Default, dark, clear and tinted all recognisably the same icon
+- [ ] `.icon` file name matches the App Icon setting in Xcode
+
+## Common mistakes
+
+- **Baking in the old glossy look.** Pre-drawn highlights and drop shadows double up with the system's material.
+- **Too many groups.** Every extra depth layer adds visual noise. Four is the limit, not the target.
+- **Fine detail.** Thin lines and small text vanish at Home Screen and Spotlight sizes.
+- **A dark icon that's a different icon.** Changing the symbol or layout between appearances breaks recognition.
+- **A black background on Apple Watch.** Apple's guidelines advise against it; the icon disappears against the watch face.
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="What size should a Liquid Glass app icon be?">
+
+Design on a 1024 × 1024 px canvas for iPhone, iPad and Mac, and 1088 × 1088 px for Apple Watch. The system generates every smaller size from your Icon Composer file.
+
+</FaqItem>
+
+<FaqItem q="Do I have to use Icon Composer for iOS 26?">
+
+No. Apple still accepts asset catalog icons, and older icons keep working. But only a layered Icon Composer file gets the full Liquid Glass treatment and proper dark, clear and tinted appearances.
+
+</FaqItem>
+
+<FaqItem q="How many layers can an Icon Composer icon have?">
+
+You can import many layers, but Icon Composer organises them into a maximum of four groups. Those groups become the depth layers the system renders.
+
+</FaqItem>
+
+<FaqItem q="What are the dark, clear and tinted app icon appearances?">
+
+They're Home Screen looks people can choose in iOS 26. Dark suits a dark Home Screen; clear makes the icon glass-like and translucent; tinted renders it in a single colour the person picks. Clear and tinted each come in light and dark, and Icon Composer previews them under the Mono appearance.
+
+</FaqItem>
+
+<FaqItem q="Can I use Icon Composer without Xcode?">
+
+Yes. It's available as a separate download from Apple's developer site, and you can add the `.icon` file to an Xcode project later.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="app-icons" posts={["og-image-size-guide", "best-agent-skills-for-ui-design"]} />

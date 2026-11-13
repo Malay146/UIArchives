@@ -8,6 +8,7 @@ import { ResourceDrawer } from "./resource-drawer";
 import { MagnifierGlyph18 } from "@/components/icons";
 import { FilterBar } from "@/components/collection/filter-bar";
 import { SET_CATEGORY } from "@/lib/command";
+import { withSlugs } from "@/lib/slug";
 
 const ALL = "All";
 
@@ -22,6 +23,8 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
   const listTopRef = useRef<HTMLDivElement>(null);
 
   // Stable catalogue numbers, independent of search order.
+  // Each resource's own page (same slugs the server uses for /resources/[slug]).
+  const slugOf = useMemo(() => new Map(withSlugs(resources, (r) => logoKey(r)).map((x) => [x.item, x.slug])), [resources]);
   const numberOf = useMemo(() => {
     const map = new Map<UiCardData, number>();
     resources.forEach((r, i) => map.set(r, i + 1));
@@ -191,6 +194,7 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
                 number={numberOf.get(r) ?? 0}
                 selected={selected === r}
                 onOpen={openDrawer}
+                page={`/resources/${slugOf.get(r)}`}
               />
             ))}
           </ul>

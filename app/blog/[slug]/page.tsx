@@ -7,6 +7,8 @@ import Link from "next/link";
 import { PostRow } from "@/components/blog/post-row";
 import { ArrowLeftGlyph18 } from "@/components/icons";
 import { formatDate } from "@/components/blog/format";
+import { BlogCover } from "@/components/blog/cover";
+import { toGenre } from "@/lib/journal-genres";
 
 const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || "https://uiarchives.com";
 
@@ -21,7 +23,7 @@ export async function generateMetadata({
   const post = getPostBySlug(resolvedParams.slug);
   if (!post) {
     return {
-      title: "Post Not Found - UIArchives",
+      title: "Post not found",
       robots: { index: false, follow: false },
     };
   }
@@ -48,7 +50,7 @@ export async function generateMetadata({
   ];
 
   return {
-    title: `${title} | UIArchives Blog`,
+    title,
     description: metaDesc,
     keywords: keywords.join(", "),
     authors: author ? [{ name: author.name }] : [{ name: "UIArchives Team" }],
@@ -69,7 +71,7 @@ export async function generateMetadata({
       },
     },
     openGraph: {
-      title: `${title} | UIArchives`,
+      title,
       description: metaDesc,
       type: "article",
       publishedTime: date,
@@ -174,12 +176,11 @@ export default async function PostPage({ params }: PostPageProps) {
         },
     publisher: {
       "@type": "Organization",
+      "@id": `${baseUrl}/#organization`,
       name: "UIArchives",
-      logo: {
-        "@type": "ImageObject",
-        url: `${baseUrl}/og.png`,
-      },
+      logo: { "@type": "ImageObject", url: `${baseUrl}/faviconLight.png` },
     },
+    isPartOf: { "@id": `${baseUrl}/#website` },
     keywords: tags ? tags.join(", ") : undefined,
     articleSection: category,
   };
@@ -192,13 +193,13 @@ export default async function PostPage({ params }: PostPageProps) {
       {
         "@type": "ListItem",
         position: 1,
-        name: "Home",
+        name: "UIArchives",
         item: baseUrl,
       },
       {
         "@type": "ListItem",
         position: 2,
-        name: "Blog",
+        name: "Journal",
         item: `${baseUrl}/blog`,
       },
       {
@@ -264,18 +265,11 @@ export default async function PostPage({ params }: PostPageProps) {
           )}
         </header>
 
-        {coverImage && (
-          <div className="relative mt-10 aspect-video w-full overflow-hidden rounded-lg border bg-hover">
-            <Image
-              src={coverImage}
-              alt={`Cover image for ${title}`}
-              fill
-              sizes="(max-width: 680px) 100vw, 680px"
-              className="object-cover grayscale"
-              priority
-            />
-          </div>
-        )}
+        <BlogCover
+          title={title}
+          genre={toGenre(category)}
+          className="mt-10 rounded-lg shadow-[0_0_0_1px_var(--line)]"
+        />
 
         <div className="mt-10">
           {Body ? <Body components={getMdxComponents()} /> : null}
@@ -290,7 +284,8 @@ export default async function PostPage({ params }: PostPageProps) {
         )}
       </article>
 
-      {suggestions.length > 0 && (
+      {/* Posts that end with <Explore> already show their own "Keep reading". */}
+      {suggestions.length > 0 && !post.content.includes("<Explore") && (
         <section className="mx-auto mt-24 max-w-[1600px]">
           <h2 className="border-b px-4 pb-3 text-fg-3 sm:px-6">Keep reading</h2>
           <ul>

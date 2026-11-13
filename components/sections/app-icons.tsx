@@ -1,5 +1,7 @@
 "use client";
 
+import { withSlugs } from "@/lib/slug";
+import { useMemo } from "react";
 import { shortAppName } from "@/lib/app-name";
 import { CollectionView } from "@/components/collection/collection-view";
 import { PrimaryLink, CopyButton } from "@/components/collection/copy-button";
@@ -30,8 +32,11 @@ function Icon({ icon, className }: { icon: AppIcon; className: string }) {
 }
 
 export function AppIcons({ items }: { items: AppIcon[] }) {
+  // Each item's own page (same slugs the server uses for /app-icons/[slug]).
+  const slugs = useMemo(() => new Map(withSlugs(items, (a) => shortAppName(a.name)).map((x) => [x.item, x.slug])), [items]);
   return (
     <CollectionView
+      href={(i) => `/app-icons/${slugs.get(i)}`}
       items={items}
       facets={facets}
       text={text}

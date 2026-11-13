@@ -8,7 +8,7 @@ import { PasskeySignIn } from "@/components/review/passkey-sign-in";
 import { maskedAdminEmail } from "@/lib/server/email-code";
 import { hasAnyPasskey } from "@/lib/server/passkeys";
 
-export const metadata: Metadata = { title: "Review — UIArchives", robots: { index: false, follow: false } };
+export const metadata: Metadata = { title: "Review", robots: { index: false, follow: false } };
 
 export default async function Page() {
   const admin = await getAdmin();

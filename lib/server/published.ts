@@ -54,6 +54,7 @@ export async function getDesigns(): Promise<DesignClip[]> {
       stack: a(d, "stack"),
       added: iso(it.reviewed_at),
       posted: s(d, "postedAt") || undefined,
+      duration: s(d, "durationMs") ? Math.round(Number(s(d, "durationMs")) / 1000) : undefined,
       width: Number(s(d, "width")) || undefined,
       height: Number(s(d, "height")) || undefined,
       caption: s(d, "caption") || undefined,

@@ -1,0 +1,194 @@
+---
+title: "OG Image Size in 2026: Specs, Meta Tags and Design Rules That Work"
+description: "The right OG image size is 1200 × 630 px. Here are the official specs for Facebook, X and LinkedIn, the exact meta tags to use, and design rules from real examples."
+excerpt: "One image size that works everywhere, the meta tags that make it show up, and the design rules behind link previews people actually click."
+date: "2026-11-13"
+category: "Guides"
+tags: ["Open Graph", "OG Image", "SEO", "Meta Tags", "Next.js"]
+coverImage: "/blogs/og-image-size-guide.png"
+---
+
+**Short answer:** make your Open Graph image **1200 × 630 pixels** (a 1.91:1 ratio), save it as a **PNG or JPEG under 5 MB**, keep anything important away from the edges, and declare it with `og:image`, `og:image:width`, `og:image:height`, `og:image:alt` and `twitter:card` set to `summary_large_image`. That one file works on Facebook, LinkedIn, X, Slack, Discord, iMessage and WhatsApp.
+
+The rest of this guide explains why, shows the exact tags, and covers the part most size guides skip: what makes a link preview worth clicking.
+
+## What is an OG image?
+
+An OG image is the picture a link turns into when someone shares it. The name comes from the [Open Graph protocol](https://ogp.me), the set of `og:` meta tags that social networks and messaging apps read to build a preview card: a title, a description and an image.
+
+Without one, a shared link becomes a bare URL or a card with a blank gray box. With a good one, it becomes a small advertisement for the page. Most of the decision to click happens before anyone reads the title.
+
+## The right OG image size for every platform
+
+The Open Graph protocol itself doesn't set a pixel size. Each platform publishes its own rules, and they converge on almost the same shape.
+
+| Platform | Recommended size | Minimum | Max file |
+| --- | --- | --- | --- |
+| Facebook / Meta | 1200 × 630 (1.91:1) | 600 × 315 | 8 MB |
+| X (Twitter) large card | 2:1, e.g. 1200 × 600 | 300 × 157 | 5 MB |
+| LinkedIn | 1200 × 627 (1.91:1) | — | 5 MB |
+| Slack, Discord, iMessage, WhatsApp | Your `og:image` | — | Keep it small |
+
+Sources: [Meta for Developers](https://developers.facebook.com/documentation/sharing/webmasters/images) and the [X Developer docs](https://developer.twitter.com/en/docs/twitter-for-websites/cards/overview/summary-card-with-large-image). LinkedIn's figures are the widely cited values used by its Post Inspector; Meta also accepts images down to 200 × 200, shown as a small thumbnail.
+
+Two details matter more than the table suggests:
+
+- **X uses 2:1, not 1.91:1.** A 1200 × 630 image shown in a 2:1 frame loses about 15 pixels from the top and bottom. That's harmless as long as nothing important sits on those edges.
+- **Smaller than 600 × 315 and Facebook shows a thumbnail, not a card.** Meta's docs say small images still appear, just much smaller. Always ship the full size.
+
+### Why 1200 × 630 is the one size to use
+
+It meets Meta's recommendation exactly, it's within a pixel or two of LinkedIn's, and it survives X's 2:1 crop with only a sliver trimmed. It's also large enough to stay sharp on high-density screens. One file, every platform.
+
+## The safe zone: where to put text and logos
+
+Platforms crop, round corners and overlay UI on top of your image. Design for that:
+
+- Keep text and logos at least **60 px from the left and right edges** and **40 px from the top and bottom** of a 1200 × 630 canvas.
+- Assume the image may be shown as small as **400–500 px wide** in a feed. Text under about 40 px tall at full size will be hard to read there.
+- Don't put the title in the top or bottom 15 px; X's 2:1 frame cuts it.
+
+A centred composition with generous margins survives every crop. Our own OG image is built exactly this way: one hairline grid, the mark, a headline and nothing within the outer frame.
+
+## The meta tags you need
+
+Put these in the `<head>` of every page you want to share well:
+
+```html
+<meta property="og:title" content="OG Image Size in 2026" />
+<meta property="og:description" content="Specs, meta tags and design rules that work." />
+<meta property="og:url" content="https://example.com/blog/og-image-size" />
+<meta property="og:type" content="article" />
+<meta property="og:image" content="https://example.com/og/og-image-size.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta property="og:image:alt" content="OG Image Size in 2026 — specs and design rules" />
+
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="OG Image Size in 2026" />
+<meta name="twitter:description" content="Specs, meta tags and design rules that work." />
+<meta name="twitter:image" content="https://example.com/og/og-image-size.png" />
+```
+
+What each one earns you:
+
+- **`og:image` must be an absolute URL** on a public, crawlable host. Relative paths fail silently on most platforms.
+- **`og:image:width` and `og:image:height`** let Facebook render the image the first time a link is shared, before its crawler has downloaded the file. Meta's docs call this out directly.
+- **`og:image:alt`** describes the image for screen readers.
+- **`twitter:card` set to `summary_large_image`** is what turns an X preview into a large card instead of a small square thumbnail.
+
+### In Next.js (App Router)
+
+You don't have to write the tags by hand. Export `metadata` from a page or layout:
+
+```tsx
+// app/blog/[slug]/page.tsx
+export const metadata = {
+  title: "OG Image Size in 2026",
+  description: "Specs, meta tags and design rules that work.",
+  openGraph: {
+    type: "article",
+    images: [{ url: "/og/og-image-size.png", width: 1200, height: 630, alt: "OG Image Size in 2026" }],
+  },
+  twitter: { card: "summary_large_image" },
+};
+```
+
+Set `metadataBase` in your root layout so relative image paths become absolute URLs. Next.js also lets you drop an `opengraph-image.png` (or an `opengraph-image.tsx` that returns an `ImageResponse`) next to a route, and it writes the tags for you.
+
+## Design rules from OG images that work
+
+Size gets the image displayed. Design gets the link clicked. These patterns come from the cards we collect in the [UIArchives OG Images gallery](/og-images).
+
+### 1. Say one thing
+
+The best cards carry a single idea. [Shotbase](/og-images) puts one promise in large type ("Beautiful Captures") beside a column of what it captures, and nothing else. If a card needs a paragraph, it's doing the landing page's job.
+
+### 2. Make the headline the image
+
+Typography alone can carry a card when it's set with intent. [DialKit](/og-images) writes "DialKit is a tool for shaping your ideas by feel" and turns individual words into the product, with live controls floating around them. The type *is* the demo.
+
+### 3. Show the output, not the logo
+
+If people come for what your product makes, show that. [Framer](/og-images) surrounds its mark with a mosaic of real sites built with it. It answers "what will I get?" faster than any tagline.
+
+### 4. Let the brand mark breathe
+
+When the brand is recognisable, restraint wins. [Cosmos](/og-images) uses its six-dot mark in the centre with images drifting around it. No headline needed.
+
+### 5. Design for the thumbnail, not the canvas
+
+Check your card at 400 px wide before you ship it. Thin weights, low-contrast grey text and small labels disappear first. One strong headline and one supporting line is usually the ceiling.
+
+### 6. Match the page it represents
+
+A preview that promises one thing and lands somewhere else costs more than it earns. Use the page's real title, its real product shot, and the same colours the visitor will see when they arrive.
+
+### 7. Be consistent across pages
+
+Give every page the same template, with only the title and one detail changing. [Interfere's design system](/og-images) uses a single composition of component tiles around its name; our Journal covers use the same layout for every post with a pattern generated from the title. Consistency makes your links recognisable in a feed before anyone reads them.
+
+## Generating OG images for every page
+
+Hand-making an image per page doesn't scale past a few dozen pages. Two approaches do:
+
+- **Render on request.** Next.js `ImageResponse` (built on [Satori](https://github.com/vercel/satori)) turns JSX and CSS into a PNG at the edge. It's fast and needs no browser, but supports a subset of CSS.
+- **Render at build time.** Build the card as a normal HTML page and screenshot it with a headless browser. Every CSS feature works, and the output is a static file served from your CDN. This is how UIArchives makes its Journal covers.
+
+Either way, generate from data you already have (the title, a category, a date) so new pages get a correct image without anyone opening a design tool.
+
+## How to test and refresh an OG image
+
+Platforms cache previews, sometimes for days. To check a page and force a refresh:
+
+- **Facebook:** the [Sharing Debugger](https://developers.facebook.com/tools/debug/) shows what Meta sees and re-scrapes on demand.
+- **LinkedIn:** the [Post Inspector](https://www.linkedin.com/post-inspector/) does the same for LinkedIn.
+- **X:** the Card Validator no longer shows previews, so compose a post (you don't have to publish it) to see the card.
+- **Anywhere else:** if a platform keeps showing an old image, change the image URL (for example `og.png?v=2`). A new URL can't be served from the old cache.
+
+## Common mistakes
+
+- **Using a relative `og:image` path.** It must be absolute.
+- **Using SVG.** X explicitly doesn't support it, and many crawlers ignore it. Use PNG or JPEG.
+- **Putting the image behind a login, a firewall or `robots.txt`.** Crawlers can't fetch what visitors can't.
+- **Shipping a 6 MB PNG.** It may be rejected, and slow messaging apps skip it. Export at 1200 × 630 and compress.
+- **Placing text on the edges.** It gets cropped on X and covered by UI elsewhere.
+- **Replacing the file but keeping the URL.** Caches keep showing the old one.
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="What is the best OG image size?">
+
+1200 × 630 pixels at a 1.91:1 ratio. It matches Meta's recommendation, is within a few pixels of LinkedIn's, and only loses a sliver at the top and bottom in X's 2:1 card.
+
+</FaqItem>
+
+<FaqItem q="Is the Twitter (X) card image size different?">
+
+X's large card uses a 2:1 ratio, with a minimum of 300 × 157 and a maximum of 4096 × 4096 under 5 MB. A 1200 × 630 image works; X crops about 15 px from the top and bottom.
+
+</FaqItem>
+
+<FaqItem q="Can an OG image be a WebP?">
+
+X supports JPG, PNG, WebP and GIF. PNG and JPEG are the safest choice across every platform, so use them unless you've tested WebP everywhere your links travel.
+
+</FaqItem>
+
+<FaqItem q="Does an OG image help SEO?">
+
+It isn't a Google ranking factor. It affects how often people click your link when it's shared, which affects traffic, and a well-shared page tends to earn the links and attention that do matter for search.
+
+</FaqItem>
+
+<FaqItem q="Why isn't my OG image showing?">
+
+The usual causes are a relative URL, a missing `og:image:width`/`og:image:height` on the first share, an image the crawler can't reach, a file that's too large, or a cached old preview. Run the page through the Facebook Sharing Debugger or LinkedIn Post Inspector to see which.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="og-images" posts={["liquid-glass-app-icon-guide", "best-agent-skills-for-ui-design"]} />

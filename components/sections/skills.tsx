@@ -1,5 +1,7 @@
 "use client";
 
+import { withSlugs } from "@/lib/slug";
+import { useMemo } from "react";
 import { CollectionView } from "@/components/collection/collection-view";
 import { PrimaryLink } from "@/components/collection/copy-button";
 import { CommandCopy } from "@/components/collection/command-copy";
@@ -19,8 +21,11 @@ const text = (s: Skill) =>
 const GRID = "md:grid md:grid-cols-[minmax(0,16rem)_minmax(0,1fr)_minmax(0,18rem)] md:items-center md:gap-6";
 
 export function Skills({ items }: { items: Skill[] }) {
+  // Each item's own page (same slugs the server uses for /skills/[slug]).
+  const slugs = useMemo(() => new Map(withSlugs(items, (s) => (s.id.startsWith("sk-") ? s.name : s.id)).map((x) => [x.item, x.slug])), [items]);
   return (
     <CollectionView
+      href={(i) => `/skills/${slugs.get(i)}`}
       items={items}
       facets={facets}
       text={text}

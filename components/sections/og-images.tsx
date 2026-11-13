@@ -1,5 +1,7 @@
 "use client";
 
+import { withSlugs } from "@/lib/slug";
+import { useMemo } from "react";
 import { CollectionView } from "@/components/collection/collection-view";
 import { Tile } from "@/components/collection/tile";
 import { CopyButton, PrimaryLink } from "@/components/collection/copy-button";
@@ -26,8 +28,11 @@ const text = (i: OgImage) =>
   `${i.title} ${host(i.url)} ${i.industry} ${i.style.join(" ")} ${i.theme} ${i.pageTitle ?? ""} ${i.pageDescription ?? ""}`;
 
 export function OgImages({ items }: { items: OgImage[] }) {
+  // Each item's own page (same slugs the server uses for /og-images/[slug]).
+  const slugs = useMemo(() => new Map(withSlugs(items, (o) => o.title).map((x) => [x.item, x.slug])), [items]);
   return (
     <CollectionView
+      href={(i) => `/og-images/${slugs.get(i)}`}
       items={items}
       facets={facets}
       text={text}
@@ -35,11 +40,10 @@ export function OgImages({ items }: { items: OgImage[] }) {
       noun={["image", "images"]}
       layout={{
         kind: "grid",
-        columns: "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4",
+        columns: "grid-cols-1 md:grid-cols-2",
+        caption: (i) => ({ title: i.title, link: { href: i.url, label: host(i.url) } }),
         tile: (i) => (
           <Tile
-            title={i.title}
-            meta={host(i.url)}
             media={
               // eslint-disable-next-line @next/next/no-img-element
               <img src={i.image} alt="" loading="lazy" decoding="async" className="absolute inset-0 size-full object-cover" />
@@ -62,22 +66,20 @@ export function OgImages({ items }: { items: OgImage[] }) {
             <CopyButton value={new URL(i.image, "https://uiarchives.com").href} label="Copy image URL" />
           </div>
 
-          {/* How it unfurls: the image above the title and domain, like a shared link */}
-          <figure className="mt-8 overflow-hidden rounded-lg shadow-[0_0_0_1px_var(--line-strong)]">
+          <div className="mt-8 overflow-hidden rounded-lg shadow-[0_0_0_1px_var(--line-strong)]">
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={i.image} alt={`Open Graph image for ${i.title}`} width={i.width} height={i.height} className="block w-full" />
-            <figcaption className="border-t px-4 py-3">
-              <p className="text-[12px] text-fg-3">{host(i.url)}</p>
-              <p className="mt-0.5 truncate font-medium">{i.pageTitle || i.title}</p>
-              {i.pageDescription && <p className="mt-0.5 line-clamp-2 text-fg-2">{i.pageDescription}</p>}
-            </figcaption>
-          </figure>
-          <p className="mt-2 text-[12px] text-fg-3">Preview of how a link to {host(i.url)} unfurls.</p>
+          </div>
 
           <SheetSection title="Details">
             <dl className="border-t">
-              <SheetRow label="Size">{i.width} × {i.height}</SheetRow>
-              <SheetRow label="Ratio">{(i.width / i.height).toFixed(2)} : 1</SheetRow>
+              <SheetRow label="Website">
+                <a href={i.url} target="_blank" rel="noopener noreferrer" className="link underline-offset-4 transition-colors hover:text-fg hover:underline">
+                  {host(i.url)}
+                </a>
+              </SheetRow>
+              {i.pageTitle && <SheetRow label="Shared title">{i.pageTitle}</SheetRow>}
+              {i.pageDescription && <SheetRow label="Shared description">{i.pageDescription}</SheetRow>}
               <SheetRow label="Style"><SheetTags tags={i.style} /></SheetRow>
               <SheetRow label="Theme">{i.theme}</SheetRow>
               <SheetRow label="Industry">{i.industry}</SheetRow>

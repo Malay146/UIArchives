@@ -1,6 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { withSlugs } from "@/lib/slug";
+import { useRef, useState, useMemo } from "react";
 import { CollectionView } from "@/components/collection/collection-view";
 import { PrimaryLink, CopyButton } from "@/components/collection/copy-button";
 import { SheetRow, SheetSection, SheetTags } from "@/components/ui/sheet";
@@ -17,6 +18,8 @@ const text = (c: DesignClip) =>
 
 const date = (iso: string) =>
   new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(new Date(iso));
+
+const length = (sec: number) => `${Math.floor(sec / 60)}:${String(sec % 60).padStart(2, "0")}`;
 
 const profileUrl = (handle: string) => `https://x.com/${handle}`;
 
@@ -179,8 +182,11 @@ const COLUMNS = [
 ];
 
 export function Designs({ items }: { items: DesignClip[] }) {
+  // Each item's own page (same slugs the server uses for /designs/[slug]).
+  const slugs = useMemo(() => new Map(withSlugs(items, (c) => c.title).map((x) => [x.item, x.slug])), [items]);
   return (
     <CollectionView
+      href={(i) => `/designs/${slugs.get(i)}`}
       items={items}
       facets={facets}
       text={text}
@@ -246,6 +252,8 @@ export function Designs({ items }: { items: DesignClip[] }) {
               <SheetRow label="Platform"><SheetTags tags={c.platform} /></SheetRow>
               {c.stack?.length ? <SheetRow label="Built with"><SheetTags tags={c.stack} /></SheetRow> : null}
               {c.posted && <SheetRow label="Posted">{date(c.posted)}</SheetRow>}
+              {c.duration ? <SheetRow label="Length">{length(c.duration)}</SheetRow> : null}
+              {c.width && c.height ? <SheetRow label="Resolution">{c.width} × {c.height}</SheetRow> : null}
               <SheetRow label="Added">{date(c.added)}</SheetRow>
             </dl>
           </SheetSection>

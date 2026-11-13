@@ -1,6 +1,7 @@
 import type { ComponentType } from "react";
 import { load as parseYaml } from "js-yaml";
 import readingTime from "reading-time";
+import { toGenre } from "./journal-genres";
 import type { Post, PostFrontmatter } from "../types/blog";
 
 /**
@@ -33,6 +34,8 @@ const slugOf = (path: string) => path.split("/").pop()!.replace(/\.mdx$/, "");
 const POSTS: Post[] = Object.entries(SOURCES)
   .map(([path, source]) => {
     const { data, content } = matter(source);
+    // Every post belongs to one Journal genre (drives filters and the cover).
+    data.category = toGenre(typeof data.category === "string" ? data.category : undefined);
     return {
       slug: slugOf(path),
       frontmatter: data as unknown as PostFrontmatter,

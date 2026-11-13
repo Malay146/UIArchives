@@ -1,4 +1,8 @@
 @import "tailwindcss";
+/* Scan every source folder explicitly, so classes in newly added files are always generated. */
+@source "../app";
+@source "../components";
+@source "../lib";
 
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
@@ -179,3 +183,7 @@
 [data-theme="dark"] .tint-og-images { --tint: #ffbe78; }
 [data-theme="dark"] .tint-app-icons { --tint: #7fe3a5; }
 [data-theme="dark"] .tint-skills { --tint: #c8adff; }
+
+/* Journal covers follow the site theme for their genre colour. */
+.blog-cover { --g-tint: var(--g-light); }
+[data-theme="dark"] .blog-cover { --g-tint: var(--g-dark); }

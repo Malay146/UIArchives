@@ -10,7 +10,8 @@
     "types": "cf workers types",
     "fetch:logos": "tsx scripts/fetch-logos.ts",
     "fetch:meta": "tsx scripts/fetch-meta.ts",
-    "fetch:snapshots": "tsx scripts/fetch-snapshots.ts"
+    "fetch:snapshots": "tsx scripts/fetch-snapshots.ts",
+    "covers": "bash scripts/blog-covers.sh"
   },
   "dependencies": {
     "@google/genai": "^1.44.0",

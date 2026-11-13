@@ -10,6 +10,46 @@ import { MagnifierGlyph18 } from "@/components/icons";
 
 const ALL = "All";
 
+/**
+ * Opens an item: a link to its own page when it has one (so crawlers and
+ * ⌘/ctrl-click work), with a plain click intercepted to open the panel.
+ */
+function Opener({
+  href,
+  onOpen,
+  className,
+  tabIndex,
+  children,
+}: {
+  href?: string;
+  onOpen: () => void;
+  className?: string;
+  tabIndex?: number;
+  children: React.ReactNode;
+}) {
+  if (!href) {
+    return (
+      <button type="button" aria-haspopup="dialog" onClick={onOpen} className={className} tabIndex={tabIndex}>
+        {children}
+      </button>
+    );
+  }
+  return (
+    <a
+      href={href}
+      tabIndex={tabIndex}
+      className={className}
+      onClick={(e) => {
+        if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || e.button !== 0) return;
+        e.preventDefault();
+        onOpen();
+      }}
+    >
+      {children}
+    </a>
+  );
+}
+
 type Props<T> = {
   items: T[];
   facets: Facet<T>[];
@@ -19,11 +59,19 @@ type Props<T> = {
   /** Singular / plural noun for counts, e.g. ["clip", "clips"]. */
   noun: [string, string];
   layout:
-    | { kind: "grid"; columns: string; tile: (item: T) => React.ReactNode }
+    | {
+        kind: "grid";
+        columns: string;
+        tile: (item: T) => React.ReactNode;
+        /** Caption under the tile, outside its button, so it can hold a real link. */
+        caption?: (item: T) => { title: string; link?: { href: string; label: string } };
+      }
     /** Row-first masonry: tiles keep their own height (see Masonry). */
     | { kind: "masonry"; columns: MasonryColumns; ratio: (item: T) => number; tile: (item: T) => React.ReactNode }
     | { kind: "list"; header: React.ReactNode; row: (item: T) => React.ReactNode };
   detail: (item: T, helpers: { list: T[]; open: (item: T) => void }) => React.ReactNode;
+  /** The item's own page. Tiles become real links (crawlable, ⌘-click opens a tab); a plain click opens the panel. */
+  href?: (item: T) => string;
   /** Media-first viewer: rendered centred on a dark stage, with `detail` in a right sidebar. */
   stage?: (item: T) => React.ReactNode;
   /** Shown when the collection has nothing in it yet. */
@@ -35,7 +83,7 @@ type Props<T> = {
  * content in the middle, details in a sheet. One structure everywhere, so
  * moving between sections never asks people to relearn anything.
  */
-export function CollectionView<T>({ items, facets, text, getKey, noun, layout, detail, stage, empty }: Props<T>) {
+export function CollectionView<T>({ items, facets, text, getKey, noun, layout, detail, stage, href, empty }: Props<T>) {
   const c = useCollection({ items, facets, text });
   const [open, setOpen] = useState<T | null>(null);
   const [frozen, setFrozen] = useState<T[]>([]);
@@ -162,28 +210,39 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
             ratio={layout.ratio}
             getKey={getKey}
             render={(item) => (
-              <button
-                type="button"
-                aria-haspopup="dialog"
-                onClick={() => openItem(item)}
-                className="group block w-full text-left outline-none"
-              >
+              <Opener href={href?.(item)} onOpen={() => openItem(item)} className="group block w-full text-left outline-none">
                 {layout.tile(item)}
-              </button>
+              </Opener>
             )}
           />
         ) : layout.kind === "grid" ? (
           <ul className={`grid gap-x-4 gap-y-8 px-4 py-6 sm:px-6 ${layout.columns}`}>
             {c.results.map((item) => (
-              <li key={getKey(item)}>
-                <button
-                  type="button"
-                  aria-haspopup="dialog"
-                  onClick={() => openItem(item)}
-                  className="group block w-full text-left outline-none"
-                >
+              <li key={getKey(item)} className="group">
+                <Opener href={href?.(item)} onOpen={() => openItem(item)} className="group block w-full text-left outline-none">
                   {layout.tile(item)}
-                </button>
+                </Opener>
+                {layout.caption &&
+                  (() => {
+                    const cap = layout.caption(item);
+                    return (
+                      <div className="mt-2.5 flex items-baseline justify-between gap-3">
+                        <Opener href={href?.(item)} tabIndex={-1} onOpen={() => openItem(item)} className="truncate text-left font-medium">
+                          {cap.title}
+                        </Opener>
+                        {cap.link && (
+                          <a
+                            href={cap.link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="shrink-0 truncate text-[12px] text-fg-3 underline-offset-4 transition-colors hover:text-fg hover:underline"
+                          >
+                            {cap.link.label}
+                          </a>
+                        )}
+                      </div>
+                    );
+                  })()}
               </li>
             ))}
           </ul>
@@ -193,14 +252,13 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
             <ul>
               {c.results.map((item) => (
                 <li key={getKey(item)} className="group relative border-b transition-colors hover:bg-hover">
-                  <button
-                    type="button"
-                    aria-haspopup="dialog"
-                    onClick={() => openItem(item)}
+                  <Opener
+                    href={href?.(item)}
+                    onOpen={() => openItem(item)}
                     className="absolute inset-0 outline-none focus-visible:outline focus-visible:outline-1 focus-visible:-outline-offset-1 focus-visible:outline-fg"
                   >
                     <span className="sr-only">Show details</span>
-                  </button>
+                  </Opener>
                   {layout.row(item)}
                 </li>
               ))}

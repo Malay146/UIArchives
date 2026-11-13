@@ -1,0 +1,241 @@
+---
+title: "The 7 Best Agent Skills for UI Design in 2026 (Claude Code, Cursor, Codex)"
+description: "The best agent skills for UI and frontend design in 2026, compared: what each one actually does, how to install it, and which to combine for new builds, polish, animation and review."
+excerpt: "We read every SKILL.md so you don't have to. Seven design skills that measurably change what your coding agent builds, and how to combine them."
+date: "2026-11-11"
+category: "Tools"
+tags: ["Agent Skills", "Claude Code", "Cursor", "Codex", "Frontend Design", "AI"]
+coverImage: "/blogs/best-agent-skills-for-ui-design.png"
+---
+
+**Short answer:** start with **Anthropic's `frontend-design`** skill for taste on every new UI, add **Impeccable** to critique and polish what you've built, and finish with **Vercel's `web-design-guidelines`** as a pre-ship review. For motion, add **Emil Kowalski's skills**; for art direction from references, **Taste Skill**; for a searchable design-system generator, **UI UX Pro Max**; and to keep decisions consistent across sessions, **Interface Design**.
+
+Below is what each skill actually does (we read their `SKILL.md` files, not just the READMEs), how to install it, and which to combine for the job in front of you.
+
+## What is an agent skill?
+
+An agent skill is a folder with a `SKILL.md` file: a short description, followed by instructions, references and sometimes scripts. Your coding agent reads the description up front and loads the full instructions only when a task calls for them. That makes skills cheap to install and easy to stack.
+
+Skills follow an open format, so the same skill works in Claude Code, Cursor, Codex, GitHub Copilot and most other agents. The common installer is the `skills` CLI:
+
+```bash
+npx skills add <owner>/<repo>
+```
+
+Claude Code can also install skills packaged as plugins with `/plugin install`.
+
+Why design skills matter: ask an agent for a page with no guidance and you get the same defaults every time. Inter everywhere, a purple-to-blue gradient, cards inside cards, an icon tile above every heading. A design skill replaces those defaults with decisions.
+
+## The best design skills at a glance
+
+| Skill | Best for | Stars* | Licence |
+| --- | --- | --- | --- |
+| frontend-design (Anthropic) | Taste on every new UI | ~194k (repo) | See repo |
+| Impeccable | Critique, polish, slop detection | ~109k | Apache-2.0 |
+| Taste Skill | Art direction from references | ~115k | MIT |
+| UI UX Pro Max | Design-system generation | ~149k | MIT |
+| Emil Kowalski's skills | Animation and interaction | ~57k | MIT |
+| web-design-guidelines (Vercel) | Pre-ship UI review | ~34k (repo) | See repo |
+| Interface Design | Consistency across sessions | ~6k | MIT |
+
+\*GitHub stars as of November 13, 2026, rounded. Stars measure attention, not quality; read the notes below before choosing. Each skill's install command is in its section.
+
+## 1. frontend-design (Anthropic)
+
+**Best for:** making every new interface look designed rather than generated.
+
+Anthropic's official skill, from the [anthropics/skills](https://github.com/anthropics/skills) repository, frames the agent as the design lead at a studio whose clients have already rejected anything templated. It pushes for decisions grounded in the subject: identify the product, the audience and the page's job first, then pick palette, type and layout from that world.
+
+What stands out in its instructions:
+
+- **Typography carries the personality.** One or two families, chosen on purpose, with a clear type scale and line lengths under about 80 characters.
+- **It names the tells of generated pages** and tells the agent to avoid them: a single accented word in a headline, all-caps labels, decorative eyebrows, and `01 / 02 / 03` markers on content that isn't a sequence.
+- **Structure must carry information.** Borders, numbering and dividers are allowed only when they encode something.
+
+**Use it when:** you're building anything new. It's the best single skill to install first.
+
+**Install** (in Claude Code), then pick the plugin from the marketplace:
+
+```bash
+/plugin marketplace add anthropics/skills
+```
+
+## 2. Impeccable
+
+**Best for:** improving interfaces that already exist.
+
+[Impeccable](https://github.com/pbakaus/impeccable) gives your agent a design vocabulary: 24 commands that each load a playbook for one move. Instead of "make it pop", you run `/impeccable bolder the pricing cards`.
+
+- **Steer:** `bolder`, `quieter`, `distill`, `colorize`, `typeset` and more.
+- **Review:** `critique` scores the design against usability heuristics and ranks fixes; `audit` checks accessibility, performance, theming and responsiveness, with findings ranked by severity.
+- **Finish:** `polish`, `harden` (errors, overflow, i18n), `clarify` (copy), `adapt` (screen sizes).
+- **A slop detector:** 62 deterministic rules flag the common AI-design tells, with no model call and no API key.
+
+Run `/impeccable init` once per project; it writes a `PRODUCT.md` that every later command reads.
+
+**Use it when:** you have a page or component and want it measurably better. Narrow targets ("the onboarding flow") get better results than whole sites.
+
+**Install**, then reload your agent:
+
+```bash
+npx impeccable install
+```
+
+## 3. Taste Skill
+
+**Best for:** art direction and visual identity.
+
+[Taste Skill](https://github.com/Leonxlnx/taste-skill) works the way a designer would: it sets an art direction, works from reference images, and checks the result in a real browser instead of trusting the code. It bundles scripts that capture and inspect the page, and can pull in photography for heroes.
+
+Note the requirements: its scripts need **Node 22+** and an installed **Chrome, Edge or Chromium** (set `CHROME_PATH` if it's somewhere unusual). It installs nothing else and needs no API keys.
+
+**Use it when:** the brief is "give this a real look", such as a landing page or launch site where identity matters more than components.
+
+**Install:**
+
+```bash
+npx skills add https://github.com/Leonxlnx/taste-skill --skill "design-taste-frontend"
+```
+
+Or, in Claude Code:
+
+```bash
+/plugin install taste-skill@taste-skill
+```
+
+## 4. UI UX Pro Max
+
+**Best for:** generating a design system from a description.
+
+[UI UX Pro Max](https://github.com/nextlevelbuilder/ui-ux-pro-max-skill) is a searchable design knowledge base: **192 reasoning rules** and **80 UI styles**, with palettes, font pairings and patterns matched to product type and industry. Ask for "a fintech dashboard" and it proposes a coherent system instead of generic defaults.
+
+It's the most "database-like" skill here. It's broad and fast, though less opinionated than frontend-design or Impeccable. It uses Python 3 under the hood.
+
+**Use it when:** you're starting a product in an unfamiliar industry and want a sensible system to react to.
+
+**Install** (in Claude Code):
+
+```bash
+/plugin install ui-ux-pro-max@ui-ux-pro-max-skill
+```
+
+Or install its CLI:
+
+```bash
+npm install -g ui-ux-pro-max-cli
+```
+
+## 5. Emil Kowalski's skills
+
+**Best for:** animation and interaction quality.
+
+Emil Kowalski (creator of Sonner and Vaul) publishes a set of focused skills in [emilkowalski/skills](https://github.com/emilkowalski/skills), each targeting one craft problem:
+
+- **`emil-design-eng`:** his philosophy on polish, component design and when to animate at all.
+- **`review-animations`** and **`improve-animations`:** review motion code against a high bar and fix it.
+- **`remove-animations`:** find motion the interface doesn't need.
+- **`animation-performance`**, **`gestures`**, **`choreograph`:** timing, touch and multi-element sequences.
+- **`pick-ui-library`:** pick a proven library instead of letting the agent hand-roll a toast or install an abandoned package.
+
+We use `emil-design-eng` on UIArchives itself. It's the reason our drawers and sheets ease the way they do.
+
+**Use it when:** your interface works but feels stiff, or your agent is adding animation everywhere.
+
+**Install:**
+
+```bash
+npx skills@latest add emilkowalski/skills
+```
+
+## 6. web-design-guidelines (Vercel)
+
+**Best for:** a final review before you ship.
+
+Vercel's [`web-design-guidelines`](https://github.com/vercel-labs/agent-skills) skill fetches the latest Web Interface Guidelines and checks your files against every rule: accessibility, forms, focus states, motion, typography, performance. It reports findings in a terse `file:line` format your agent can fix immediately.
+
+It doesn't design anything. It's a linter for interface quality, and it pairs perfectly with the skills above.
+
+**Use it when:** asking "review my UI" or "check accessibility" before a release.
+
+**Install** (the repo also includes React and composition skills):
+
+```bash
+npx skills add vercel-labs/agent-skills
+```
+
+## 7. Interface Design
+
+**Best for:** keeping a design consistent across many sessions.
+
+[Interface Design](https://github.com/Dammyjay93/interface-design) establishes a design direction for your project and saves the decisions (spacing, type, colour, component rules) to `.interface-design/system.md`. Every later session reads it, so the agent stops reinventing your button styles each time.
+
+**Use it when:** you're building a product over weeks, not a page in an afternoon.
+
+**Install:**
+
+```bash
+npx skills add https://github.com/dammyjay93/interface-design --skill interface-design
+```
+
+## Honourable mentions
+
+- **Apple HIG skills** ([hig-doctor](https://github.com/raintree-technology/hig-doctor)): Apple's Human Interface Guidelines as reference skills (foundations, patterns and components) for iOS, macOS and visionOS work. Pair them with our guide to [designing Liquid Glass app icons](/blog/liquid-glass-app-icon-guide).
+- **DESIGN.md files** ([awesome-design-md](https://github.com/VoltAgent/awesome-design-md)): design-system write-ups of well-known brands you can drop into a project as context.
+
+## Which skills to combine
+
+| Job | Stack |
+| --- | --- |
+| Building something new | frontend-design → web-design-guidelines |
+| Improving an existing app | Impeccable (`critique`, then `polish`) → web-design-guidelines |
+| A landing page with a real identity | Taste Skill → frontend-design |
+| Animation and feel | Emil Kowalski's skills |
+| A product built over months | Interface Design + frontend-design |
+| iOS and macOS apps | Apple HIG skills + frontend-design |
+
+Two rules of thumb:
+
+- **Don't install them all at once.** Overlapping instructions compete. Pick one skill that *creates* (frontend-design, Taste Skill or UI UX Pro Max), one that *refines* (Impeccable or Emil's), and one that *reviews* (web-design-guidelines).
+- **Give the agent eyes.** Every skill does better when the agent can see the rendered page in a browser, not only the code.
+
+## How we chose
+
+We started from what designers and engineers actually install, then read each skill's `SKILL.md` and repository to see what it changes in practice. Skills made the list if they: change output in a way you can see, are actively maintained (all had updates in the last few months), and do something the others don't. Star counts are from GitHub on November 13, 2026.
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="What is the best Claude Code skill for frontend design?">
+
+Anthropic's `frontend-design` is the best single starting point: it changes how the agent makes visual decisions on every new UI. Add Impeccable for refining existing interfaces.
+
+</FaqItem>
+
+<FaqItem q="Do agent skills work in Cursor and Codex?">
+
+Yes. Skills use an open `SKILL.md` format, and installers like `npx skills add` set them up for Claude Code, Cursor, Codex, GitHub Copilot and other agents. Some skills ship extra commands for specific tools.
+
+</FaqItem>
+
+<FaqItem q="Are these design skills free?">
+
+All seven are free and open source. Check each licence (MIT, Apache-2.0 or the repository's own terms) before using them in commercial work.
+
+</FaqItem>
+
+<FaqItem q="How many skills should I install?">
+
+Usually two or three: one that creates, one that refines and one that reviews. More than that and their instructions start to overlap.
+
+</FaqItem>
+
+<FaqItem q="Do skills replace a designer?">
+
+No. They replace the agent's defaults with better ones, which raises the floor. Direction, judgement and taste for your specific product still come from you.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="skills" posts={["og-image-size-guide", "liquid-glass-app-icon-guide"]} />

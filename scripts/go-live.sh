@@ -76,6 +76,9 @@ DB_ID=$(npx cf d1 list 2>/dev/null | node -e '
   });' "$DB_NAME")
 npx cf d1 migrations apply "$DB_ID"
 
+say "Telling search engines about new pages"
+bash scripts/indexnow.sh || echo "  (IndexNow ping failed — run scripts/indexnow.sh later)"
+
 say "Done."
 echo "Set up a passkey at /review — the code is emailed to ADMIN_EMAIL."
 echo "Live at https://uiarchives.com"

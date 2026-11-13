@@ -5,45 +5,15 @@ import { BlogListingClient } from "@/components/blog/blog-listing-client";
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "https://uiarchives.com";
 
 export const metadata: Metadata = {
-  title: "Blog - UIArchives | Frontend Development & UI Design Articles",
+  title: "Journal — design resource guides & UI tools",
   description:
-    "Read the latest articles on UI design, frontend development, React components, and modern web design techniques. Stay updated with the best tools and resources.",
-  keywords: [
-    "UI design blog",
-    "frontend development articles",
-    "React components blog",
-    "Tailwind CSS tutorials",
-    "web design resources",
-    "developer blog",
-  ],
-  alternates: {
-    canonical: `${SITE_URL}/blog`,
-  },
+    "Guides and notes on design resources: OG images, app icons, UI component libraries, agent skills for design and the frontend tools worth knowing. Written for designers and frontend developers.",
+  alternates: { canonical: "/blog" },
   openGraph: {
-    title: "Blog - UIArchives | Frontend Development & UI Design",
-    description:
-      "Articles, tutorials, and insights for developers and designers on modern UI development and design systems.",
-    url: `${SITE_URL}/blog`,
+    url: "/blog",
     type: "website",
-    siteName: "UIArchives",
-    locale: "en_US",
-    images: [
-      {
-        url: `${SITE_URL}/og.png`,
-        width: 1200,
-        height: 630,
-        alt: "UIArchives Blog",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "UIArchives Blog | Frontend & Design",
-    description:
-      "Insights and resources for UI design and frontend development.",
-    creator: "@pmalay694",
-    site: "@pmalay694",
-    images: [`${SITE_URL}/og.png`],
+    title: "Journal — UIArchives",
+    description: "Guides and notes on design resources, UI tools and frontend craft.",
   },
 };
 
