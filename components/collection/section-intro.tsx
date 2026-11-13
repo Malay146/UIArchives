@@ -14,7 +14,8 @@ export function SectionIntro({
     <section className="grid gap-8 border-b px-4 pt-10 pb-10 sm:px-6 sm:pt-14 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
       <div className="max-w-[460px]">
         <h1 className="rise font-medium">{title}</h1>
-        <p className="rise mt-3 text-fg-2" style={{ "--i": 1 } as React.CSSProperties}>
+        {/* Three lines reserved on desktop so every section opens at the same height. */}
+        <p className="rise mt-3 text-fg-2 md:min-h-[3lh]" style={{ "--i": 1 } as React.CSSProperties}>
           {blurb}
         </p>
         {children && (
