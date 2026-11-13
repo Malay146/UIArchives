@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { Logo } from "./logo";
 import { ThemeToggle } from "./theme-toggle";
 import { SoundToggle } from "./sound-toggle";
+import { GithubStar } from "./github-star";
 import { CommandTrigger } from "@/components/command/command-menu";
 import { SECTIONS } from "@/lib/sections";
 
@@ -46,6 +47,7 @@ export function Header() {
             Journal
           </Link>
           <CommandTrigger />
+          <GithubStar />
           <span className="hidden h-3.5 w-px bg-line-strong sm:block" aria-hidden="true" />
           <div className="flex items-center gap-3.5 sm:gap-4">
             <SoundToggle />
