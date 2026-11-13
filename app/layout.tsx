@@ -83,7 +83,7 @@ export const metadata: Metadata = {
         url: `${SITE_URL}/og.png`,
         width: 1200,
         height: 630,
-        alt: "UIArchives – Curated UI Components and Design Tools",
+        alt: "UIArchives — An archive for people who make interfaces.",
       },
     ],
   },

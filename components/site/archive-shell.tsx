@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { SECTIONS, type SectionSlug } from "@/lib/sections";
 import { getSectionCounts } from "@/lib/server/published";
+import { SectionIcon } from "./section-icon";
 
 /**
  * The archive's frame: every section listed on the left, always in the same
@@ -10,9 +11,9 @@ import { getSectionCounts } from "@/lib/server/published";
 export async function ArchiveShell({ active, children }: { active: SectionSlug; children: React.ReactNode }) {
   const counts = await getSectionCounts();
   return (
-    <div className="mx-auto max-w-[1200px] lg:grid lg:grid-cols-[13rem_minmax(0,1fr)]">
+    <div className="mx-auto max-w-[1600px] lg:grid lg:grid-cols-[13rem_minmax(0,1fr)]">
       <aside className="hidden border-r lg:block">
-        <nav aria-label="Archive" className="sticky top-[var(--header-h)] py-6 pr-4 pl-4 sm:pl-6">
+        <nav aria-label="Archive" className="sticky top-[var(--header-h)] py-6 pr-4 pl-2 sm:pl-4">
           <p className="mb-2 px-2 text-fg-3">Archive</p>
           <ul>
             {SECTIONS.map((s) => {
@@ -23,11 +24,16 @@ export async function ArchiveShell({ active, children }: { active: SectionSlug; 
                   <Link
                     href={s.href}
                     aria-current={on ? "page" : undefined}
-                    className={`press flex items-center justify-between gap-3 rounded-md px-2 py-1.5 transition-colors duration-150 ${
-                      on ? "bg-hover text-fg" : "text-fg-2 hover:text-fg"
+                    className={`tint-${s.slug} press flex items-center justify-between gap-3 rounded-md px-2 py-1.5 transition-colors duration-150 ${
+                      on
+                        ? "bg-hover text-[var(--tint)]"
+                        : "text-[color-mix(in_oklab,var(--tint)_70%,var(--fg-2))] hover:text-[var(--tint)]"
                     }`}
                   >
-                    <span>{s.label}</span>
+                    <span className="flex items-center gap-2.5">
+                      <SectionIcon slug={s.slug} />
+                      {s.label}
+                    </span>
                     <span className="text-fg-3 tabular-nums">{n || "Soon"}</span>
                   </Link>
                 </li>

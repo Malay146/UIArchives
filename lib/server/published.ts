@@ -41,7 +41,11 @@ export async function getDesigns(): Promise<DesignClip[]> {
     return {
       id: `m-${it.id}`,
       title: s(d, "title"),
-      author: { name: s(d, "authorName") || s(d, "authorHandle"), handle: s(d, "authorHandle").replace(/^@/, "") },
+      author: {
+        name: s(d, "authorName") || s(d, "authorHandle"),
+        handle: s(d, "authorHandle").replace(/^@/, ""),
+        avatar: s(d, "authorAvatar") || undefined,
+      },
       post: s(d, "post"),
       video: s(d, "video"),
       poster: s(d, "poster"),
@@ -49,6 +53,10 @@ export async function getDesigns(): Promise<DesignClip[]> {
       platform: a(d, "platform"),
       stack: a(d, "stack"),
       added: iso(it.reviewed_at),
+      posted: s(d, "postedAt") || undefined,
+      width: Number(s(d, "width")) || undefined,
+      height: Number(s(d, "height")) || undefined,
+      caption: s(d, "caption") || undefined,
       note: s(d, "note") || undefined,
     };
   });

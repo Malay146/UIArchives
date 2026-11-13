@@ -71,7 +71,7 @@ export const SECTION_SCHEMAS: Record<SectionKey, SectionSchema> = {
       { key: "title", label: "What it shows", type: "text", required: true, placeholder: "e.g. Pricing page exploration" },
       { key: "authorName", label: "Maker", type: "text", placeholder: "Filled from the post if empty" },
       { key: "authorHandle", label: "Maker's X handle", type: "text", placeholder: "@handle" },
-      { key: "kind", label: "Type", type: "multiselect", required: true, options: DESIGN_TYPES },
+      { key: "kind", label: "Category", type: "multiselect", required: true, options: DESIGN_TYPES, hint: "Pick one or two" },
       { key: "platform", label: "Platform", type: "multiselect", required: true, options: DESIGN_PLATFORMS },
       { key: "stack", label: "Built with", type: "tags", hint: "If known, e.g. Figma, Framer, SwiftUI" },
       { key: "note", label: "Why it works", type: "textarea", placeholder: "Optional — what makes it good" },

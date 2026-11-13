@@ -1,7 +1,7 @@
 import { CheckGlyph18 } from "@/components/icons";
 
 export type FilterOption = { value: string; label?: string; count?: number; active: boolean; disabled?: boolean };
-export type FilterGroup = { key: string; label: string; options: FilterOption[]; active?: number };
+export type FilterGroup = { key: string; label: string; options: FilterOption[]; active?: number; exclusive?: boolean };
 
 /**
  * Filters live directly under search, one row per group, so the question
@@ -37,7 +37,7 @@ export function FilterBar({
                     : "text-fg-2 shadow-[inset_0_0_0_1px_var(--line-strong)] hover:text-fg"
                 }`}
               >
-                {o.active && g.options.length > 1 && o.value !== "All" && (
+                {o.active && !g.exclusive && g.options.length > 1 && o.value !== "All" && (
                   <CheckGlyph18 aria-hidden="true" className="-ml-0.5 size-2.5" />
                 )}
                 {o.label ?? o.value}
@@ -47,7 +47,7 @@ export function FilterBar({
               </button>
             ))}
           </div>
-          {onClear && (g.active ?? 0) > 0 && (
+          {onClear && !g.exclusive && (g.active ?? 0) > 0 && (
             <button
               type="button"
               onClick={() => onClear(g.key)}

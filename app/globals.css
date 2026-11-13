@@ -166,3 +166,16 @@
 .scrollbar-none::-webkit-scrollbar {
   display: none;
 }
+
+/* Section tints — each archive section's colour (matches its glass icon).
+   Deeper on white, lighter on black, so the label keeps good contrast. */
+.tint-resources { --tint: #1d5fd6; }
+.tint-designs { --tint: #c4246a; }
+.tint-og-images { --tint: #c25a0c; }
+.tint-app-icons { --tint: #16843f; }
+.tint-skills { --tint: #6a3be0; }
+[data-theme="dark"] .tint-resources { --tint: #8ec0ff; }
+[data-theme="dark"] .tint-designs { --tint: #ff9cc8; }
+[data-theme="dark"] .tint-og-images { --tint: #ffbe78; }
+[data-theme="dark"] .tint-app-icons { --tint: #7fe3a5; }
+[data-theme="dark"] .tint-skills { --tint: #c8adff; }

@@ -20,7 +20,7 @@ export function BlogListingClient({
       : posts.filter((p) => p.frontmatter.category === active);
 
   return (
-    <div className="mx-auto max-w-[1200px]">
+    <div className="mx-auto max-w-[1600px]">
       <header className="px-4 pt-16 pb-12 sm:px-6 sm:pt-24">
         <h1 className="rise font-medium">Journal</h1>
         <p

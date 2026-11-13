@@ -22,7 +22,8 @@ Lucide, Google Fonts, etc.). If nothing clears the bar today, add nothing.
   Typography, Icons, Graphics, Design Tools, Dev Tools, Inspiration, Learning,
   Socials (Socials = a person; use their X profile URL).
 - **Designs** — standout design videos posted on X by designers and design
-  engineers: components, explorations, landing pages, dashboards, mobile apps.
+  engineers: components, interactions, landing pages, mobile apps, dashboards,
+  typography, 3D and branding.
   Only add a post you can open and that contains a video.
   Provide the post URL; the site pulls the video and maker automatically.
 - **OG images** — Open Graph cards that introduce a product especially well
@@ -43,7 +44,7 @@ POST to `https://uiarchives.com/api/ingest` with header
   "origin": "claude",
   "items": [
     { "section": "resources", "data": { "title": "…", "url": "https://…", "category": "Typography", "description": "One or two plain sentences.", "tags": ["Free Fonts"] } },
-    { "section": "designs", "data": { "post": "https://x.com/…/status/…", "title": "What it shows", "kind": ["Landing Page"], "platform": ["Web"], "note": "Why it works, one sentence." } },
+    { "section": "designs", "data": { "post": "https://x.com/…/status/…", "title": "What it shows", "kind": ["Landing Pages"], "platform": ["Web"], "note": "Why it works, one sentence." } },
     { "section": "og-images", "data": { "title": "Product", "url": "https://…", "style": ["Typography"], "theme": "Dark", "industry": "Developer Tools" } },
     { "section": "app-icons", "data": { "link": "https://apps.apple.com/…/id123", "style": ["Glass"], "color": ["Blue"] } },
     { "section": "skills", "data": { "repo": "https://github.com/owner/repo", "topics": ["Animation"] } }
@@ -51,8 +52,9 @@ POST to `https://uiarchives.com/api/ingest` with header
 }
 ```
 
-Allowed values — Designs `kind`: Featured, Component, Exploration, Landing Page,
-Dashboard, Mobile App, Interaction, Onboarding, Brand. Designs `platform`: Web,
+Allowed values — Designs `kind` (one or two): Components, Interactions,
+Landing Pages, Mobile Apps, Dashboards, Typography, 3D, Branding (Featured is
+set by the owner only). Designs `platform`: Web,
 iOS, Android, macOS.
 OG `style`: Typography, Product Shot, Illustration, 3D, Photography, Gradient,
 Minimal. OG `theme`: Light, Dark. Icon `style`: Glass, Flat, Gradient, 3D,

@@ -291,7 +291,7 @@ export default async function PostPage({ params }: PostPageProps) {
       </article>
 
       {suggestions.length > 0 && (
-        <section className="mx-auto mt-24 max-w-[1200px]">
+        <section className="mx-auto mt-24 max-w-[1600px]">
           <h2 className="border-b px-4 pb-3 text-fg-3 sm:px-6">Keep reading</h2>
           <ul>
             {suggestions.map((s) => (
