@@ -4,6 +4,7 @@ import "./globals.css";
 import { SoundProvider } from "@/components/site/sound-provider";
 import { CommandMenu } from "@/components/command/command-menu";
 import { getAllPosts } from "@/lib/blog";
+import { toGraph } from "@/lib/seo";
 
 // -------------------------------
 // Fonts — Geist only
@@ -125,7 +126,7 @@ export default function RootLayout({
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(SITE_JSON_LD).replace(/</g, "\\u003c") }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(toGraph(SITE_JSON_LD)).replace(/</g, "\\u003c") }}
         />
       </head>
 

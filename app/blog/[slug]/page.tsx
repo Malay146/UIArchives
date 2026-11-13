@@ -7,6 +7,7 @@ import Link from "next/link";
 import { PostRow } from "@/components/blog/post-row";
 import { ArrowLeftGlyph18 } from "@/components/icons";
 import { formatDate } from "@/components/blog/format";
+import { AUTHOR } from "@/lib/author";
 import { BlogCover } from "@/components/blog/cover";
 import { toGenre } from "@/lib/journal-genres";
 
@@ -53,8 +54,8 @@ export async function generateMetadata({
     title,
     description: metaDesc,
     keywords: keywords.join(", "),
-    authors: author ? [{ name: author.name }] : [{ name: "UIArchives Team" }],
-    creator: author ? author.name : "UIArchives",
+    authors: [{ name: author?.name ?? AUTHOR.name, url: `${baseUrl}${AUTHOR.url}` }],
+    creator: author?.name ?? AUTHOR.name,
     publisher: "UIArchives",
     alternates: {
       canonical: canonicalUrl,
@@ -96,7 +97,7 @@ export async function generateMetadata({
               alt: "UIArchives Default Image",
             },
           ],
-      authors: author ? [author.name] : ["UIArchives Team"],
+      authors: [author?.name ?? AUTHOR.name],
       tags: tags,
     },
     twitter: {
@@ -132,9 +133,11 @@ export default async function PostPage({ params }: PostPageProps) {
     date,
     category,
     tags,
-    author,
+    author: authorFm,
     coverImage,
   } = post.frontmatter;
+  // Every post has a byline: the frontmatter author, or the site's curator.
+  const author = authorFm ?? { name: AUTHOR.name };
   const metaDesc = description || excerpt || "";
   const Body = getPostComponent(post.slug);
 
@@ -163,17 +166,13 @@ export default async function PostPage({ params }: PostPageProps) {
     image: coverImage ? [`${baseUrl}${coverImage}`] : [`${baseUrl}/og.png`],
     datePublished: date,
     dateModified: date,
-    author: author
-      ? {
-          "@type": "Person",
-          name: author.name,
-          url: baseUrl,
-        }
-      : {
-          "@type": "Organization",
-          name: "UIArchives",
-          url: baseUrl,
-        },
+    author: {
+      "@type": "Person",
+      "@id": `${baseUrl}/about#malay-patel`,
+      name: author.name,
+      url: `${baseUrl}${AUTHOR.url}`,
+      sameAs: [AUTHOR.x, AUTHOR.github],
+    },
     publisher: {
       "@type": "Organization",
       "@id": `${baseUrl}/#organization`,

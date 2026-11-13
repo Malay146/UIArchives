@@ -47,6 +47,9 @@ export async function ArchiveShell({ active, children }: { active: SectionSlug; 
             <Link href="/submit" className="flex rounded-md px-2 py-1.5 text-fg-2 transition-colors hover:text-fg">
               Submit something
             </Link>
+            <Link href="/about" className="flex rounded-md px-2 py-1.5 text-fg-2 transition-colors hover:text-fg">
+              About
+            </Link>
           </div>
         </nav>
       </aside>

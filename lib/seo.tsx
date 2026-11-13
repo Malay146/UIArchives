@@ -9,9 +9,21 @@ export function JsonLd({ data }: { data: Record<string, unknown> | Record<string
   return (
     <script
       type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(data).replace(/</g, "\\u003c") }}
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(toGraph(data)).replace(/</g, "\\u003c") }}
     />
   );
+}
+
+/**
+ * Always one top-level object: several entities go in a single `@graph`
+ * (some JSON-LD readers can't handle a top-level array).
+ */
+export function toGraph(data: Record<string, unknown> | Record<string, unknown>[]) {
+  if (!Array.isArray(data)) return data;
+  return {
+    "@context": "https://schema.org",
+    "@graph": data.map(({ ["@context"]: _drop, ...rest }) => rest),
+  };
 }
 
 export function breadcrumbs(items: { name: string; path: string }[]) {

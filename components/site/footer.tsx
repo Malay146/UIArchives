@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mark } from "./logo";
+import { GithubGlyph32, XTwitterGlyph32 } from "@/components/icons";
 
 export function Footer() {
   return (
@@ -12,6 +13,9 @@ export function Footer() {
           </span>
         </div>
         <div className="flex items-center gap-5">
+          <Link href="/about" className="link hover:text-fg">
+            About
+          </Link>
           <Link href="/submit" className="link hover:text-fg">
             Submit
           </Link>
@@ -19,17 +23,21 @@ export function Footer() {
             href="https://github.com/Malay146/UIArchives"
             target="_blank"
             rel="noopener noreferrer"
-            className="link hover:text-fg"
+            aria-label="UIArchives on GitHub"
+            title="GitHub"
+            className="transition-colors hover:text-fg"
           >
-            GitHub
+            <GithubGlyph32 aria-hidden="true" className="size-4" />
           </a>
           <a
             href="https://x.com/pmalay694"
             target="_blank"
             rel="noopener noreferrer"
-            className="link hover:text-fg"
+            aria-label="UIArchives on X"
+            title="X"
+            className="transition-colors hover:text-fg"
           >
-            X
+            <XTwitterGlyph32 aria-hidden="true" className="size-3.5" />
           </a>
         </div>
       </div>
