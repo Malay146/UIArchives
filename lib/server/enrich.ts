@@ -116,7 +116,7 @@ export async function enrich(section: SectionKey, data: ItemData, id: string): P
     if ((d[k] === undefined || d[k] === "" || (Array.isArray(d[k]) && !d[k]!.length)) && v) d[k] = v as string;
   };
 
-  if (section === "motion" && d.post) {
+  if (section === "designs" && d.post) {
     const x = await xPost(String(d.post));
     if (x) {
       fill("authorName", x.authorName);

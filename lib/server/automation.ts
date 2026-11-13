@@ -9,7 +9,7 @@ import { CATEGORIES } from "@/types/resource";
  * published without approval. Duplicates — including anything previously
  * rejected — are skipped by the database's unique key.
  *
- * Judgement-heavy finds (great motion clips, OG cards, curated resources)
+ * Judgement-heavy finds (great design videos, OG cards, curated resources)
  * come from the scheduled Claude agent via /api/ingest instead.
  */
 const UA = "UIArchivesBot/1.0 (+https://uiarchives.com)";

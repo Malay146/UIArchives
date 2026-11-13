@@ -7,19 +7,19 @@ import { PrimaryLink, CopyButton } from "@/components/collection/copy-button";
 import { SheetRow, SheetSection, SheetTags } from "@/components/ui/sheet";
 import { XTwitterGlyph32 } from "@/components/icons";
 import type { Facet } from "@/lib/use-collection";
-import { MOTION_KINDS, MOTION_PLATFORMS, type MotionClip } from "@/data/collections/motion";
+import { DESIGN_TYPES, DESIGN_PLATFORMS, type DesignClip } from "@/data/collections/designs";
 
-const facets: Facet<MotionClip>[] = [
-  { key: "kind", label: "Interaction", get: (c) => c.kind, order: [...MOTION_KINDS] },
-  { key: "platform", label: "Platform", get: (c) => c.platform, order: [...MOTION_PLATFORMS] },
+const facets: Facet<DesignClip>[] = [
+  { key: "kind", label: "Type", get: (c) => c.kind, order: [...DESIGN_TYPES] },
+  { key: "platform", label: "Platform", get: (c) => c.platform, order: [...DESIGN_PLATFORMS] },
   { key: "stack", label: "Built with", get: (c) => c.stack ?? [] },
 ];
 
-const text = (c: MotionClip) =>
+const text = (c: DesignClip) =>
   `${c.title} ${c.author.name} ${c.author.handle} ${c.kind.join(" ")} ${c.platform.join(" ")} ${(c.stack ?? []).join(" ")} ${c.note ?? ""}`;
 
 /** Poster at rest; plays muted only while hovered, so a grid of clips stays calm. */
-function HoverVideo({ clip }: { clip: MotionClip }) {
+function HoverVideo({ clip }: { clip: DesignClip }) {
   const ref = useRef<HTMLVideoElement>(null);
   return (
     <video
@@ -43,22 +43,22 @@ function HoverVideo({ clip }: { clip: MotionClip }) {
   );
 }
 
-export function Motion({ items }: { items: MotionClip[] }) {
+export function Designs({ items }: { items: DesignClip[] }) {
   return (
     <CollectionView
       items={items}
       facets={facets}
       text={text}
       getKey={(c) => c.id}
-      noun={["clip", "clips"]}
+      noun={["design", "designs"]}
       layout={{
         kind: "grid",
         columns: "grid-cols-1 sm:grid-cols-2 xl:grid-cols-3",
         tile: (c) => <Tile title={c.title} meta={`@${c.author.handle}`} aspect="aspect-video" media={<HoverVideo clip={c} />} />,
       }}
       empty={{
-        title: "Clips are on their way.",
-        body: "Short interaction studies from designers and engineers on X — hovers, transitions, gestures and loading states, filterable by what they show.",
+        title: "Designs are on their way.",
+        body: "Short design videos from designers on X — components, explorations, landing pages and more, filterable by type and platform.",
       }}
       detail={(c) => (
         <article className="px-4 pt-8 pb-16 sm:px-8">
@@ -76,13 +76,13 @@ export function Motion({ items }: { items: MotionClip[] }) {
             <video key={c.video} src={c.video} poster={c.poster} controls autoPlay muted loop playsInline className="block w-full" />
           </div>
           {c.note && (
-            <SheetSection title="Why it works">
+            <SheetSection title="Why it\u2019s good">
               <p className="max-w-[62ch] text-[15px] leading-[1.7] text-fg-2">{c.note}</p>
             </SheetSection>
           )}
           <SheetSection title="Details">
             <dl className="border-t">
-              <SheetRow label="Interaction"><SheetTags tags={c.kind} /></SheetRow>
+              <SheetRow label="Type"><SheetTags tags={c.kind} /></SheetRow>
               <SheetRow label="Platform"><SheetTags tags={c.platform} /></SheetRow>
               {c.stack?.length ? <SheetRow label="Built with"><SheetTags tags={c.stack} /></SheetRow> : null}
               <SheetRow label="Added">

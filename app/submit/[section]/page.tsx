@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { notFound } from "next/navigation";
+import { notFound, redirect } from "next/navigation";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
 import { SubmitForm } from "@/components/submit/submit-form";
@@ -17,6 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 export default async function Page({ params }: Props) {
   const { section } = await params;
+  if (section === "motion") redirect("/submit/designs"); // old name
   if (!isSectionKey(section)) notFound();
   const schema = SECTION_SCHEMAS[section];
   return (
