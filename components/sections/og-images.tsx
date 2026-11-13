@@ -27,6 +27,14 @@ const facets: Facet<OgImage>[] = [
 const text = (i: OgImage) =>
   `${i.title} ${host(i.url)} ${i.industry} ${i.style.join(" ")} ${i.theme} ${i.pageTitle ?? ""} ${i.pageDescription ?? ""}`;
 
+/** "1.91:1", or a named ratio when it's a common one. */
+function ratioLabel(w: number, h: number) {
+  const r = w / h;
+  const named: [number, string][] = [[1.91, "1.91:1 (Open Graph)"], [2, "2:1"], [16 / 9, "16:9"], [4 / 3, "4:3"], [1, "1:1"]];
+  const hit = named.find(([v]) => Math.abs(v - r) < 0.015);
+  return hit ? hit[1] : `${r.toFixed(2)}:1`;
+}
+
 export function OgImages({ items }: { items: OgImage[] }) {
   // Each item's own page (same slugs the server uses for /og-images/[slug]).
   const slugs = useMemo(() => new Map(withSlugs(items, (o) => o.title).map((x) => [x.item, x.slug])), [items]);
@@ -55,8 +63,22 @@ export function OgImages({ items }: { items: OgImage[] }) {
         title: "OG images are on their way.",
         body: "Hand-picked Open Graph cards — the image a link becomes when it's shared — filterable by style, theme and industry.",
       }}
+      // The image takes the centre stage, as large as fits, at its own ratio.
+      stage={(i) => (
+        <div className="flex size-full items-center justify-center [container-type:size]">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={i.image}
+            alt={`Open Graph image for ${i.title}`}
+            width={i.width}
+            height={i.height}
+            style={{ aspectRatio: `${i.width} / ${i.height}`, width: `min(100cqw, ${(100 * i.width) / i.height}cqh)` }}
+            className="block rounded-xl bg-black object-cover shadow-[0_0_0_1px_rgb(255_255_255/0.08),0_24px_80px_-20px_rgb(0_0_0/0.6)]"
+          />
+        </div>
+      )}
       detail={(i, { list, open }) => (
-        <article className="px-4 pt-8 pb-16 sm:px-8">
+        <article className="px-4 pt-6 pb-16 sm:px-6">
           <h2 id="sheet-title" className="text-[17px] font-medium tracking-[-0.01em]">{i.title}</h2>
           <p className="mt-1 text-fg-2">{host(i.url)}</p>
           <div className="mt-6 flex flex-wrap gap-2">
@@ -64,11 +86,6 @@ export function OgImages({ items }: { items: OgImage[] }) {
               Visit website <ArrowUpRightGlyph18 aria-hidden="true" className="size-3" />
             </PrimaryLink>
             <CopyButton value={new URL(i.image, "https://uiarchives.com").href} label="Copy image URL" />
-          </div>
-
-          <div className="mt-8 overflow-hidden rounded-lg shadow-[0_0_0_1px_var(--line-strong)]">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={i.image} alt={`Open Graph image for ${i.title}`} width={i.width} height={i.height} className="block w-full" />
           </div>
 
           <SheetSection title="Details">
@@ -80,6 +97,8 @@ export function OgImages({ items }: { items: OgImage[] }) {
               </SheetRow>
               {i.pageTitle && <SheetRow label="Shared title">{i.pageTitle}</SheetRow>}
               {i.pageDescription && <SheetRow label="Shared description">{i.pageDescription}</SheetRow>}
+              <SheetRow label="Resolution">{i.width} × {i.height}</SheetRow>
+              <SheetRow label="Ratio">{ratioLabel(i.width, i.height)}</SheetRow>
               <SheetRow label="Style"><SheetTags tags={i.style} /></SheetRow>
               <SheetRow label="Theme">{i.theme}</SheetRow>
               <SheetRow label="Industry">{i.industry}</SheetRow>
