@@ -4,9 +4,9 @@ export type FilterOption = { value: string; label?: string; count?: number; acti
 export type FilterGroup = { key: string; label: string; options: FilterOption[]; active?: number; exclusive?: boolean };
 
 /**
- * Filters live directly under search, one row per group, so the question
- * ("what am I looking for?") and the answer ("narrow it like this") read as
- * one line of thought. Rows scroll sideways on phones and wrap on desktop.
+ * Filters live directly under search, one group per section in a single
+ * row, so the question ("what am I looking for?") and the answer ("narrow it
+ * like this") read as one line. The row scrolls sideways when it overflows.
  */
 export function FilterBar({
   groups,
@@ -23,7 +23,7 @@ export function FilterBar({
       {groups.map((g) => (
         <div key={g.key} role="group" aria-label={g.label} className="flex items-start gap-4 px-4 sm:px-6">
           <span className="w-[84px] shrink-0 pt-[5px] text-[13px] text-fg-3">{g.label}</span>
-          <div className="scrollbar-none -my-1 flex min-w-0 flex-1 gap-1.5 overflow-x-auto py-1 lg:flex-wrap lg:overflow-visible">
+          <div className="scrollbar-none -my-1 flex min-w-0 flex-1 gap-1.5 overflow-x-auto py-1">
             {g.options.map((o) => (
               <button
                 key={o.value}

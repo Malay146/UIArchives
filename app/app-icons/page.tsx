@@ -12,7 +12,7 @@ import { AppIcons } from "@/components/sections/app-icons";
 export const metadata: Metadata = {
   title: "App Icon Inspiration — iOS & macOS app icons",
   description:
-    "A curated gallery of iOS and macOS app icons with distinctive marks: glass, gradient, flat and 3D styles. Filter by style, colour and category for app icon design inspiration.",
+    "A curated gallery of iOS and macOS app icons with distinctive marks: glass, gradient, flat and 3D styles. Filter by style for app icon design inspiration.",
   alternates: { canonical: "/app-icons" },
   openGraph: { url: "/app-icons", title: "App icon inspiration — UIArchives" },
 };
@@ -34,7 +34,7 @@ export default async function Page() {
         <ArchiveShell active="app-icons">
           <SectionIntro
             title="App Icons"
-            blurb="Logomarks from iOS and macOS, shown on Apple's own corner curve. Filter by style, colour or category to find a direction."
+            blurb="Logomarks from iOS and macOS, shown on Apple's own corner curve. Filter by style to find a direction."
             facts={[
               { label: "Icons", value: appIcons.length },
               { label: "Platforms", value: "iOS · macOS" },

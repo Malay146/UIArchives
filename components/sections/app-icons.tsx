@@ -8,13 +8,10 @@ import { PrimaryLink, CopyButton } from "@/components/collection/copy-button";
 import { SheetRow, SheetSection, SheetTags } from "@/components/ui/sheet";
 import { ArrowUpRightGlyph18 } from "@/components/icons";
 import type { Facet } from "@/lib/use-collection";
-import { ICON_COLORS, ICON_STYLES, type AppIcon } from "@/data/collections/app-icons";
+import { ICON_STYLES, type AppIcon } from "@/data/collections/app-icons";
 
 const facets: Facet<AppIcon>[] = [
-  { key: "style", label: "Style", get: (i) => i.style, order: [...ICON_STYLES] },
-  { key: "color", label: "Colour", get: (i) => i.color, order: [...ICON_COLORS] },
-  { key: "category", label: "Category", get: (i) => [i.category] },
-  { key: "platform", label: "Platform", get: (i) => i.platform, order: ["iOS", "macOS"] },
+  { key: "style", label: "Style", get: (i) => i.style, order: [...ICON_STYLES], exclusive: true },
 ];
 
 const text = (i: AppIcon) => `${i.name} ${i.developer} ${i.category} ${i.style.join(" ")} ${i.color.join(" ")}`;

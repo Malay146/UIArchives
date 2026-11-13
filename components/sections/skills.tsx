@@ -11,8 +11,7 @@ import type { Facet } from "@/lib/use-collection";
 import type { Skill } from "@/data/collections/skills";
 
 const facets: Facet<Skill>[] = [
-  { key: "topic", label: "Topic", get: (s) => s.topics },
-  { key: "agent", label: "Works with", get: (s) => s.agents, order: ["Claude Code", "Cursor", "Codex"] },
+  { key: "topic", label: "Topic", get: (s) => s.topics, exclusive: true },
 ];
 
 const text = (s: Skill) =>

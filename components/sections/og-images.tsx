@@ -8,7 +8,7 @@ import { CopyButton, PrimaryLink } from "@/components/collection/copy-button";
 import { SheetRow, SheetSection, SheetTags } from "@/components/ui/sheet";
 import { ArrowUpRightGlyph18 } from "@/components/icons";
 import type { Facet } from "@/lib/use-collection";
-import { OG_STYLES, OG_THEMES, type OgImage } from "@/data/collections/og-images";
+import { OG_STYLES, type OgImage } from "@/data/collections/og-images";
 
 const host = (url: string) => {
   try {
@@ -19,9 +19,7 @@ const host = (url: string) => {
 };
 
 const facets: Facet<OgImage>[] = [
-  { key: "style", label: "Style", get: (i) => i.style, order: [...OG_STYLES] },
-  { key: "theme", label: "Theme", get: (i) => [i.theme], order: [...OG_THEMES] },
-  { key: "industry", label: "Industry", get: (i) => [i.industry] },
+  { key: "style", label: "Style", get: (i) => i.style, order: [...OG_STYLES], exclusive: true },
 ];
 
 const text = (i: OgImage) =>

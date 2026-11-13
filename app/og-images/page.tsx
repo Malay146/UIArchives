@@ -12,7 +12,7 @@ import { OgImages } from "@/components/sections/og-images";
 export const metadata: Metadata = {
   title: "OG Image Examples — Open Graph image inspiration",
   description:
-    "A gallery of the best Open Graph image examples: how great products present their links when shared. Filter by style, theme and industry for OG image inspiration.",
+    "A gallery of the best Open Graph image examples: how great products present their links when shared. Filter by style for OG image inspiration.",
   alternates: { canonical: "/og-images" },
   openGraph: { url: "/og-images", title: "OG image examples — UIArchives" },
 };
@@ -35,7 +35,7 @@ export default async function Page() {
         <ArchiveShell active="og-images">
           <SectionIntro
             title="OG Images"
-            blurb="The image a link turns into when it's shared. Hand-picked cards that introduce a product well in 1200 × 630 — filter by style, theme or industry."
+            blurb="The image a link turns into when it's shared. Hand-picked cards that introduce a product well in 1200 × 630, filtered by style."
             facts={[
               { label: "Images", value: ogImages.length },
               { label: "Light / Dark", value: `${light} / ${ogImages.length - light}` },
