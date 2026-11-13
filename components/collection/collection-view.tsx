@@ -7,6 +7,7 @@ import { FilterBar } from "./filter-bar";
 import { Masonry, type MasonryColumns } from "./masonry";
 import { Sheet } from "@/components/ui/sheet";
 import { MagnifierGlyph18 } from "@/components/icons";
+import { useProgressive } from "@/lib/use-progressive";
 
 const ALL = "All";
 
@@ -140,6 +141,8 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
   const present = new Map(facets.map((f) => [f.key, new Set(items.flatMap((i) => f.get(i)))]));
 
   const count = c.results.length;
+  // Render a screenful or two, then more as the reader nears the end.
+  const { shown, sentinel } = useProgressive(c.results, layout.kind === "list" ? 60 : 24);
   // No filters until there is something to filter.
   const filtersVisible = facets.length > 0 && items.length > 0;
 
@@ -210,7 +213,7 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
           </div>
         ) : layout.kind === "masonry" ? (
           <Masonry
-            items={c.results}
+            items={shown}
             columns={layout.columns}
             ratio={layout.ratio}
             getKey={getKey}
@@ -222,7 +225,7 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
           />
         ) : layout.kind === "grid" ? (
           <ul className={`grid gap-x-4 gap-y-8 px-4 py-6 sm:px-6 ${layout.columns}`}>
-            {c.results.map((item) => (
+            {shown.map((item) => (
               <li key={getKey(item)} className="group">
                 <Opener href={href?.(item)} onOpen={() => openItem(item)} className="group block w-full text-left outline-none">
                   {layout.tile(item)}
@@ -255,7 +258,7 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
           <>
             {layout.header}
             <ul>
-              {c.results.map((item) => (
+              {shown.map((item) => (
                 <li key={getKey(item)} className="group relative border-b transition-colors hover:bg-hover">
                   <Opener
                     href={href?.(item)}
@@ -270,6 +273,7 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
             </ul>
           </>
         )}
+        {sentinel}
       </section>
 
       <Sheet item={open} list={frozen} onSelect={openItem} onClose={close} stage={stage}>

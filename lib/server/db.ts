@@ -102,7 +102,7 @@ export async function reviewItem(id: string, status: Exclude<ItemStatus, "pendin
 /** Approved items for a section, newest first — merged into the public pages. */
 export async function approvedItems(section: SectionKey): Promise<Item[]> {
   try {
-    return await listItems("approved", section, 1000);
+    return await listItems("approved", section, 5000);
   } catch {
     // Database not migrated yet (fresh deploy): the static archive still renders.
     return [];

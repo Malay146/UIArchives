@@ -1,7 +1,8 @@
 "use client";
 
 import { withSlugs } from "@/lib/slug";
-import { useRef, useState, useMemo } from "react";
+import { useEffect, useRef, useState, useMemo } from "react";
+import { canHover, shouldAutoplay, useInView } from "@/lib/use-in-view";
 import { CollectionView } from "@/components/collection/collection-view";
 import { PrimaryLink, CopyButton } from "@/components/collection/copy-button";
 import { SheetRow, SheetSection, SheetTags } from "@/components/ui/sheet";
@@ -54,32 +55,47 @@ function Avatar({ author, size }: { author: DesignClip["author"]; size: number }
 }
 
 /**
- * Poster at rest; plays muted only while hovered, so a grid of videos stays
- * calm. The poster sits on top as an image and only fades away once the video
- * is really playing, so there's never a blank frame while it loads.
+ * Poster at rest. With a mouse, plays muted while hovered; on touch screens
+ * (no hover), plays while it's mostly on screen and pauses as it scrolls away.
+ * The video file isn't requested until the tile is close to the viewport, so
+ * a long grid only ever loads what's near. The poster sits on top and only
+ * fades once the video is really playing, so there's never a blank frame.
  */
 function HoverVideo({ clip }: { clip: DesignClip }) {
   const ref = useRef<HTMLVideoElement>(null);
   const [playing, setPlaying] = useState(false);
+  const [touch, setTouch] = useState(false);
+  useEffect(() => setTouch(!canHover() && shouldAutoplay()), []);
+  const near = useInView(ref, { rootMargin: "600px 0px", once: true });
+  const onScreen = useInView(ref, { threshold: 0.6 });
+
+  const stop = (rewind: boolean) => {
+    setPlaying(false);
+    const v = ref.current;
+    if (!v) return;
+    v.pause();
+    if (rewind) v.currentTime = 0;
+  };
+
+  useEffect(() => {
+    if (!touch) return;
+    if (onScreen) ref.current?.play().catch(() => {});
+    else stop(false);
+  }, [touch, onScreen]);
+
   return (
     <>
       <video
         ref={ref}
-        src={clip.video}
+        src={near ? clip.video : undefined}
         muted
         loop
         playsInline
-        preload="metadata"
+        disablePictureInPicture
+        preload={near ? "metadata" : "none"}
         onPlaying={() => setPlaying(true)}
         onPointerEnter={(e) => e.pointerType === "mouse" && ref.current?.play().catch(() => {})}
-        onPointerLeave={() => {
-          setPlaying(false);
-          const v = ref.current;
-          if (v) {
-            v.pause();
-            v.currentTime = 0;
-          }
-        }}
+        onPointerLeave={(e) => e.pointerType === "mouse" && stop(true)}
         className="absolute inset-0 size-full object-cover"
       />
       {clip.poster && (

@@ -35,7 +35,7 @@ export default async function Page() {
         <ArchiveShell active="designs">
           <SectionIntro
             title="Designs"
-            blurb="Design videos worth studying, mostly from X — components, interactions, landing pages, mobile apps and more. Hover to play; open one to see who made it."
+            blurb="Design videos worth studying, mostly from X — components, interactions, landing pages, mobile apps and more. Hover or scroll to play; open one for the maker."
             facts={[
               { label: "Designs", value: designs.length },
               { label: "Makers", value: authors },

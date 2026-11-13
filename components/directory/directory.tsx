@@ -9,6 +9,7 @@ import { MagnifierGlyph18 } from "@/components/icons";
 import { FilterBar } from "@/components/collection/filter-bar";
 import { SET_CATEGORY } from "@/lib/command";
 import { withSlugs } from "@/lib/slug";
+import { useProgressive } from "@/lib/use-progressive";
 
 const ALL = "All";
 
@@ -55,6 +56,9 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
     else url.searchParams.delete("r");
     window.history.replaceState(window.history.state, "", url);
   };
+
+  // Rows render a page at a time, ahead of the scroll.
+  const { shown, sentinel } = useProgressive(visible, 60);
 
   const visibleRef = useRef<UiCardData[]>([]);
   visibleRef.current = visible;
@@ -187,7 +191,7 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
 
         {visible.length > 0 ? (
           <ul>
-            {visible.map((r) => (
+            {shown.map((r) => (
               <ResourceRow
                 key={numberOf.get(r)}
                 resource={r}
@@ -218,6 +222,7 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
             </p>
           </div>
         )}
+        {sentinel}
       </section>
 
       <ResourceDrawer
