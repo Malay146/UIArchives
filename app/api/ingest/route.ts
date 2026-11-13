@@ -1,6 +1,6 @@
 import { env } from "@/lib/server/env";
 import { createItem, logRun } from "@/lib/server/db";
-import { enrich } from "@/lib/server/enrich";
+import { enrich, appStoreError } from "@/lib/server/enrich";
 import { SECTION_SCHEMAS, isSectionKey, validate, MIN_SKILL_STARS } from "@/lib/section-schemas";
 
 /**
@@ -47,7 +47,8 @@ export async function POST(req: Request) {
       (it.section === "og-images" && !enriched.image) ||
       (it.section === "designs" && !enriched.video);
     if (missing) {
-      results.push({ section: it.section, status: "invalid", error: "Couldn't fetch its media right now. Try again." });
+      const why = it.section === "app-icons" && appStoreError ? ` (App Store: ${appStoreError})` : "";
+      results.push({ section: it.section, status: "invalid", error: `Couldn't fetch its media right now. Try again.${why}` });
       continue;
     }
     const created = await createItem({ section: it.section, data: enriched, source: "automation", origin });

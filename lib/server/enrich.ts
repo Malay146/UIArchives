@@ -64,6 +64,9 @@ export async function xPost(url: string) {
 
 type AppLookup = { results: { trackName: string; artistName: string; primaryGenreName: string; artworkUrl512: string; trackViewUrl: string; kind: string }[] };
 
+/** Why the last App Store lookup failed (status or error), for intake messages. */
+export let appStoreError = "";
+
 export async function appStore(link: string) {
   const id = link.match(/id(\d+)/)?.[1];
   if (!id) return null;
@@ -78,7 +81,13 @@ export async function appStore(link: string) {
   for (const url of urls) {
     for (let attempt = 0; attempt < 2 && !app; attempt++) {
       if (attempt) await new Promise((r) => setTimeout(r, 600));
-      app = (await json<AppLookup>(url))?.results?.[0];
+      try {
+        const r = await fetch(url, { headers: { "user-agent": UA, accept: "application/json" } });
+        if (r.ok) app = ((await r.json()) as AppLookup).results?.[0];
+        appStoreError = r.ok ? (app ? "" : "no result") : `HTTP ${r.status}`;
+      } catch (e) {
+        appStoreError = e instanceof Error ? e.message : "fetch failed";
+      }
     }
     if (app) break;
   }
