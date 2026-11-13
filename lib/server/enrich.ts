@@ -91,7 +91,7 @@ export async function appStore(link: string) {
     }
     if (app) break;
   }
-  if (!app) return null;
+  if (!app) return appStorePage(id, country ?? "us");
   return {
     name: app.trackName,
     developer: app.artistName,
@@ -100,6 +100,49 @@ export async function appStore(link: string) {
     link: app.trackViewUrl.split("?")[0],
     platform: app.kind === "mac-software" ? ["macOS"] : ["iOS"],
   };
+}
+
+/** "GameApplication" → "Games", "ProductivityApplication" → "Productivity". */
+const CATEGORY: Record<string, string> = { GameApplication: "Games", PhotographyApplication: "Photo & Video", MultimediaApplication: "Photo & Video" };
+
+/**
+ * Fallback when the lookup API refuses us (it often answers 403 to requests
+ * from Cloudflare): the App Store's own page carries the same facts as
+ * structured data, and its icon URL can be asked for at 1024 px.
+ */
+async function appStorePage(id: string, country: string) {
+  try {
+    const link = `https://apps.apple.com/${country}/app/id${id}`;
+    const r = await fetch(link, { headers: { "user-agent": UA, accept: "text/html" }, redirect: "follow" });
+    if (!r.ok) {
+      appStoreError += `; page HTTP ${r.status}`;
+      return null;
+    }
+    const html = await r.text();
+    for (const m of html.matchAll(/<script[^>]*application\/ld\+json[^>]*>([\s\S]*?)<\/script>/g)) {
+      let j: { "@type"?: string; name?: string; image?: string; applicationCategory?: string; operatingSystem?: string; author?: { name?: string } };
+      try {
+        j = JSON.parse(m[1]);
+      } catch {
+        continue;
+      }
+      if (j["@type"] !== "SoftwareApplication" || !j.name || !j.image) continue;
+      const cat = j.applicationCategory ?? "";
+      appStoreError = "";
+      return {
+        name: j.name,
+        developer: j.author?.name ?? "",
+        category: CATEGORY[cat] ?? cat.replace(/Application$/, ""),
+        artwork: j.image.replace(/\/\d+x\d+[a-z]*\.(jpg|png|webp)$/, "/1024x1024bb.webp"),
+        link: r.url.split("?")[0] || link,
+        platform: /macOS/i.test(j.operatingSystem ?? "") ? ["macOS"] : ["iOS"],
+      };
+    }
+    appStoreError += "; page had no app data";
+  } catch (e) {
+    appStoreError += `; page ${e instanceof Error ? e.message : "failed"}`;
+  }
+  return null;
 }
 
 /* ---------- Web pages ---------- */
