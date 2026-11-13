@@ -28,6 +28,14 @@ type SiteMeta = {
   checked: string;
 };
 const META = siteMeta as Record<string, SiteMeta>;
+/** "Nov 13, 2026", or "" when there's no valid date (e.g. media fetched on submit). */
+const shortDate = (iso: string) => {
+  const d = iso ? new Date(iso) : null;
+  return d && !Number.isNaN(d.getTime())
+    ? new Intl.DateTimeFormat("en-US", { month: "short", day: "numeric", year: "numeric" }).format(d)
+    : "";
+};
+
 type Snapshot = { src: string; width: number; height: number; checked: string };
 const SNAPS = snapshots as Record<string, Snapshot>;
 
@@ -211,15 +219,8 @@ function Details({
           />
         </a>
       )}
-      {snap && (
-        <p className="mt-2 text-[12px] text-fg-3">
-          Landing page, captured{" "}
-          {new Intl.DateTimeFormat("en-US", {
-            month: "short",
-            day: "numeric",
-            year: "numeric",
-          }).format(new Date(snap.checked))}
-        </p>
+      {snap && shortDate(snap.checked) && (
+        <p className="mt-2 text-[12px] text-fg-3">Landing page, captured {shortDate(snap.checked)}</p>
       )}
 
       {/* Overview */}
@@ -244,12 +245,8 @@ function Details({
               </blockquote>
             )}
             <figcaption className="mt-2 text-[12px] text-fg-3">
-              {meta.title} — checked{" "}
-              {new Intl.DateTimeFormat("en-US", {
-                month: "short",
-                day: "numeric",
-                year: "numeric",
-              }).format(new Date(meta.checked))}
+              {meta.title}
+              {shortDate(meta.checked) && <> — checked {shortDate(meta.checked)}</>}
             </figcaption>
           </figure>
         </SheetSection>
