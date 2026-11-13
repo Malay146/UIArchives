@@ -126,7 +126,7 @@ export function ReviewBoard({
   };
 
   return (
-    <div className="mx-auto max-w-[1600px]">
+    <div className="mx-auto max-w-[1920px]">
       {/* Header row */}
       <section className="grid gap-8 border-b px-4 pt-10 pb-8 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
         <div>

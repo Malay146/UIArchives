@@ -23,7 +23,7 @@ export default async function Page({ params }: Props) {
   return (
     <>
       <Header />
-      <main className="mx-auto grid max-w-[1600px] gap-14 px-4 pt-12 sm:px-6 sm:pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-24">
+      <main className="mx-auto grid max-w-[1920px] gap-14 px-4 pt-12 sm:px-6 sm:pt-16 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:gap-24">
         <div className="max-w-[400px]">
           <Link href="/submit" className="press -ml-1 inline-flex items-center gap-1.5 p-1 text-fg-2 transition-colors hover:text-fg">
             <ArrowLeftGlyph18 aria-hidden="true" className="size-3" /> All sections

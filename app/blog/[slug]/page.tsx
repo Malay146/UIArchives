@@ -285,7 +285,7 @@ export default async function PostPage({ params }: PostPageProps) {
 
       {/* Posts that end with <Explore> already show their own "Keep reading". */}
       {suggestions.length > 0 && !post.content.includes("<Explore") && (
-        <section className="mx-auto mt-24 max-w-[1600px]">
+        <section className="mx-auto mt-24 max-w-[1920px]">
           <h2 className="border-b px-4 pb-3 text-fg-3 sm:px-6">Keep reading</h2>
           <ul>
             {suggestions.map((s) => (

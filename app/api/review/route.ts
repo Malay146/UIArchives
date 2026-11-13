@@ -1,6 +1,6 @@
 import { env } from "@/lib/server/env";
 import { getAdmin, sameOrigin } from "@/lib/server/auth";
-import { getItem, reviewItem } from "@/lib/server/db";
+import { findsDuplicate, getItem, reviewItem } from "@/lib/server/db";
 import { storeRemote } from "@/lib/server/media";
 import { resourceMedia } from "@/lib/server/enrich";
 import { layout, sendMail } from "@/lib/server/email";
@@ -35,6 +35,11 @@ export async function POST(req: Request) {
     if (errors.length) return fail(errors[0]);
     // Keep extra enrichment fields (poster, pageTitle, …) that aren't form fields.
     data = { ...item.data, ...clean };
+    // Never publish the same thing twice: it may have landed in the data files
+    // or been approved under another entry since it was queued, or been edited here.
+    if (await findsDuplicate(item.section, data, item.id)) {
+      return fail(`This ${schema.noun} is already in the archive or another entry in the queue. Reject it instead.`, 409);
+    }
     // Resources: make sure the logo and preview were fetched (older or hand-added entries).
     if (item.section === "resources" && (!data.logo || !data.image)) {
       Object.assign(data, await resourceMedia(data, item.id).catch(() => ({})));

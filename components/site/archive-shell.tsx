@@ -11,7 +11,7 @@ import { SectionIcon } from "./section-icon";
 export async function ArchiveShell({ active, children }: { active: SectionSlug; children: React.ReactNode }) {
   const counts = await getSectionCounts();
   return (
-    <div className="mx-auto max-w-[1600px] lg:grid lg:grid-cols-[13rem_minmax(0,1fr)]">
+    <div className="mx-auto max-w-[1920px] lg:grid lg:grid-cols-[13rem_minmax(0,1fr)]">
       <aside className="hidden border-r lg:block">
         <nav aria-label="Archive" className="sticky top-[var(--header-h)] py-6 pr-4 pl-2 sm:pl-4">
           <p className="mb-2 px-2 text-fg-3">Archive</p>

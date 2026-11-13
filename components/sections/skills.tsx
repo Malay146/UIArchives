@@ -44,7 +44,7 @@ export function Skills({ items }: { items: Skill[] }) {
             <div className="min-w-0">
               <p className="truncate font-medium">{s.name}</p>
               <p className="truncate text-[12px] text-fg-3">
-                {s.author.name} · {s.skills.length} skills
+                {s.author.name} · {s.skills.length} {s.skills.length === 1 ? "skill" : "skills"}
               </p>
             </div>
             <p className="mt-1 line-clamp-2 text-fg-2 md:mt-0">{s.description}</p>
