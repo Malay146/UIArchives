@@ -119,7 +119,7 @@ export default async function Page() {
               and agent skills for design. UIArchives started as a personal list of the tools Malay kept reaching for, and
               is built and maintained by hand.
             </p>
-            <div className="mt-4 flex gap-2">
+            <div className="mt-3 -ml-2 flex gap-1">
               {[
                 { href: AUTHOR.x, label: "Malay Patel on X (@pmalay694)", Icon: XTwitterGlyph32 },
                 { href: AUTHOR.github, label: "Malay Patel on GitHub", Icon: GithubGlyph32 },
@@ -131,7 +131,7 @@ export default async function Page() {
                   rel="noopener noreferrer me"
                   aria-label={label}
                   title={label}
-                  className="press grid size-9 place-items-center rounded-md text-fg-2 shadow-[0_0_0_1px_var(--line-strong)] transition-colors hover:bg-hover hover:text-fg"
+                  className="press grid size-9 place-items-center rounded-md text-fg-2 transition-colors hover:bg-hover hover:text-fg"
                 >
                   <Icon aria-hidden="true" className="size-4" />
                 </a>
