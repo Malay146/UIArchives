@@ -45,13 +45,21 @@ POST to `https://uiarchives.com/api/ingest` with header
   "origin": "claude",
   "items": [
     { "section": "resources", "data": { "title": "…", "url": "https://…", "category": "Typography", "description": "One or two plain sentences.", "tags": ["Free Fonts"] } },
-    { "section": "designs", "data": { "post": "https://x.com/…/status/…", "title": "What it shows", "kind": ["Landing Pages"], "platform": ["Web"], "note": "Why it works, one sentence." } },
+    { "section": "designs", "data": { "post": "https://x.com/…/status/…", "title": "What it shows", "kind": ["Landing Pages"], "platform": ["Web"], "note": "Why it works, visually: one or two sentences." } },
     { "section": "og-images", "data": { "title": "Product", "url": "https://…", "style": ["Typography"], "theme": "Dark", "industry": "Developer Tools" } },
     { "section": "app-icons", "data": { "link": "https://apps.apple.com/…/id123", "style": ["Glass"], "color": ["Blue"] } },
     { "section": "skills", "data": { "repo": "https://github.com/owner/repo", "topics": ["Animation"] } }
   ]
 }
 ```
+
+Every design needs a `note` (it can't be approved without one). Watch the
+video and describe what you see and the technique behind it: name the effect
+(morph, metaball/liquid, particles, WebGL distortion, glass and rim light,
+halftone, skeuomorphic texture, spring, letter-by-letter roll…) and what it
+does for the interface. Example: "Completed steps fuse into one glossy liquid
+shape, a gooey metaball effect that stretches toward the next step and turns
+green on confirm." Not generic praise like "smooth and polished".
 
 Allowed values — Designs `kind` (one or two): Components, Interactions,
 Landing Pages, Mobile Apps, Dashboards, Typography, 3D, Branding (Featured is
