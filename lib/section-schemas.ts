@@ -11,6 +11,9 @@ import { DESIGN_TYPES, DESIGN_PLATFORMS } from "@/data/collections/designs";
 import { ICON_COLORS, ICON_STYLES } from "@/data/collections/app-icons";
 import { OG_STYLES, OG_THEMES } from "@/data/collections/og-images";
 
+/** Automation and the daily curator only suggest skills with at least this many GitHub stars. */
+export const MIN_SKILL_STARS = 1000;
+
 export type SectionKey = "resources" | "designs" | "og-images" | "app-icons" | "skills";
 
 export type FieldType = "text" | "url" | "textarea" | "select" | "multiselect" | "tags" | "file";

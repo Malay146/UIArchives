@@ -177,6 +177,7 @@ export async function enrich(section: SectionKey, data: ItemData, id: string): P
       fill("topics", r.topics?.slice(0, 5));
       fill("install", `npx skills add ${r.full_name}`);
       fill("name", r.full_name.split("/")[1]);
+      d.stars = String(r.stargazers_count);
     }
   }
   return d;

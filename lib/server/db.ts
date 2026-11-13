@@ -1,6 +1,9 @@
 import { env } from "./env";
 import { type ItemData, type SectionKey, SECTION_SCHEMAS, dedupeKey } from "@/lib/section-schemas";
 
+const normName = (s: string) => s.toLowerCase().normalize("NFKD").replace(/[^a-z0-9]+/g, "");
+import { identityFor, inStaticArchive } from "./dedupe";
+
 export type ItemStatus = "pending" | "approved" | "rejected";
 
 export type Item = {
@@ -35,8 +38,24 @@ export async function createItem(input: {
   submitterName?: string;
   submitterEmail?: string;
 }): Promise<Item | null> {
-  const schema = SECTION_SCHEMAS[input.section];
-  const key = dedupeKey(String(input.data[schema.dedupeField] ?? ""));
+  // Never queue something the archive already has (built-in data files)…
+  if (inStaticArchive(input.section, input.data)) return null;
+  // …or anything already in the database, whatever its status (unique key).
+  const key = identityFor(input.section, input.data);
+  if (!key) return null;
+  const legacyKey = dedupeKey(String(input.data[SECTION_SCHEMAS[input.section].dedupeField] ?? ""));
+  const clash = await env.DB.prepare("SELECT 1 FROM items WHERE section = ? AND dedupe_key IN (?, ?) LIMIT 1")
+    .bind(input.section, key, legacyKey)
+    .first();
+  if (clash) return null;
+  // Resources: the same named product under a different link is still a duplicate.
+  if (input.section === "resources") {
+    const name = normName(String(input.data.title ?? ""));
+    if (name) {
+      const { results } = await env.DB.prepare("SELECT json_extract(data, '$.title') AS t FROM items WHERE section = 'resources'").all<{ t: string | null }>();
+      if (results.some((r) => r.t && normName(r.t) === name)) return null;
+    }
+  }
   const id = newId();
   const now = Date.now();
   const res = await env.DB.prepare(

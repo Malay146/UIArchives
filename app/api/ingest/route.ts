@@ -1,7 +1,7 @@
 import { env } from "@/lib/server/env";
 import { createItem, logRun } from "@/lib/server/db";
 import { enrich } from "@/lib/server/enrich";
-import { SECTION_SCHEMAS, isSectionKey, validate } from "@/lib/section-schemas";
+import { SECTION_SCHEMAS, isSectionKey, validate, MIN_SKILL_STARS } from "@/lib/section-schemas";
 
 /**
  * For the scheduled Claude agent (and any trusted script): add candidates to
@@ -36,6 +36,10 @@ export async function POST(req: Request) {
     }
     for (const k of ["image", "video", "poster"]) if (typeof it.data[k] === "string") data[k] = it.data[k] as string;
     const enriched = await enrich(it.section, data, crypto.randomUUID().slice(0, 8));
+    if (it.section === "skills" && Number(enriched.stars ?? 0) < MIN_SKILL_STARS) {
+      results.push({ section: it.section, status: "invalid", error: `Skills need ${MIN_SKILL_STARS.toLocaleString("en-US")}+ GitHub stars` });
+      continue;
+    }
     const created = await createItem({ section: it.section, data: enriched, source: "automation", origin });
     results.push({ section: it.section, status: created ? "queued" : "duplicate" });
   }

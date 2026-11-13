@@ -1,5 +1,6 @@
 import { env } from "./env";
 import { createItem, logRun } from "./db";
+import { MIN_SKILL_STARS } from "@/lib/section-schemas";
 import type { ItemData, SectionKey } from "@/lib/section-schemas";
 import { CATEGORIES } from "@/types/resource";
 
@@ -125,7 +126,7 @@ async function skills(seed: number) {
   const headers: Record<string, string> = env.GITHUB_TOKEN ? { authorization: `Bearer ${env.GITHUB_TOKEN}` } : {};
   const buckets: ItemData[][] = [];
   for (const q of pick(SKILL_QUERIES, seed * 3, 3)) {
-    const r = await getJson<Res>(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${q} stars:>15`)}&sort=updated&order=desc&per_page=30`, headers);
+    const r = await getJson<Res>(`https://api.github.com/search/repositories?q=${encodeURIComponent(`${q} stars:>=${MIN_SKILL_STARS}`)}&sort=updated&order=desc&per_page=30`, headers);
     const found: ItemData[] = [];
     buckets.push(found);
     for (const repo of r?.items ?? []) {
@@ -140,6 +141,7 @@ async function skills(seed: number) {
         description: repo.description ?? "",
         topics: repo.topics.slice(0, 5),
         agents: ["Claude Code"],
+        stars: String(repo.stargazers_count),
       });
     }
   }

@@ -33,6 +33,7 @@ Lucide, Google Fonts, etc.). If nothing clears the bar today, add nothing.
   Provide the App Store URL; artwork and details are fetched automatically.
 - **Skills** — agent skills that teach design or frontend craft (animation,
   typography, accessibility, design systems, taste). Provide the GitHub repo.
+  **Only repos with 1,000+ GitHub stars** — anything smaller is rejected.
 
 ## How to submit
 
@@ -60,6 +61,9 @@ OG `style`: Typography, Product Shot, Illustration, 3D, Photography, Gradient,
 Minimal. OG `theme`: Light, Dark. Icon `style`: Glass, Flat, Gradient, 3D,
 Skeuomorphic, Monochrome, Illustrated. Icon `color`: Black, White, Grey, Red,
 Orange, Yellow, Green, Blue, Purple, Pink, Multicolor.
+
+Before adding anything, check it isn't already on uiarchives.com (search the site
+or its /llms.txt) — duplicates are rejected automatically.
 
 The response lists each item as `queued`, `duplicate` (already in the archive or
 previously rejected — don't retry it) or `invalid` (fix and resend once).

@@ -44,7 +44,8 @@ export async function POST(req: Request) {
 
   const updated = await reviewItem(item.id, body.action === "approve" ? "approved" : "rejected", data, note);
 
-  if (item.submitter_email) {
+  // Email the submitter once, on the first decision — not again if it's changed later.
+  if (item.submitter_email && item.status === "pending") {
     const title = String(data[schema.titleField] ?? "your submission");
     const name = item.submitter_name ?? "there";
     if (body.action === "approve") {

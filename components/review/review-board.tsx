@@ -90,17 +90,28 @@ export function ReviewBoard({
     [list, open],
   );
 
-  /** After a decision: move the item between lists and advance to the next pending one. */
+  /**
+   * After a decision: move the item to its new list (removing it from every
+   * other list, so it can only ever be in one state).
+   *  - Working through Pending → advance to the next pending item.
+   *  - Changing a decided item → stay on it, showing its new state.
+   */
   const decided = (updated: Item, from: Status) => {
-    setItems((s) => ({
-      ...s,
-      [from]: s[from].filter((i) => i.id !== updated.id),
-      [updated.status]: [updated, ...s[updated.status as Status].filter((i) => i.id !== updated.id)],
-    }));
-    const idx = frozen.findIndex((i) => i.id === updated.id);
-    const next = frozen.filter((i) => i.id !== updated.id)[idx] ?? null;
-    setFrozen((f) => f.filter((i) => i.id !== updated.id));
-    setOpen(next);
+    setItems((s) => {
+      const next = { ...s } as typeof s;
+      for (const k of ["pending", "approved", "rejected"] as Status[]) next[k] = s[k].filter((i) => i.id !== updated.id);
+      next[updated.status as Status] = [updated, ...next[updated.status as Status]];
+      return next;
+    });
+    if (from === "pending") {
+      const idx = frozen.findIndex((i) => i.id === updated.id);
+      const nextItem = frozen.filter((i) => i.id !== updated.id)[idx] ?? null;
+      setFrozen((f) => f.filter((i) => i.id !== updated.id));
+      setOpen(nextItem);
+    } else {
+      setFrozen((f) => f.map((i) => (i.id === updated.id ? updated : i)));
+      setOpen(updated);
+    }
   };
 
   const quickAdd = async (e: React.FormEvent) => {
@@ -254,6 +265,16 @@ function Thumb({ item }: { item: Item }) {
   );
 }
 
+function StatusPill({ status }: { status: Status }) {
+  const tone =
+    status === "approved"
+      ? "bg-[color-mix(in_oklab,#16a34a_14%,transparent)] text-[#15803d] dark:text-[#4ade80]"
+      : status === "rejected"
+        ? "bg-[color-mix(in_oklab,#dc2626_12%,transparent)] text-[#b91c1c] dark:text-[#f87171]"
+        : "bg-hover text-fg-2";
+  return <span className={`shrink-0 rounded-[4px] px-1.5 py-px text-[12px] font-medium capitalize ${tone}`}>{status}</span>;
+}
+
 function Editor({ item, onDecided }: { item: Item; onDecided: (updated: Item, from: Status) => void }) {
   const schema = SECTION_SCHEMAS[item.section];
   const [data, setData] = useState<ItemData>(item.data);
@@ -340,16 +361,30 @@ function Editor({ item, onDecided }: { item: Item; onDecided: (updated: Item, fr
       </SheetSection>
 
       <div className="sticky bottom-0 -mx-4 mt-10 flex items-center justify-between gap-4 border-t bg-bg px-4 py-4 sm:-mx-8 sm:px-8">
-        <p className="min-w-0 text-[13px]" aria-live="polite">
-          {error ? `× ${error}` : <span className="text-fg-3">{item.status === "pending" ? "Not live yet." : `Currently ${item.status}.`}</span>}
+        <p className="flex min-w-0 items-center gap-2 text-[13px]" aria-live="polite">
+          {error ? (
+            `× ${error}`
+          ) : (
+            <>
+              <StatusPill status={item.status} />
+              <span className="truncate text-fg-3">
+                {item.status === "pending" ? "Not live yet." : item.status === "approved" ? "Live on the site." : "Not on the site."}
+              </span>
+            </>
+          )}
         </p>
         <div className="flex shrink-0 gap-2">
-          <Button variant="secondary" data-sound="toggle-off" disabled={!!busy || item.status === "rejected"} onClick={() => decide("reject")}>
-            {busy === "reject" ? "Rejecting…" : "Reject"}
-          </Button>
-          <Button data-sound="toggle-on" disabled={!!busy || item.status === "approved"} onClick={() => decide("approve")}>
-            {busy === "approve" ? "Approving…" : item.status === "approved" ? "Approved" : "Approve"}
-          </Button>
+          {/* Only the actions that change something: one state at a time. */}
+          {item.status !== "rejected" && (
+            <Button variant="secondary" data-sound="toggle-off" disabled={!!busy} onClick={() => decide("reject")}>
+              {busy === "reject" ? "Rejecting…" : item.status === "approved" ? "Unpublish" : "Reject"}
+            </Button>
+          )}
+          {item.status !== "approved" && (
+            <Button data-sound="toggle-on" disabled={!!busy} onClick={() => decide("approve")}>
+              {busy === "approve" ? "Approving…" : item.status === "rejected" ? "Approve instead" : "Approve"}
+            </Button>
+          )}
         </div>
       </div>
     </article>
