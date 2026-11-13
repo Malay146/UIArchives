@@ -101,7 +101,7 @@ function Details({
   const meta =
     META[logoKey(r)] ??
     (r.headline || r.metaDescription
-      ? { title: r.headline ?? "", description: r.metaDescription ?? "", headline: r.headline ?? "", checked: "" }
+      ? { title: "", description: r.metaDescription ?? "", headline: r.headline ?? "", checked: "" }
       : undefined);
   const snap = SNAPS[logoKey(r)];
   // Landing snapshot first; otherwise the preview image stored with the entry.
@@ -244,10 +244,12 @@ function Details({
                 {meta.description}
               </blockquote>
             )}
-            <figcaption className="mt-2 text-[12px] text-fg-3">
-              {meta.title}
-              {shortDate(meta.checked) && <> — checked {shortDate(meta.checked)}</>}
-            </figcaption>
+            {meta.title && (
+              <figcaption className="mt-2 text-[12px] text-fg-3">
+                {meta.title}
+                {shortDate(meta.checked) && <> — checked {shortDate(meta.checked)}</>}
+              </figcaption>
+            )}
           </figure>
         </SheetSection>
       )}
