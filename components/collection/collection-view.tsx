@@ -136,6 +136,9 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
+  // Options only appear once at least one item in the collection has them.
+  const present = new Map(facets.map((f) => [f.key, new Set(items.flatMap((i) => f.get(i)))]));
+
   const count = c.results.length;
   // No filters until there is something to filter.
   const filtersVisible = facets.length > 0 && items.length > 0;
@@ -179,7 +182,9 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
               ...g,
               options: [
                 ...(g.exclusive ? [{ value: ALL, count: g.total, active: g.active === 0 }] : []),
-                ...g.options.map((o) => ({ ...o, disabled: !o.active && o.count === 0 })),
+                ...g.options
+                  .filter((o) => o.active || present.get(g.key)?.has(o.value))
+                  .map((o) => ({ ...o, disabled: !o.active && o.count === 0 })),
               ],
             }))}
             onToggle={(key, value) => (value === ALL ? c.clearGroup(key) : c.toggle(key, value))}

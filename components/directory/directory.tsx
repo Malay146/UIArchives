@@ -160,7 +160,7 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
             {
               key: "category",
               label: "Category",
-              options: [ALL, ...CATEGORIES].map((cat) => ({
+              options: [ALL, ...CATEGORIES.filter((cat) => cat === category || resources.some((r) => (categoriesOf(r) as string[]).includes(cat)))].map((cat) => ({
                 value: cat,
                 count: counts[cat],
                 active: cat === category,
