@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Header } from "@/components/site/header";
 import { Footer } from "@/components/site/footer";
-import { ArrowUpRightGlyph18, CheckGlyph18, XTwitterGlyph32 } from "@/components/icons";
+import { ArrowUpRightGlyph18, CheckGlyph18 } from "@/components/icons";
 import { SectionIcon } from "@/components/site/section-icon";
 import { SECTION_ORDER, SECTION_SCHEMAS } from "@/lib/section-schemas";
 
@@ -68,29 +68,6 @@ export default function Page() {
               </li>
             );
           })}
-          <li className="border-b">
-            <a
-              href="https://x.com/pmalay694"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group flex items-start gap-4 py-5 transition-colors duration-200 hover:bg-hover sm:px-3"
-            >
-              <span className="grid size-10 shrink-0 place-items-center rounded-xl bg-hover text-fg-2 transition-colors duration-200 group-hover:bg-bg group-hover:text-fg">
-                <XTwitterGlyph32 aria-hidden="true" className="size-4" />
-              </span>
-              <span className="min-w-0 flex-1">
-                <span className="block font-medium">Not sure where it fits?</span>
-                <span className="mt-0.5 block max-w-[60ch] text-fg-2">
-                  Something else worth adding, or a correction to an existing entry? Send it over on X.
-                </span>
-                <span className="mt-2 block text-[13px] text-fg-3">@pmalay694</span>
-              </span>
-              <ArrowUpRightGlyph18
-                aria-hidden="true"
-                className="mt-1.5 size-3.5 shrink-0 text-fg-3 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-fg"
-              />
-            </a>
-          </li>
         </ul>
 
         <section className="mt-14">
