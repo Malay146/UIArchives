@@ -122,8 +122,10 @@ export async function enrich(section: SectionKey, data: ItemData, id: string): P
       fill("authorName", x.authorName);
       fill("authorHandle", x.authorHandle);
       fill("title", x.text.replace(/https:\/\/t\.co\/\S+/g, "").trim().slice(0, 80));
-      if (!d.video && x.video) d.video = x.video; // streamed from X's CDN, credited and linked
-      if (x.poster) fill("poster", x.poster);
+      // X's CDN refuses playback embedded on other sites, so keep our own copy
+      // (credited and linked to the post). Fall back to X's URL if copying fails.
+      if (!d.video && x.video) d.video = await storeRemote(`designs/${id}`, x.video, 20).catch(() => x.video);
+      if (!d.poster && x.poster) d.poster = await storeRemote(`designs/${id}`, x.poster).catch(() => x.poster);
     }
   }
 
