@@ -1,5 +1,6 @@
 import { env } from "./env";
 import { createItem, logRun } from "./db";
+import { captureServer } from "./analytics";
 import { MIN_SKILL_STARS } from "@/lib/section-schemas";
 import type { ItemData, SectionKey } from "@/lib/section-schemas";
 import { CATEGORIES } from "@/types/resource";
@@ -243,8 +244,10 @@ export async function runAutomation(_cron?: string) {
     try {
       const { found, queued } = await run(seed);
       await logRun(name, found, queued);
+      await captureServer("automation_run", { source: name, found, queued, ok: true }, `uiarchives-automation:${name}`);
     } catch (e) {
       await logRun(name, 0, 0, (e as Error).message).catch(() => {});
+      await captureServer("automation_run", { source: name, ok: false, error: (e as Error).message.slice(0, 200) }, `uiarchives-automation:${name}`);
     }
   }
 }

@@ -5,6 +5,7 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Field, TextArea } from "@/components/ui/field";
 import { CheckGlyph18 } from "@/components/icons";
+import { track } from "@/lib/analytics";
 import { type Field as FieldDef, SECTION_SCHEMAS, type SectionKey } from "@/lib/section-schemas";
 
 type Status = { type: "success" | "error"; text: string } | null;
@@ -42,10 +43,12 @@ export function SubmitForm({ section }: { section: SectionKey }) {
       const res = await fetch("/api/submit", { method: "POST", body: fd });
       const data = (await res.json().catch(() => ({}))) as { error?: string };
       if (!res.ok) throw new Error(data.error || "Something went wrong.");
+      track("submission_sent", { section });
       setStatus({ type: "success", text: "Received. We review every submission by hand and will email you either way." });
       formRef.current?.reset();
       setPicks({});
     } catch (err) {
+      track("submission_failed", { section, reason: (err as Error).message });
       setStatus({ type: "error", text: (err as Error).message });
     } finally {
       setLoading(false);

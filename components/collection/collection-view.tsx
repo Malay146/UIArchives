@@ -8,6 +8,7 @@ import { Masonry, type MasonryColumns } from "./masonry";
 import { Sheet } from "@/components/ui/sheet";
 import { MagnifierGlyph18 } from "@/components/icons";
 import { useProgressive } from "@/lib/use-progressive";
+import { track, useSearchTracking } from "@/lib/analytics";
 
 const ALL = "All";
 
@@ -86,6 +87,7 @@ type Props<T> = {
  */
 export function CollectionView<T>({ items, facets, text, getKey, noun, layout, detail, stage, href, empty }: Props<T>) {
   const c = useCollection({ items, facets, text });
+  useSearchTracking(noun[1], c.query, c.results.length);
   const [open, setOpen] = useState<T | null>(null);
   const [frozen, setFrozen] = useState<T[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -98,6 +100,7 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
 
   const openItem = useCallback(
     (item: T) => {
+      track("resource_opened", { section: noun[1], key: getKey(item), via: open !== null ? "drawer" : "list" });
       setFrozen((f) => (open !== null && f.includes(item) ? f : c.results.includes(item) ? c.results : items));
       setOpen(item);
       setUrlItem(item);
@@ -190,7 +193,10 @@ export function CollectionView<T>({ items, facets, text, getKey, noun, layout, d
                   .map((o) => ({ ...o, disabled: !o.active && o.count === 0 })),
               ],
             }))}
-            onToggle={(key, value) => (value === ALL ? c.clearGroup(key) : c.toggle(key, value))}
+            onToggle={(key, value) => {
+              track("filter_toggled", { section: noun[1], group: key, value });
+              value === ALL ? c.clearGroup(key) : c.toggle(key, value);
+            }}
             onClear={c.clearGroup}
           />
         )}

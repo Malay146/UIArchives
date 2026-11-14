@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { SoundProvider } from "@/components/site/sound-provider";
+import { Analytics } from "@/components/site/analytics";
 import { CommandMenu } from "@/components/command/command-menu";
 import { getAllPosts } from "@/lib/blog";
 import { toGraph } from "@/lib/seo";
@@ -133,6 +134,7 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         {children}
         <SoundProvider />
+        <Analytics />
         <CommandMenu
           posts={getAllPosts().map((p) => ({
             slug: p.slug,

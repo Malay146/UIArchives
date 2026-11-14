@@ -32,6 +32,7 @@
     "next": "^16.0.7",
     "next-mdx-remote": "^6.0.0",
     "nodemailer": "^7.0.10",
+    "posthog-js": "^1.449.2",
     "prism-react-renderer": "^2.4.1",
     "puppeteer": "^24.38.0",
     "radix-ui": "^1.4.3",

@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { CheckGlyph18, CopyGlyph18 } from "@/components/icons";
+import { track } from "@/lib/analytics";
 
 /**
  * A shell command with a copy button tucked into its right edge.
@@ -51,6 +52,7 @@ export function CommandCopy({
       return;
     }
     setCopied(true);
+    track("copied", { label: "command", value: command.slice(0, 200) });
     if (timer.current) clearTimeout(timer.current);
     timer.current = setTimeout(() => setCopied(false), 1600);
   };

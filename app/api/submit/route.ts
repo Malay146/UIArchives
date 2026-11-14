@@ -5,6 +5,7 @@ import { enrich } from "@/lib/server/enrich";
 import { putFile } from "@/lib/server/media";
 import { layout, sendMail } from "@/lib/server/email";
 import { SECTION_SCHEMAS, isSectionKey, validate } from "@/lib/section-schemas";
+import { captureServer } from "@/lib/server/analytics";
 
 const LIMIT_PER_HOUR = 5;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -80,6 +81,7 @@ export async function POST(req: Request) {
 
   const item = await createItem({ section, data: enriched, source: "submission", submitterName: name, submitterEmail: email });
   if (!item) return fail(`This ${schema.noun} is already in the archive or under review.`, 409);
+  await captureServer("submission_stored", { section, title: String(enriched[schema.titleField] ?? "") });
 
   const title = String(enriched[schema.titleField] ?? "your submission");
   await Promise.all([

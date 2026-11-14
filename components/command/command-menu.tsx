@@ -15,6 +15,7 @@ import { OPEN_COMMAND, requestCategory } from "@/lib/command";
 import { SECTIONS } from "@/lib/sections";
 import { getTheme, toggleTheme } from "@/lib/theme";
 import { isSoundOn, setSoundOn } from "@/lib/sound";
+import { track, useSearchTracking } from "@/lib/analytics";
 import {
   CATEGORIES,
   type UiCardData,
@@ -400,6 +401,13 @@ export function CommandMenu({ posts }: { posts: CommandPost[] }) {
     return out.sort((a, b) => GROUP_ORDER.indexOf(a.group) - GROUP_ORDER.indexOf(b.group));
   }, [open, query, scope, search, recent, byTitle, posts, actions, cardData]);
 
+  useSearchTracking("command_menu", query, items.length);
+
+  // One "opened" per opening, however it was opened (⌘K, button, event).
+  useEffect(() => {
+    if (open) track("command_menu_opened");
+  }, [open]);
+
   // Keep a valid selection; reset to the top whenever the results change shape.
   useEffect(() => {
     setActiveId(items[0]?.id ?? null);
@@ -433,6 +441,16 @@ export function CommandMenu({ posts }: { posts: CommandPost[] }) {
 
   const run = (item: Item | null) => {
     if (!item) return;
+    track("command_menu_selected", {
+      kind: item.kind,
+      group: item.group,
+      target:
+        item.kind === "resource" ? item.resource.title
+        : item.kind === "post" ? item.post.slug
+        : item.kind === "category" ? item.category
+        : item.title,
+      query: query.trim().toLowerCase() || undefined,
+    });
     switch (item.kind) {
       case "resource":
         pushRecent(item.resource.title);

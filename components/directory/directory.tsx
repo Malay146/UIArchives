@@ -10,6 +10,7 @@ import { FilterBar } from "@/components/collection/filter-bar";
 import { SET_CATEGORY } from "@/lib/command";
 import { withSlugs } from "@/lib/slug";
 import { useProgressive } from "@/lib/use-progressive";
+import { track, useSearchTracking } from "@/lib/analytics";
 
 const ALL = "All";
 
@@ -49,6 +50,8 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
     [results, category],
   );
 
+  useSearchTracking("resources", query, visible.length);
+
   // ----- Detail drawer, mirrored in the URL as ?r=<key> so it can be shared.
   const setUrlResource = (r: UiCardData | null) => {
     const url = new URL(window.location.href);
@@ -64,12 +67,14 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
   visibleRef.current = visible;
 
   const openDrawer = useCallback((r: UiCardData) => {
+    track("resource_opened", { section: "resources", title: r.title, key: logoKey(r), via: "list" });
     setDrawerList(visibleRef.current.includes(r) ? visibleRef.current : resources);
     setSelected(r);
     setUrlResource(r);
   }, [resources]);
 
   const selectInDrawer = useCallback((r: UiCardData) => {
+    track("resource_opened", { section: "resources", title: r.title, key: logoKey(r), via: "drawer" });
     setDrawerList((list) => (list.includes(r) ? list : resources));
     setSelected(r);
     setUrlResource(r);
@@ -84,6 +89,7 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
     const key = new URLSearchParams(window.location.search).get("r");
     const r = key ? resources.find((x) => logoKey(x) === key) : null;
     if (r) {
+      track("resource_opened", { section: "resources", title: r.title, key: logoKey(r), via: "link" });
       setDrawerList(resources);
       setSelected(r);
     }
@@ -119,6 +125,7 @@ export function Directory({ resources }: { resources: UiCardData[] }) {
   }, []);
 
   const choose = useCallback((cat: string) => {
+    track("filter_toggled", { section: "resources", group: "category", value: cat });
     setCategory(cat);
     const top = listTopRef.current;
     if (top && top.getBoundingClientRect().top < 0) {

@@ -69,6 +69,18 @@ bash scripts/go-live.sh
 
 The script keeps secrets in `.cloudflare-secrets` (git-ignored), builds, deploys the Worker and applies any new database migrations. See [docs/cloudflare-setup.md](docs/cloudflare-setup.md) for the full setup: secrets, passkey sign-in, email, DNS and the daily agent.
 
+## Analytics
+
+Analytics runs on [PostHog](https://posthog.com) and stays off until a project key is set. Add it to `.env` (git-ignored) before building:
+
+```bash
+NEXT_PUBLIC_POSTHOG_KEY=phc_...
+NEXT_PUBLIC_POSTHOG_REGION=us   # or eu
+# NEXT_PUBLIC_POSTHOG_DEV=1     # also send events from localhost
+```
+
+The browser sends events to `/_ph`, and the Worker forwards them to PostHog, so ad blockers don't drop them. PostHog captures pageviews, clicks, rage clicks, dead clicks, heatmaps, web vitals and errors on its own. Session replay is turned on in the PostHog project settings, with every form field masked. Custom events, all listed in [`lib/analytics.ts`](lib/analytics.ts): `outbound_click`, `search` (including searches with no results), `filter_toggled`, `resource_opened`, `copied`, `command_menu_opened`, `command_menu_selected`, `theme_changed`, `sound_changed`, `submission_sent` and `submission_failed`, plus `review_decision` and `review_added` on /review. The server also sends `submission_stored`, `automation_ingest` and `automation_run`. Opening /review flags that browser as `is_reviewer`, so it can be left out of the numbers. Every event carries `site = uiarchives`, so the PostHog project can be shared with another site: filter by it to see UIArchives alone.
+
 ## Project layout
 
 ```

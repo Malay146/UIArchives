@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { CheckGlyph18, CopyGlyph18 } from "@/components/icons";
+import { track } from "@/lib/analytics";
 
 export function CopyButton({ value, label = "Copy", className = "" }: { value: string; label?: string; className?: string }) {
   const [done, setDone] = useState(false);
@@ -17,6 +18,7 @@ export function CopyButton({ value, label = "Copy", className = "" }: { value: s
         try {
           await navigator.clipboard.writeText(value);
           setDone(true);
+          track("copied", { label, value: value.slice(0, 200) });
         } catch {}
       }}
       className={`press inline-flex h-8 items-center gap-1.5 rounded-md px-3 text-fg shadow-[0_0_0_1px_var(--line-strong)] transition-colors hover:bg-hover ${className}`}

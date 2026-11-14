@@ -2,6 +2,7 @@ import { env } from "@/lib/server/env";
 import { createItem, logRun } from "@/lib/server/db";
 import { enrich, appStoreError } from "@/lib/server/enrich";
 import { SECTION_SCHEMAS, isSectionKey, validate, MIN_SKILL_STARS } from "@/lib/section-schemas";
+import { captureServer } from "@/lib/server/analytics";
 
 /**
  * For the scheduled Claude agent (and any trusted script): add candidates to
@@ -54,6 +55,14 @@ export async function POST(req: Request) {
     const created = await createItem({ section: it.section, data: enriched, source: "automation", origin });
     results.push({ section: it.section, status: created ? "queued" : "duplicate" });
   }
-  await logRun(origin, items.length, results.filter((r) => r.status === "queued").length).catch(() => {});
+  const queued = results.filter((r) => r.status === "queued").length;
+  await logRun(origin, items.length, queued).catch(() => {});
+  await captureServer("automation_ingest", {
+    origin,
+    received: items.length,
+    queued,
+    duplicates: results.filter((r) => r.status === "duplicate").length,
+    invalid: results.filter((r) => r.status === "invalid").length,
+  }, `uiarchives-automation:${origin}`);
   return Response.json({ results });
 }

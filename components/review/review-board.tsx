@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import { identifyReviewer, track } from "@/lib/analytics";
 import { Sheet, SheetSection } from "@/components/ui/sheet";
 import { FilterBar } from "@/components/collection/filter-bar";
 import { Button } from "@/components/ui/button";
@@ -71,6 +72,9 @@ export function ReviewBoard({
   const [addUrl, setAddUrl] = useState("");
   const [addMsg, setAddMsg] = useState<string | null>(null);
 
+  // Only a signed-in reviewer sees this board: flag the browser as internal.
+  useEffect(() => identifyReviewer(), []);
+
   const list = useMemo(
     () => items[status].filter((i) => section === "all" || i.section === section),
     [items, status, section],
@@ -120,6 +124,7 @@ export function ReviewBoard({
     const res = await fetch("/api/review/add", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ url: addUrl }) });
     const body = (await res.json().catch(() => ({}))) as { error?: string; item?: Item };
     if (!res.ok || !body.item) return setAddMsg(body.error ?? "Couldn't add that link.");
+    track("review_added", { section: body.item.section });
     setItems((s) => ({ ...s, pending: [body.item!, ...s.pending] }));
     setAddUrl("");
     setAddMsg(`Queued in ${SECTION_SCHEMAS[body.item.section].label}.`);
@@ -295,6 +300,7 @@ function Editor({ item, onDecided }: { item: Item; onDecided: (updated: Item, fr
     const body = (await res.json().catch(() => ({}))) as { error?: string; item?: Item };
     setBusy(null);
     if (!res.ok || !body.item) return setError(body.error ?? "Something went wrong.");
+    track("review_decision", { action, section: item.section, source: item.source, origin: item.origin ?? undefined, was: item.status });
     onDecided(body.item, item.status);
   };
 
