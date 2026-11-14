@@ -232,11 +232,13 @@ async function resources(seed: number) {
 
 /* ---------- Runner ---------- */
 
+// Only app icons are gathered automatically for now. Skills and resources
+// are added by hand; put them back in this list to resume crawling them.
 const SOURCES: [string, (seed: number) => Promise<{ found: number; queued: number }>][] = [
   ["app-store", appIcons],
-  ["github", skills],
-  ["web", resources],
 ];
+void skills;
+void resources;
 
 export async function runAutomation(_cron?: string) {
   const seed = Math.floor(Date.now() / (6 * 3600_000));

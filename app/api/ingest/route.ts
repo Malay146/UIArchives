@@ -5,6 +5,12 @@ import { SECTION_SCHEMAS, isSectionKey, validate, MIN_SKILL_STARS } from "@/lib/
 import { captureServer } from "@/lib/server/analytics";
 
 /**
+ * Sections automation may add to. Everything else (resources, designs, OG
+ * images, skills) is added by hand on /review for now.
+ */
+const AUTOMATED_SECTIONS: string[] = ["app-icons"];
+
+/**
  * For the scheduled Claude agent (and any trusted script): add candidates to
  * the review queue. Bearer-token protected. Nothing is ever published here —
  * every item lands as `pending`.
@@ -24,6 +30,10 @@ export async function POST(req: Request) {
   for (const it of items) {
     if (!isSectionKey(it.section) || !it.data) {
       results.push({ section: String(it.section), status: "invalid", error: "Unknown section or missing data" });
+      continue;
+    }
+    if (!AUTOMATED_SECTIONS.includes(it.section)) {
+      results.push({ section: it.section, status: "invalid", error: `Automation only adds ${AUTOMATED_SECTIONS.join(", ")} right now` });
       continue;
     }
     const schema = SECTION_SCHEMAS[it.section];
