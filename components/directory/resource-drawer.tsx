@@ -115,11 +115,12 @@ function Details({
       }
     : r.image
       ? {
+          // A share image: shown whole at its own ratio, never cropped.
           src: r.image,
-          width: 1440,
-          height: 900,
-          fit: "object-cover object-top",
-          ratio: "aspect-[16/10]",
+          width: 1200,
+          height: 630,
+          fit: "h-auto",
+          ratio: "",
         }
       : null;
   const cats = categoriesOf(r);

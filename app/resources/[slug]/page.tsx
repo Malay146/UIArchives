@@ -116,7 +116,9 @@ export default async function Page({ params }: Props) {
               width={snap.width}
               height={snap.height}
               alt={`${r.title} website, landing page`}
-              className="block aspect-[16/10] w-full rounded-lg object-cover object-top shadow-[0_0_0_1px_var(--line)]"
+              className={`block w-full rounded-lg shadow-[0_0_0_1px_var(--line)] ${
+                SNAPS[key] ? "aspect-[16/10] object-cover object-top" : "h-auto" /* share image: whole, never cropped */
+              }`}
             />
           ) : null
         }
