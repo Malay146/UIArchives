@@ -38,7 +38,7 @@ const BADGES: Badge[] = [
   },
   {
     name: "neeed.directory",
-    href: "https://neeed.directory",
+    href: "https://neeed.directory/products/uiarchives?utm_source=uiarchives",
     src: "https://neeed.directory/badges/neeed-badge-light.svg",
     width: 139,
     height: 40,
@@ -56,13 +56,6 @@ const BADGES: Badge[] = [
     src: "https://smollaunch.com/badges/featured.svg",
     width: 250,
     height: 60,
-  },
-  {
-    name: "TinyShelf",
-    href: "https://www.tinyshelf.co/?ref=uiarchives.com",
-    src: "https://www.tinyshelf.co/badge/tinyshelf-badge-light-5ca4026a.svg",
-    width: 216,
-    height: 64,
   },
 ];
 
