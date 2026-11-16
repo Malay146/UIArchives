@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Mark } from "./logo";
+import { BadgeMarquee } from "./badge-marquee";
 import { GithubGlyph32, XTwitterGlyph32 } from "@/components/icons";
 
 export function Footer() {
@@ -12,6 +13,7 @@ export function Footer() {
             UIArchives — an open index, maintained by hand.
           </span>
         </div>
+        <BadgeMarquee />
         <div className="flex items-center gap-5">
           <Link href="/about" className="link hover:text-fg">
             About

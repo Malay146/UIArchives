@@ -187,3 +187,22 @@
 /* Journal covers follow the site theme for their genre colour. */
 .blog-cover { --g-tint: var(--g-light); }
 [data-theme="dark"] .blog-cover { --g-tint: var(--g-dark); }
+
+/* Footer strip of directory badges: the track holds the list twice and slides by half its width. */
+@keyframes badge-marquee {
+  to {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+.badge-marquee-track {
+  animation: badge-marquee 40s linear infinite;
+}
+.badge-marquee:hover .badge-marquee-track,
+.badge-marquee:focus-within .badge-marquee-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .badge-marquee-track {
+    animation: none;
+  }
+}
