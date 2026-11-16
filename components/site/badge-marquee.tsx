@@ -10,14 +10,14 @@ type Badge = { name: string; href: string; src: string; width: number; height: n
 const BADGES: Badge[] = [
   {
     name: "Startup Fame",
-    href: "https://startupfa.me?utm_source=uiarchives.com",
+    href: "https://startupfa.me/s/uiarchives?utm_source=uiarchives.com",
     src: "https://startupfa.me/badge?t=classic&theme=default",
     width: 171,
     height: 54,
   },
   {
     name: "Findly.tools",
-    href: "https://findly.tools?utm_source=uiarchives",
+    href: "https://findly.tools/uiarchives?utm_source=uiarchives",
     src: "https://findly.tools/badges/findly-tools-badge-light.svg",
     width: 175,
     height: 55,
