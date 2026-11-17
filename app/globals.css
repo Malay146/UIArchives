@@ -188,6 +188,30 @@
 .blog-cover { --g-tint: var(--g-light); }
 [data-theme="dark"] .blog-cover { --g-tint: var(--g-dark); }
 
+/* Journal code blocks: syntax colours per theme. */
+:root {
+  --code-bg: #fafafa;
+  --code-comment: #6e7781;
+  --code-keyword: #cf222e;
+  --code-string: #0a3069;
+  --code-function: #8250df;
+  --code-number: #0550ae;
+  --code-tag: #116329;
+  --code-attr: #953800;
+  --code-punct: #57606a;
+}
+[data-theme="dark"] {
+  --code-bg: #111111;
+  --code-comment: #8b949e;
+  --code-keyword: #ff7b72;
+  --code-string: #a5d6ff;
+  --code-function: #d2a8ff;
+  --code-number: #79c0ff;
+  --code-tag: #7ee787;
+  --code-attr: #ffa657;
+  --code-punct: #9ca3af;
+}
+
 /* Footer strip of directory badges: the track holds the list twice and slides by half its width. */
 @keyframes badge-marquee {
   to {

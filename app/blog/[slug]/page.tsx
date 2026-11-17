@@ -1,6 +1,5 @@
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import { getPostBySlug, getAllPosts, getPostComponent } from "@/lib/blog";
 import { getMdxComponents } from "@/components/blog/mdx-components";
 import Link from "next/link";
@@ -272,22 +271,10 @@ export default async function PostPage({ params }: PostPageProps) {
             <p className="mt-3 text-[15px] text-fg-2 text-pretty">{metaDesc}</p>
           )}
           {author && (
-            <div className="mt-6 flex items-center gap-2.5">
-              <span className="relative grid size-6 place-items-center overflow-hidden rounded-full border bg-hover text-[11px] font-medium">
-                {author.image ? (
-                  <Image
-                    src={author.image}
-                    alt=""
-                    fill
-                    sizes="24px"
-                    className="object-cover grayscale"
-                  />
-                ) : (
-                  author.name.charAt(0)
-                )}
-              </span>
-              <span>{author.name}</span>
-            </div>
+            <p className="mt-6">
+              <span className="text-fg-3">Author</span>{" "}
+              <span className="ml-1.5">{author.name}</span>
+            </p>
           )}
         </header>
 

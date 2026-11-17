@@ -5,16 +5,19 @@ import { cn } from "@/utlis/cn";
 import { CommandCopy } from "@/components/collection/command-copy";
 import { CopyButton } from "@/components/collection/copy-button";
 
-// Monochrome syntax theme: structure comes from grey value, not hue.
-const mono: PrismTheme = {
-  plain: { color: "var(--fg)", backgroundColor: "transparent" },
+// Syntax theme driven by --code-* variables (globals.css), so it follows light and dark.
+const theme: PrismTheme = {
+  plain: { color: "var(--fg)", backgroundColor: "var(--code-bg)" },
   styles: [
-    { types: ["comment", "prolog", "doctype", "cdata"], style: { color: "var(--fg-3)", fontStyle: "italic" } },
-    { types: ["punctuation", "operator"], style: { color: "var(--fg-3)" } },
-    { types: ["string", "char", "attr-value", "regex", "inserted"], style: { color: "var(--fg-2)" } },
-    { types: ["keyword", "tag", "selector", "important", "atrule"], style: { color: "var(--fg)", fontWeight: "500" } },
-    { types: ["number", "boolean", "constant", "symbol", "property", "attr-name", "function", "class-name"], style: { color: "var(--fg)" } },
-    { types: ["deleted"], style: { color: "var(--fg-3)", textDecorationLine: "line-through" } },
+    { types: ["comment", "prolog", "doctype", "cdata"], style: { color: "var(--code-comment)", fontStyle: "italic" } },
+    { types: ["punctuation", "operator"], style: { color: "var(--code-punct)" } },
+    { types: ["keyword", "atrule", "important", "rule"], style: { color: "var(--code-keyword)" } },
+    { types: ["string", "char", "attr-value", "regex", "inserted", "url"], style: { color: "var(--code-string)" } },
+    { types: ["function", "class-name", "selector", "maybe-class-name"], style: { color: "var(--code-function)" } },
+    { types: ["number", "boolean", "constant", "symbol", "unit"], style: { color: "var(--code-number)" } },
+    { types: ["tag", "builtin"], style: { color: "var(--code-tag)" } },
+    { types: ["property", "attr-name", "variable"], style: { color: "var(--code-attr)" } },
+    { types: ["deleted"], style: { color: "var(--code-keyword)", textDecorationLine: "line-through" } },
   ],
 };
 
@@ -47,7 +50,7 @@ export function CodeBlock({ children, className, ...props }: any) {
   }
 
   return (
-    <Highlight theme={mono} code={code} language={language}>
+    <Highlight theme={theme} code={code} language={language}>
       {({ className: prismClassName, style, tokens, getLineProps, getTokenProps }) => (
         <figure className="my-8 overflow-hidden rounded-lg border">
           <figcaption className="flex items-center justify-between border-b py-1.5 pr-1.5 pl-4 text-[12px] text-fg-3">
