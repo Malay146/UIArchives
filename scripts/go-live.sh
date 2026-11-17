@@ -58,6 +58,18 @@ DEPLOY_SECRETS=$(mktemp)
 trap 'rm -f "$DEPLOY_SECRETS"' EXIT
 for k in $DECLARED; do printf '%s=%s\n' "$k" "$(get "$k")" >> "$DEPLOY_SECRETS"; done
 
+# ---------------------------------------------------------------- archive data
+# Items approved locally go to production together with their media (videos,
+# posters, screenshots, logos), before the deploy refreshes cached pages.
+# Never copy item rows to production any other way: rows without media show
+# as blank cards.
+say "Syncing approved items and media"
+if curl -sf -o /dev/null "http://localhost:3001/"; then
+  node scripts/sync-to-prod.mjs || { echo "  Sync failed — fix it before deploying."; exit 1; }
+else
+  echo "  Dev server not running — skipped. Start it (npm run dev) to sync local approvals."
+fi
+
 # ---------------------------------------------------------------- build + deploy
 say "2/4  Building"
 npm run build

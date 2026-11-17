@@ -24,7 +24,10 @@ export async function GET(req: Request, { params }: { params: Promise<{ key: str
     if (hit) return hit;
   }
 
-  const { value, metadata } = await env.MEDIA.getWithMetadata<MediaMeta>(key, { type: "arrayBuffer", cacheTtl: 86400 });
+  // No long KV cacheTtl: it also caches misses, so a file looked up just
+  // before it was uploaded would 404 for up to a day. Hits are kept in the
+  // edge cache below for a year anyway.
+  const { value, metadata } = await env.MEDIA.getWithMetadata<MediaMeta>(key, { type: "arrayBuffer" });
   if (!value) return new Response("Not found", { status: 404 });
 
   const headers = new Headers({
