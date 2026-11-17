@@ -1,0 +1,191 @@
+---
+title: "Pixel-Perfect Web Typography in 2026: text-box-trim, text-wrap and the New Type Units"
+description: "The CSS typography features that finally make web type look designed: text-box-trim for true optical centering, text-wrap balance and pretty, cap and lh units, font-size-adjust, variable font axes and font-width."
+excerpt: "Web type used to sit slightly wrong in every button and break awkwardly in every headline. The 2026 CSS features that fix it, and a ready-to-use typography base."
+date: "2026-11-14"
+category: "Design"
+tags: ["Typography", "CSS", "text-box-trim", "Variable Fonts", "Design Systems", "Fonts"]
+coverImage: "/blogs/modern-css-typography-2026.png"
+---
+
+**Short answer:** four CSS features close the gap between designed type and rendered type. **`text-box: trim-both cap alphabetic`** removes the invisible space above and below text so padding and centering are exact (Baseline since August 2026). **`text-wrap: balance`** evens out headline lines, and **`text-wrap: pretty`** avoids single-word last lines in paragraphs. **`cap`, `lh` and `rlh` units** let you size icons and spacing from the font itself. And **`font-size-adjust`** keeps fallback fonts from jumping in size. Together they replace a pile of magic numbers.
+
+## Why web type never quite matched the design file
+
+Open any design tool and put text in a button. It looks centred. Build the same button in CSS with equal top and bottom padding, and the text sits a pixel or two low. Every developer has fixed this with `padding-top: 9px; padding-bottom: 7px` at some point.
+
+The reason is the **line box**. Fonts include extra space above the capitals (for accents and ascenders) and below the baseline (for descenders), and each font distributes it differently. CSS has always laid out that whole box, not the visible letters. Design tools increasingly trim it. Now CSS can too.
+
+## 1. text-box-trim: true optical centering
+
+```css
+.button,
+.badge,
+h1, h2, h3 {
+  text-box: trim-both cap alphabetic;
+}
+```
+
+`text-box` is shorthand for two properties:
+
+- **`text-box-trim`**: which sides to trim: `trim-start`, `trim-end` or `trim-both`.
+- **`text-box-edge`**: where to trim to. `cap alphabetic` trims to the top of capital letters and the baseline, which is what designers usually mean by "the text". `ex alphabetic` trims to the x-height instead, useful for lowercase-heavy labels.
+
+The result: padding equals visible space. A button with `padding: 10px 16px` has exactly 10 px above the caps and 10 px below the baseline, in every font.
+
+It became **Baseline in August 2026** when Firefox 154 shipped it (Safari 18.2 and Chrome 133 already had it). In older browsers, text simply keeps its normal line box, which is how it has always looked, so it's safe to add today.
+
+**Where to use it:** buttons, badges, tags, headings, card titles, anything where text aligns to an icon or a box edge. **Where not to:** long paragraphs, where the line box spacing is what keeps lines readable.
+
+## 2. text-wrap: balance and pretty
+
+```css
+h1, h2, h3, blockquote, figcaption {
+  text-wrap: balance;
+}
+
+p, li {
+  text-wrap: pretty;
+}
+```
+
+- **`balance`** spreads a headline's words evenly across its lines, so you don't get a long first line and a lonely word below. It's Baseline and limited to short blocks (a handful of lines), which is all headings need.
+- **`pretty`** tells the browser to spend a bit more effort on paragraphs, mainly to avoid a single short word on the last line (an "orphan"), and in some engines to improve rag and hyphenation. It's supported in Chromium and Safari; other browsers wrap normally.
+
+This replaces the `&nbsp;` you used to hand-insert between the last two words of headlines.
+
+## 3. Units that come from the font
+
+| Unit | Equals | Great for |
+| --- | --- | --- |
+| `cap` | Height of capital letters | Sizing icons to match text |
+| `ex` | x-height | Aligning to lowercase |
+| `lh` | The element's computed line height | Spacing in line rhythm |
+| `rlh` | The root element's line height | A global vertical rhythm |
+
+```css
+.icon {
+  width: 1cap;
+  height: 1cap;
+}
+
+textarea {
+  min-height: 3lh;
+  max-height: 12lh;
+}
+
+.stack > * + * {
+  margin-top: 1rlh;
+}
+```
+
+An icon sized in `cap` matches the capitals of whatever font it sits next to, at any size. That's the end of tweaking icon sizes per breakpoint.
+
+## 4. font-size-adjust: no more layout jumps when fonts load
+
+Different fonts look different sizes at the same `font-size`, because their x-heights differ. When a web font loads and replaces the fallback, the text visibly resizes and shifts the layout.
+
+```css
+body {
+  font-family: "Söhne", system-ui, sans-serif;
+  font-size-adjust: from-font;
+}
+```
+
+`font-size-adjust` scales every font in the stack so they share the same x-height. `from-font` reads the value from the primary font. Your fallback text now takes up nearly the same space as the final font, which reduces layout shift. It's Baseline since 2024.
+
+## 5. Variable fonts, properly
+
+Most popular typefaces now ship as variable fonts: one file, continuous weights and often widths and optical sizes.
+
+```css
+h1 {
+  font-weight: 650;
+  font-optical-sizing: auto;
+}
+
+.compact {
+  font-width: 85%;
+}
+```
+
+- **Use in-between weights.** 450 for body text on dark backgrounds (light text looks bolder), 650 for headings that need more than 600 but less than 700.
+- **Turn on optical sizing.** `font-optical-sizing: auto` lets fonts with an `opsz` axis adjust their details for small and large sizes.
+- **Use width for tight spaces.** `font-width` (the new name for `font-stretch`) selects condensed or expanded cuts, ideal for tables and dense dashboards.
+
+## 6. Small details that add up
+
+- **`font-variant-numeric: tabular-nums`** for numbers in tables, prices and timers, so digits line up and don't jitter when they change.
+- **`hanging-punctuation: first`** lets opening quotes hang outside the text block. Safari supports it; elsewhere it's ignored.
+- **`initial-letter`** for drop caps without floats, in Chromium and Safari.
+- **`text-underline-offset` and `text-decoration-thickness`** for links that look intentional.
+
+## A typography base you can copy
+
+```css
+:root {
+  font-family: "Inter Display", "Inter", system-ui, sans-serif;
+  font-size-adjust: from-font;
+  font-optical-sizing: auto;
+  line-height: 1.6;
+}
+
+h1, h2, h3 {
+  line-height: 1.15;
+  text-wrap: balance;
+  text-box: trim-both cap alphabetic;
+}
+
+p, li { text-wrap: pretty; }
+
+button, .badge, .tag {
+  text-box: trim-both cap alphabetic;
+}
+
+.icon { width: 1cap; height: 1cap; }
+
+table, .price, time { font-variant-numeric: tabular-nums; }
+
+a {
+  text-underline-offset: 0.2em;
+  text-decoration-thickness: 1px;
+}
+```
+
+Note the trimmed headings: because the line box is trimmed, margins above and below headings now measure from the visible letters. You'll likely need smaller margins than before.
+
+## Design handoff tip
+
+Ask designers to turn on vertical trim in their design tool (Figma calls it "Vertical trim: Cap height to baseline") for the same components. When both sides measure from the letters, spacing values in the design file match CSS exactly, and the "it's a pixel off" conversations disappear.
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="What does text-box-trim do in CSS?">
+
+It removes the extra space a font adds above and below text, trimming to the cap height and baseline (or other edges you choose). Padding and alignment then measure from the visible letters, so text centres optically.
+
+</FaqItem>
+
+<FaqItem q="Is text-box-trim supported in all browsers?">
+
+Yes, since August 2026. Firefox 154 joined Safari 18.2 and Chrome 133, making it Baseline newly available. Older browsers ignore it and show text as before.
+
+</FaqItem>
+
+<FaqItem q="What's the difference between text-wrap balance and pretty?">
+
+balance evens out the length of every line and is meant for short text like headlines. pretty focuses on avoiding single-word last lines in longer paragraphs and costs a little more to compute.
+
+</FaqItem>
+
+<FaqItem q="How do I size icons to match text?">
+
+Use the cap unit: width: 1cap and height: 1cap make an icon exactly as tall as the capital letters of the surrounding font.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="resources" posts={["oklch-color-system-guide", "css-features-that-replace-javascript-2026"]} />

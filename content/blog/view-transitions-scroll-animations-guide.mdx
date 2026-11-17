@@ -1,0 +1,206 @@
+---
+title: "Motion Without JavaScript: View Transitions and Scroll-Driven Animations in 2026"
+description: "A practical guide to native web motion now that scroll-driven animations are Baseline: view() and scroll() timelines, animation-range, same- and cross-document view transitions, shared element morphs, performance and reduced motion."
+excerpt: "Scroll-driven animations are now in every major browser, and view transitions work across pages. How to build reveals, progress bars, shared-element morphs and page transitions with CSS alone."
+date: "2026-11-14"
+category: "Engineering"
+tags: ["CSS", "Animation", "View Transitions", "Scroll-Driven Animations", "Motion Design", "Performance"]
+coverImage: "/blogs/view-transitions-scroll-animations-guide.png"
+---
+
+**Short answer:** use **scroll-driven animations** (`animation-timeline: scroll()` or `view()`) for anything tied to scrolling, such as reading progress, reveals and parallax, and **view transitions** for anything tied to a change of state or page, such as opening a card into a detail page or moving between routes. Scroll-driven animations became Baseline in October 2026 when Firefox 159 enabled them. Same-document view transitions are Baseline; cross-document ones (for normal multi-page sites) work in Chromium and Safari, with Firefox catching up through Interop 2026. Both run largely off the main thread and need almost no JavaScript.
+
+## Two kinds of motion, two tools
+
+Interface motion mostly answers one of two questions:
+
+- **"Where am I in this content?"** Progress bars, sticky header changes, elements revealing as they scroll in. That's **scroll-driven animation**.
+- **"What just changed?"** A thumbnail growing into a full page, a list re-sorting, moving between routes. That's **view transitions**.
+
+Picking the right one keeps the code small and the motion meaningful.
+
+## Part 1: Scroll-driven animations
+
+A normal CSS animation runs against time. A scroll-driven animation runs against scroll position instead. You write a regular `@keyframes` animation, then swap its timeline.
+
+### Reading progress bar
+
+```css
+.progress {
+  position: fixed;
+  inset: 0 0 auto;
+  height: 3px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: grow linear both;
+  animation-timeline: scroll(root block);
+}
+
+@keyframes grow {
+  from { scale: 0 1; }
+  to { scale: 1 1; }
+}
+```
+
+`scroll(root block)` means "the page's vertical scroll". At the top the bar is empty; at the bottom it's full.
+
+### Reveal on scroll
+
+```css
+@media (prefers-reduced-motion: no-preference) {
+  .reveal {
+    animation: fade-up linear both;
+    animation-timeline: view();
+    animation-range: entry 0% cover 30%;
+  }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; translate: 0 24px; }
+}
+```
+
+`view()` tracks the element moving through the viewport. `animation-range` picks the slice of that journey: here, from the moment it starts entering until it's 30% through. This replaces most IntersectionObserver reveal scripts.
+
+### Understanding animation-range
+
+The named ranges are what make this pleasant to write:
+
+| Range | Meaning |
+| --- | --- |
+| `entry` | While the element is entering the viewport |
+| `exit` | While it's leaving |
+| `contain` | While it's fully visible (or fully covering the viewport) |
+| `cover` | The whole journey, from first pixel in to last pixel out |
+
+Combine them with percentages, like `entry 20% exit 80%`.
+
+### Named timelines for "scroll here, animate there"
+
+To animate one element based on another's scroll, name the timeline:
+
+```css
+.carousel { scroll-timeline: --carousel inline; }
+.carousel-dots { timeline-scope: --carousel; }
+.carousel-dots .active { animation: slide linear; animation-timeline: --carousel; }
+```
+
+### Scroll-driven performance tips
+
+- **Animate `transform`, `opacity`, `scale`, `translate`, `rotate` and `filter`** when you can. Those run on the compositor and stay smooth even if the main thread is busy.
+- **Use `linear` easing** on the animation itself. The scroll is the easing; anything else feels laggy.
+- **Use `both` fill mode** so elements look correct before and after the range.
+
+## Part 2: View transitions
+
+View transitions take a snapshot of the page before a change, apply the change, then animate between the old and new states. By default you get a cross-fade; with names, you get shared-element morphs.
+
+### Same-document (single-page apps)
+
+```js
+function openCard(card) {
+  if (!document.startViewTransition) return render(card);
+  document.startViewTransition(() => render(card));
+}
+```
+
+Any DOM change inside the callback is animated. React, Vue and Svelte routers increasingly wrap this for you.
+
+### Cross-document (multi-page sites)
+
+For classic page-to-page navigation, add this to the CSS of **both** pages:
+
+```css
+@view-transition {
+  navigation: auto;
+}
+```
+
+That's it: same-origin navigations now cross-fade. Browsers without support navigate as normal, so there's no reason not to add it. It works in Chromium and Safari; Firefox support is partial and a focus of Interop 2026.
+
+### Shared element morphs
+
+Give the same element the same `view-transition-name` on both states, and the browser animates its position and size between them:
+
+```css
+/* On the list page */
+.card[data-id="42"] img { view-transition-name: hero-42; }
+
+/* On the detail page */
+.detail-hero { view-transition-name: hero-42; }
+```
+
+Names must be unique on a page at any moment. For lists, set them inline or with `attr()`, or set `view-transition-name: match-element` where supported to let the browser generate them.
+
+### Customising the animation
+
+Transitions are styled with pseudo-elements:
+
+```css
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 250ms;
+}
+
+::view-transition-group(hero-42) {
+  animation-timing-function: cubic-bezier(0.2, 0, 0, 1);
+}
+```
+
+Use **view transition types** to animate differently for different navigations, for example sliding left for "next" and right for "back", with `:active-view-transition-type()`.
+
+## Respect reduced motion, always
+
+Both features are motion. Wrap them:
+
+```css
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+```
+
+For scroll-driven effects, put the animation inside `prefers-reduced-motion: no-preference` as shown above, so content is simply visible for people who've asked for less motion.
+
+## When you still need JavaScript
+
+- **Scroll-triggered** animations that should play once at a threshold (rather than scrub with scroll) are only now arriving natively. Until they're widespread, IntersectionObserver is fine.
+- **Physics and gestures** (dragging with momentum, spring interactions) are still better with a motion library.
+- **Complex sequenced choreography** across many elements can be easier to author in JavaScript.
+
+Everything else, from progress bars to page transitions, is now a few lines of CSS. For the wider picture of what native features can replace, see [12 CSS and HTML features that replace UI JavaScript](/blog/css-features-that-replace-javascript-2026).
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="Are CSS scroll-driven animations supported in all browsers?">
+
+Yes, as of October 2026. Firefox 159 enabled them by default, joining Chrome, Edge and Safari, which makes the feature Baseline newly available.
+
+</FaqItem>
+
+<FaqItem q="What is the difference between scroll() and view() timelines?">
+
+scroll() follows a scroll container's overall progress, which suits progress bars. view() follows one element's journey through the viewport, which suits reveals and parallax.
+
+</FaqItem>
+
+<FaqItem q="Do view transitions work on multi-page sites?">
+
+Yes. Add the @view-transition rule with navigation: auto to both pages. It works in Chromium and Safari, and browsers without support simply navigate normally.
+
+</FaqItem>
+
+<FaqItem q="Do view transitions hurt performance?">
+
+They capture snapshots of the page, so keep them short (200 to 400 ms) and avoid naming hundreds of elements at once. For typical navigations, they're cheaper than JavaScript animation libraries.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="designs" posts={["css-features-that-replace-javascript-2026", "ai-streaming-response-ui-patterns"]} />

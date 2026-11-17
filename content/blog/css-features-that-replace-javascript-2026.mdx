@@ -1,0 +1,223 @@
+---
+title: "12 CSS and HTML Features That Replace UI JavaScript in 2026"
+description: "Tooltips, dropdowns, modals, masonry, scroll effects and page transitions now ship in the browser. Here are 12 native features that replace UI libraries in 2026, with real browser support and safe fallbacks."
+excerpt: "Popper, select libraries, scroll listeners and modal managers are all becoming optional. The 12 native features worth learning now, and which ones are safe to ship today."
+date: "2026-11-18"
+category: "Engineering"
+tags: ["CSS", "HTML", "Web Platform", "Baseline", "Interop 2026", "Frontend"]
+coverImage: "/blogs/css-features-that-replace-javascript-2026.png"
+---
+
+**Short answer:** in 2026 the browser does a large part of what UI libraries used to do. **Anchor positioning** replaces Popper and Floating UI, **popover** and **`<dialog>`** replace modal managers, **`appearance: base-select`** replaces custom dropdown libraries, **scroll-driven animations** replace scroll listeners, and **view transitions** replace page-transition code. Most of these are now Baseline, which means they work in current Chrome, Edge, Firefox and Safari.
+
+This is a field guide to the 12 that matter most for interface work: what each one replaces, where it works today, and how to ship it without breaking older browsers.
+
+## Why 2026 is the tipping point
+
+Every year, the browser vendors agree on a list of features to make consistent across engines. It's called **Interop**. The [Interop 2026 focus areas](https://web.dev/blog/interop-2026) read like a list of UI library features: anchor positioning, dialogs and popovers, scroll-driven animations, view transitions, `contrast-color()`, `attr()`, container style queries and scroll snap.
+
+That matters because "works in Chrome" used to be the end of the story for new CSS. Now the vendors are actively closing the gaps. When Firefox 159 turned on scroll-driven animations by default in October 2026, the feature became [Baseline newly available](https://web.dev/blog/web-platform-10-2026) overnight.
+
+The practical result: code you write against these features today gets *more* reliable every release, while library code you write today is something you'll maintain forever.
+
+## The 12 features at a glance
+
+| Feature | Replaces | Status (Nov 2026) |
+| --- | --- | --- |
+| Popover API | Dropdown/menu toggling, outside-click handlers | Baseline |
+| `<dialog>` + `closedby` | Modal managers, focus traps | `<dialog>` Baseline, `closedby` in Interop 2026 |
+| Anchor positioning | Popper.js, Floating UI | Core is Baseline (2026) |
+| Interest invokers (`interestfor`) | Hover-card and tooltip JS | Chromium only |
+| `appearance: base-select` | Custom select libraries | Chrome, Edge, Safari 27 |
+| `@starting-style` | Enter animations with JS class toggles | Baseline |
+| Scroll-driven animations | Scroll listeners, GSAP ScrollTrigger for simple effects | Baseline (Firefox 159) |
+| View transitions | Route animation libraries | Same-document Baseline, cross-document partial in Firefox |
+| `field-sizing: content` | Auto-growing textarea scripts | Chromium and Safari |
+| `text-box-trim` | Magic negative margins on text | Baseline (Firefox 154) |
+| `sibling-index()` | Stagger delays set from JS | Baseline (Firefox 154) |
+| `display: grid-lanes` | Masonry libraries | Safari only, Chromium behind a flag |
+
+The rest of this post walks through each one.
+
+## 1. Popover API: menus without click-outside code
+
+Add `popover` to an element and `popovertarget` to a button. The browser handles opening, closing on Escape, closing on outside click, the top layer (no more `z-index: 9999`), and focus return.
+
+```html
+<button popovertarget="menu">Options</button>
+<div id="menu" popover>
+  <a href="/settings">Settings</a>
+  <a href="/logout">Log out</a>
+</div>
+```
+
+`popover="auto"` closes other auto popovers. `popover="manual"` stays open until you close it. `popover="hint"`, part of Interop 2026, is meant for tooltips: opening one hint closes other hints but leaves menus alone.
+
+## 2. `<dialog>` and `closedby`: modals with real focus handling
+
+`dialog.showModal()` gives you a modal that sits in the top layer, makes the rest of the page inert, traps focus correctly and restores it on close. That's the hardest part of accessible modals, done by the browser.
+
+The newer `closedby` attribute controls how it can be dismissed: `closedby="any"` allows clicking the backdrop, `closedby="closerequest"` allows Escape only, and `closedby="none"` requires an explicit button. It's in Interop 2026, so test it, and keep a close button in every modal regardless.
+
+## 3. Anchor positioning: tooltips that flip by themselves
+
+Anchor positioning tethers one element to another in pure CSS, and `position-try-fallbacks` flips it when it runs out of room.
+
+```css
+.trigger { anchor-name: --trigger; }
+
+.tooltip {
+  position: fixed;
+  position-anchor: --trigger;
+  position-area: top;
+  position-try-fallbacks: flip-block, flip-inline;
+  margin-bottom: 8px;
+}
+```
+
+The core of it became Baseline in January 2026 when Firefox 147 shipped it. Combine it with `popover` and you have an accessible, auto-flipping dropdown with zero JavaScript. If you must support older browsers, the [OddBird polyfill](https://github.com/oddbird/css-anchor-positioning) covers the gap.
+
+## 4. Interest invokers: hover cards declared in HTML
+
+`interestfor` is the hover-and-focus twin of `popovertarget`. Point a link at a popover and the browser shows it when the user hovers, focuses, or long-presses, with built-in delays.
+
+```html
+<a href="/u/malay" interestfor="profile-card">@malay</a>
+<div id="profile-card" popover="hint">…</div>
+```
+
+It shipped in Chrome 142 and isn't in Safari or Firefox yet, so treat it as an enhancement: the link must still work as a link.
+
+## 5. `appearance: base-select`: style the real `<select>`
+
+For 25 years, styling a dropdown meant rebuilding it in JavaScript and usually breaking keyboard and screen reader support. Customizable select fixes this. Opt in on both the select and its picker:
+
+```css
+select,
+::picker(select) {
+  appearance: base-select;
+}
+```
+
+Now the button, the list, each `<option>` and even rich HTML inside options are stylable. It shipped in Chrome 135 and [Safari 27](https://webkit.org/blog/18325/webkit-features-for-safari-27-0/). Firefox doesn't support it yet, and that's fine: unsupported browsers ignore the property and show a normal select. We wrote [a full guide to customizable select](/blog/customizable-select-base-select-guide).
+
+## 6. `@starting-style`: enter animations without JS
+
+Elements that appear (a popover opening, a dialog showing, an element going from `display: none`) used to need a class toggled on the next frame. `@starting-style` declares the "before" state directly:
+
+```css
+[popover] {
+  opacity: 1;
+  translate: 0 0;
+  transition: opacity 0.2s, translate 0.2s, display 0.2s allow-discrete, overlay 0.2s allow-discrete;
+
+  @starting-style {
+    opacity: 0;
+    translate: 0 4px;
+  }
+}
+```
+
+Add `transition-behavior: allow-discrete` (here, the `allow-discrete` keyword) so `display` and `overlay` wait for the exit animation.
+
+## 7. Scroll-driven animations: no more scroll listeners
+
+`animation-timeline: scroll()` ties an animation to scroll position. `animation-timeline: view()` ties it to an element moving through the viewport. Both run off the main thread, so they stay smooth when your JavaScript is busy.
+
+```css
+.reveal {
+  animation: fade-up linear both;
+  animation-timeline: view();
+  animation-range: entry 0% cover 30%;
+}
+```
+
+This one became Baseline in October 2026 with Firefox 159. Wrap it in `@media (prefers-reduced-motion: no-preference)` and it's ready for production. Our [motion guide](/blog/view-transitions-scroll-animations-guide) goes deeper.
+
+## 8. View transitions: animated navigation, even between pages
+
+Same-document view transitions (`document.startViewTransition()`) are Baseline. Cross-document transitions, for normal multi-page sites, need one line of CSS on both pages:
+
+```css
+@view-transition { navigation: auto; }
+```
+
+Chromium and Safari support cross-document transitions; Firefox support is still partial, and it's an Interop 2026 focus area. Browsers without support just navigate normally, so there's no downside to adding it.
+
+## 9. `field-sizing: content`: inputs that grow
+
+```css
+textarea { field-sizing: content; min-height: 3lh; max-height: 12lh; }
+```
+
+One line replaces every auto-resize textarea script. It works in Chromium and Safari; elsewhere the textarea simply keeps its fixed size.
+
+## 10. `text-box-trim`: optically centred text
+
+Fonts carry invisible space above capitals and below the baseline, which is why buttons always look slightly off-centre. `text-box: trim-both cap alphabetic` trims text to the cap height and baseline, so padding means what it says. It became Baseline in August 2026 with Firefox 154.
+
+## 11. `sibling-index()` and `sibling-count()`: staggers in pure CSS
+
+```css
+li {
+  transition-delay: calc(sibling-index() * 40ms);
+}
+```
+
+Staggered list animations used to require inline styles or a script that numbers each item. Also Baseline as of Firefox 154.
+
+## 12. `display: grid-lanes`: native masonry
+
+After years of debate, masonry landed as `display: grid-lanes`. Safari 26.4 shipped it, and Chromium has it behind a flag. Global support is still low, so use it as progressive enhancement over a normal grid:
+
+```css
+.gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+
+@supports (display: grid-lanes) {
+  .gallery { display: grid-lanes; }
+}
+```
+
+## How to adopt these safely
+
+- **Check Baseline, not "Chrome support".** [webstatus.dev](https://webstatus.dev) and the Baseline badges on MDN tell you whether a feature works across all major engines.
+- **Use `@supports` for anything not Baseline.** Write the fallback first, then enhance.
+- **Delete code in a separate pull request.** Replacing a library with a native feature is a behaviour change. Ship the native version, compare, then remove the dependency.
+- **Respect reduced motion.** Every animation feature above should sit inside a `prefers-reduced-motion` check.
+- **Keep semantics.** Native features are accessible by default only if you use the right elements: a `<button>` for the trigger, a real `<select>`, a real `<dialog>`.
+
+## What to skip for now
+
+`grid-lanes` and `interestfor` are exciting but still single-engine in stable browsers. Use them only where the fallback is genuinely acceptable. Everything else in the table above is safe to build on today.
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="What does Baseline mean for CSS features?">
+
+Baseline is a label from the WebDX community group. "Newly available" means a feature works in the latest Chrome, Edge, Firefox and Safari. "Widely available" means it has worked in all of them for 30 months, which covers most users on older versions too.
+
+</FaqItem>
+
+<FaqItem q="Can CSS anchor positioning replace Floating UI?">
+
+For most tooltips, dropdowns and popovers, yes. The core properties (anchor-name, position-anchor, position-area and position-try-fallbacks) are Baseline in 2026. Floating UI still helps with complex virtual elements or when you must support older browsers without a polyfill.
+
+</FaqItem>
+
+<FaqItem q="Is it safe to use scroll-driven animations in production?">
+
+Yes. Since Firefox 159 they work in all major engines. Respect prefers-reduced-motion, and remember that browsers on older versions will simply show the final, unanimated state if you use animation-fill-mode: both.
+
+</FaqItem>
+
+<FaqItem q="Which of these features has the worst browser support?">
+
+display: grid-lanes (Safari only in stable) and the interestfor attribute (Chromium only). Both need a fallback that works on its own.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="resources" posts={["customizable-select-base-select-guide", "view-transitions-scroll-animations-guide"]} />

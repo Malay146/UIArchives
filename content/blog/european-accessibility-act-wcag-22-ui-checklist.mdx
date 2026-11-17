@@ -1,0 +1,178 @@
+---
+title: "European Accessibility Act for UI Designers: A WCAG 2.2 Checklist (2026)"
+description: "The European Accessibility Act has applied since June 2025, and EN 301 549 is moving to WCAG 2.2. What it means for designers and frontend developers, who it covers, and a practical UI checklist with the six new WCAG 2.2 AA criteria."
+excerpt: "The EAA is in force, the first court orders are out, and the EU standard is moving to WCAG 2.2. A plain-language guide and a component-by-component checklist for interface teams."
+date: "2026-11-15"
+category: "Guides"
+tags: ["Accessibility", "European Accessibility Act", "WCAG 2.2", "EN 301 549", "Compliance", "UI Design"]
+coverImage: "/blogs/european-accessibility-act-wcag-22-ui-checklist.png"
+---
+
+**Short answer:** the European Accessibility Act (EAA) has applied since **28 June 2025** to many digital products and services sold to people in the EU, including e-commerce, banking, e-books, transport ticketing and communication services, whether or not the company is based in the EU. The practical benchmark is **EN 301 549**, which points to **WCAG**. A new version, EN 301 549 v4.1.1, moves to **WCAG 2.2**, so build to **WCAG 2.2 AA** now. For interface teams that means six new criteria on top of WCAG 2.1: focus not obscured, dragging alternatives, 24 px target size, consistent help, no redundant entry and accessible authentication.
+
+*This is a design and engineering guide, not legal advice. Check obligations for your business with a qualified adviser.*
+
+## Who the EAA covers
+
+The EAA applies to businesses that offer certain products and services to consumers in the EU. For digital teams, the main categories are:
+
+- **E-commerce:** any website or app that sells products or services to consumers.
+- **Consumer banking services.**
+- **E-books** and the software used to read them.
+- **Passenger transport services:** websites, apps, ticketing and real-time travel information.
+- **Electronic communication services** and access to audiovisual media services.
+
+Location doesn't matter: a company outside the EU selling to EU consumers is in scope. **Microenterprises** providing services (fewer than 10 employees and annual turnover or balance sheet of €2 million or less) are exempt from the service requirements.
+
+## Where enforcement stands in late 2026
+
+Enforcement is national: each EU country has its own law and regulator, and penalties vary widely between countries. So far, regulators have mostly issued **orders to fix** problems within a deadline rather than headline fines. The best-known case is in France, where a court ordered a major retailer to make its e-commerce site and app accessible within six months.
+
+The direction is clear: complaints and audits are increasing, and "we're working on it" is not a defence for a product launched after June 2025.
+
+## The standard: EN 301 549 and WCAG 2.2
+
+The EAA describes requirements in general terms. In practice, conformance is measured against **EN 301 549**, the European standard for ICT accessibility, whose web section is WCAG at level AA.
+
+- **v3.2.1** references **WCAG 2.1 AA** and is what most audits use today.
+- **v4.1.1**, published in 2026, moves to **WCAG 2.2 AA** and becomes the reference once it's cited in the EU's Official Journal.
+
+Building to WCAG 2.2 AA now covers both versions. WCAG 2.2 is backwards compatible with 2.1 (apart from removing 4.1.1 Parsing, which is obsolete).
+
+## The six new WCAG 2.2 AA criteria, in design terms
+
+### 2.4.11 Focus Not Obscured (Minimum)
+
+When an element receives keyboard focus, it must not be entirely hidden by other content. The usual culprits are **sticky headers, cookie banners and chat widgets** covering the focused field.
+
+**Fix:** use `scroll-padding-top` equal to your sticky header's height, and make sure banners don't cover the page while people navigate.
+
+### 2.5.7 Dragging Movements
+
+Anything that needs dragging must also work with a single pointer without dragging: sliders, kanban boards, reorderable lists, map panning, range pickers.
+
+**Fix:** add buttons (move up and down, plus and minus), click-to-place, or a text input alongside every drag interaction.
+
+### 2.5.8 Target Size (Minimum)
+
+Pointer targets must be at least **24 × 24 CSS pixels**, or have enough spacing that a 24 px circle centred on each doesn't overlap another target. Inline links in text are exempt.
+
+**Fix:** audit icon buttons, close buttons, pagination, table row actions and tag "×" buttons. 24 px is the minimum; 44 px remains a better default on touch.
+
+### 3.2.6 Consistent Help
+
+If you offer help (contact details, a chat, a help link, a FAQ), it must appear in the **same relative place** on every page where it appears.
+
+**Fix:** put help in the global layout, not wherever there was room.
+
+### 3.3.7 Redundant Entry
+
+Don't make people re-enter information they already gave in the same process, unless it's essential (like confirming a password) or for security.
+
+**Fix:** auto-fill or offer "Same as shipping address", and carry data between checkout steps.
+
+### 3.3.8 Accessible Authentication (Minimum)
+
+Logging in must not depend on a **cognitive function test** (remembering a password, solving a puzzle, transcribing characters) unless there's an alternative or help.
+
+**Fix:** allow password managers and paste in password and code fields, support passkeys or email links, and avoid puzzle CAPTCHAs. Supporting passkeys is the cleanest way to meet this.
+
+## Component-by-component checklist
+
+### Global
+
+- [ ] Every page has a unique, descriptive `<title>` and one `<h1>`
+- [ ] Skip link to main content
+- [ ] Visible focus style on every interactive element, with at least 3:1 contrast
+- [ ] Focused elements never hidden behind sticky headers or banners
+- [ ] Help link or contact in the same place on every page
+- [ ] Respects `prefers-reduced-motion`; no auto-playing motion longer than 5 seconds without a pause control
+
+### Color and type
+
+- [ ] Body text contrast at least 4.5:1, large text 3:1
+- [ ] UI component boundaries and icons at least 3:1
+- [ ] Color never the only way to convey meaning (errors, statuses, chart series)
+- [ ] Text resizes to 200% without loss; layout works at 320 px wide (reflow)
+
+### Buttons, links and icons
+
+- [ ] Actions are buttons, navigation is links
+- [ ] Icon-only buttons have an accessible name
+- [ ] Targets at least 24 × 24 px
+- [ ] Link text makes sense out of context (no "click here")
+
+### Forms
+
+- [ ] Every field has a visible label, not just a placeholder
+- [ ] Required fields and formats explained before submission
+- [ ] Errors identified in text, next to the field, with a suggestion
+- [ ] No re-entering data already provided
+- [ ] Paste and password managers allowed; passkeys or email links supported
+- [ ] `autocomplete` attributes on personal data fields
+
+### Menus, dialogs and popovers
+
+- [ ] Fully keyboard operable; Escape closes; focus returns to the trigger
+- [ ] Modals use `<dialog>` with `showModal()` (built-in focus handling)
+- [ ] Hover content is dismissible, hoverable and persistent (1.4.13)
+
+### Media and images
+
+- [ ] Meaningful images have alt text; decorative images use `alt=""`
+- [ ] Videos have captions; audio has transcripts
+- [ ] No content flashes more than three times a second
+
+### Drag, gestures and motion
+
+- [ ] Every drag interaction has a single-pointer alternative
+- [ ] Multi-finger and path-based gestures have simple alternatives
+- [ ] Motion-triggered features (shake, tilt) can be disabled
+
+## How to make it stick
+
+- **Fix it in the design system.** One accessible button, field and dialog fixes hundreds of screens. Native elements help: a real `select` is now [fully stylable](/blog/customizable-select-base-select-guide).
+- **Annotate designs.** Add focus order, labels and alt text to design handoff, not just visuals.
+- **Test with a keyboard every sprint.** Tab through each new flow before shipping.
+- **Run automated checks in CI.** Tools like axe catch roughly a third to a half of issues. The rest needs human testing.
+- **Publish an accessibility statement** with a contact for reporting problems. Several national laws require one.
+
+A bonus: almost every item above also makes your product easier for [AI agents to use](/blog/designing-websites-for-ai-agents), which is quickly becoming a second reason to do this well.
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="Does the European Accessibility Act apply to companies outside the EU?">
+
+Yes, if they offer covered products or services to consumers in the EU. Location of the company doesn't matter; the market does.
+
+</FaqItem>
+
+<FaqItem q="Is WCAG 2.2 required under the EAA?">
+
+The EAA itself doesn't name a WCAG version. Conformance is measured against EN 301 549, whose current cited version references WCAG 2.1 AA, and whose new version moves to WCAG 2.2 AA. Building to 2.2 AA covers both.
+
+</FaqItem>
+
+<FaqItem q="What are the new criteria in WCAG 2.2 level AA?">
+
+Focus Not Obscured (Minimum), Dragging Movements, Target Size (Minimum), Consistent Help, Redundant Entry and Accessible Authentication (Minimum).
+
+</FaqItem>
+
+<FaqItem q="What is the minimum touch target size in WCAG 2.2?">
+
+24 × 24 CSS pixels at level AA, or enough spacing around smaller targets. The AAA level asks for 44 × 44.
+
+</FaqItem>
+
+<FaqItem q="Are small businesses exempt from the EAA?">
+
+Microenterprises providing services, with fewer than 10 employees and €2 million or less in annual turnover or balance sheet total, are exempt from the service requirements.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="resources" posts={["designing-websites-for-ai-agents", "customizable-select-base-select-guide"]} />

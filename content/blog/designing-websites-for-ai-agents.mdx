@@ -1,0 +1,148 @@
+---
+title: "Agent Experience (AX): How to Design Websites AI Agents Can Actually Use"
+description: "AI agents now browse, compare and buy on people's behalf. How to design interfaces agents can read and operate: semantic HTML, the accessibility tree, stable labels, llms.txt, Markdown versions and WebMCP tools."
+excerpt: "Your next visitor might not have eyes. What agent experience (AX) means for interface design, and the concrete changes that make a site usable by AI agents and humans alike."
+date: "2026-11-18"
+category: "Design"
+tags: ["AI Agents", "AX", "WebMCP", "Accessibility", "llms.txt", "Future of UX"]
+coverImage: "/blogs/designing-websites-for-ai-agents.png"
+---
+
+**Short answer:** AI agents use your site in two ways. Browser agents **read the accessibility tree and screenshots** and click like a person; tool-using agents **call structured actions** if you expose them (through WebMCP or an API). To serve both: use real semantic HTML, give every control a stable visible label, keep critical flows free of hover-only and drag-only steps, publish plain-text maps (`llms.txt`, Markdown versions of key pages), and, for important actions, expose **WebMCP tools**, which entered a public Chrome origin trial in 2026. Almost every one of these changes also makes the site more accessible to people.
+
+## A new kind of user
+
+For twenty years, UX has assumed a person looking at a screen. That's no longer the whole audience. People now ask assistants to "find a flight under $300 and book it", "compare these three CRMs" or "cancel my subscription". The assistant opens a browser, reads your page and acts.
+
+**Agent experience (AX)** is the practice of designing so that those agents succeed. It isn't a separate site for robots. It's mostly good, boring interface engineering that many sites skipped.
+
+## How agents actually see your page
+
+Most browser agents combine two inputs:
+
+1. **The accessibility tree.** The same structure screen readers use: roles (button, link, textbox), names ("Add to cart"), states (checked, expanded) and relationships. This is the agent's map of what can be done.
+2. **Screenshots.** Used to understand layout and confirm what happened.
+
+If a "button" is a `div` with a click handler and no role, it barely exists in the accessibility tree. A human sees it; an agent may not. The fastest AX audit is the one you already have: open the accessibility pane in DevTools and see what your page looks like without pixels.
+
+## Design rules for agent-usable interfaces
+
+### Use real elements
+
+`<button>` for actions, `<a href>` for navigation, `<form>` with `<label>`ed inputs, `<select>` instead of a custom dropdown (it's [finally stylable](/blog/customizable-select-base-select-guide)), `<dialog>` for modals. Native elements come with roles, names, states and keyboard support.
+
+### Label everything, visibly and consistently
+
+An agent told to "change the plan" looks for something called "plan". Icon-only buttons need an accessible name. Better still, show text. Use the **same words** for the same action across the site; "Upgrade", "Change plan" and "Billing" for one feature confuse agents as much as people.
+
+### Avoid interactions agents struggle with
+
+- **Hover-only content.** If price details only appear on hover, an agent may never find them.
+- **Drag-only controls.** Provide a click or input alternative. WCAG 2.2 already requires this (success criterion 2.5.7).
+- **Infinite scroll without pagination.** Give lists real URLs per page.
+- **Content hidden behind animations** that only finish after scrolling.
+- **Custom canvas UIs** for core tasks.
+
+### Make state explicit
+
+Agents need to know whether something worked. Show confirmations as text ("Added to cart, 2 items"), use `aria-live` regions for async updates, and reflect state in the URL where you can (filters, sort order, selected tab). A URL is an instruction an agent can repeat.
+
+### Write error messages that say what to do
+
+"Invalid input" stops an agent. "Enter a date after 18 November 2026" lets it recover.
+
+### Put the important facts in text
+
+Prices, availability, sizes, dimensions, policies. If it's only inside an image, it's invisible to tools that read the DOM and expensive for tools that read pixels.
+
+## Give agents a map: llms.txt and Markdown
+
+Two lightweight conventions help agents find content without crawling everything:
+
+- **`/llms.txt`**: a plain-text index of your site's important pages with one-line descriptions. It carries no ranking weight in Google; it simply saves an agent time. UIArchives publishes one, generated from the same data as the pages, so it never goes stale.
+- **Markdown versions of key pages**: documentation sites increasingly serve `page.md` alongside `page.html`. Markdown is far cheaper for a model to read than full HTML with navigation, scripts and footers.
+
+## Give agents tools: WebMCP
+
+The bigger shift is **WebMCP**: a proposed browser API that lets a page register **tools**, typed functions with a name, description and input schema, that an in-browser agent can call directly instead of clicking through the UI.
+
+```js
+const ctx = document.modelContext ?? navigator.modelContext;
+
+ctx?.registerTool({
+  name: "search_flights",
+  description: "Search flights between two airports on a date.",
+  inputSchema: {
+    type: "object",
+    properties: {
+      from: { type: "string", description: "IATA code, e.g. BOM" },
+      to: { type: "string", description: "IATA code, e.g. NRT" },
+      date: { type: "string", format: "date" }
+    },
+    required: ["from", "to", "date"]
+  },
+  async execute({ from, to, date }) {
+    const results = await searchFlights(from, to, date);
+    renderResults(results); // keep the visible UI in sync
+    return { content: [{ type: "text", text: JSON.stringify(results) }] };
+  }
+});
+```
+
+Where it stands in late 2026: Chrome shipped WebMCP behind a flag in early 2026 and opened a **public origin trial in Chrome 149**. The API location has already moved (from `navigator.modelContext` to `document.modelContext` in the July 2026 draft), which is exactly why the snippet above feature-detects both. Treat it as an experiment: valuable to prototype, not something to depend on.
+
+Design principles for WebMCP tools:
+
+- **Mirror real user actions.** A tool should do what a button already does, with the same permissions and confirmations.
+- **Keep the UI in sync.** When a tool runs, the page should visibly update so the person watching can follow.
+- **Confirm anything irreversible.** Payments, deletions and messages should still ask the human.
+- **Write descriptions for a model.** Say what the tool does, what each field means and what it returns.
+
+## AX and accessibility are the same project
+
+Nearly every AX recommendation above is also a WCAG requirement: names and roles (4.1.2), labels (3.3.2), non-drag alternatives (2.5.7), status messages (4.1.3). If you're working toward the [European Accessibility Act](/blog/european-accessibility-act-wcag-22-ui-checklist), you're already most of the way to being agent-ready.
+
+## AX checklist
+
+- [ ] Actions are `<button>`, navigation is `<a href>`
+- [ ] Every input has a visible `<label>`
+- [ ] Icon buttons have accessible names
+- [ ] Same action, same words, everywhere
+- [ ] No hover-only or drag-only critical paths
+- [ ] Filters, tabs and pages reflected in the URL
+- [ ] Confirmations and errors shown as text, announced with `aria-live`
+- [ ] Prices and key facts in HTML, not images
+- [ ] `/llms.txt` published and generated from real data
+- [ ] WebMCP tools prototyped for your top one or two tasks
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="What is agent experience (AX)?">
+
+Agent experience is designing websites and products so AI agents acting for a person can understand and operate them: finding information, filling forms and completing tasks reliably.
+
+</FaqItem>
+
+<FaqItem q="Do AI agents use the accessibility tree?">
+
+Most browser agents rely heavily on it, along with screenshots. Roles, names and states in the accessibility tree tell an agent what each element is and what it can do.
+
+</FaqItem>
+
+<FaqItem q="What is WebMCP?">
+
+WebMCP is a proposed web API that lets a page register tools, functions with a name, description and input schema, that an AI agent in the browser can call directly. Chrome is testing it in a public origin trial in 2026, and the API is still changing.
+
+</FaqItem>
+
+<FaqItem q="Does llms.txt help SEO?">
+
+Not for Google rankings. It's a convenience for AI assistants that browse on a person's behalf, helping them find your important pages quickly.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="skills" posts={["designing-mcp-apps-chatgpt-claude", "european-accessibility-act-wcag-22-ui-checklist"]} />

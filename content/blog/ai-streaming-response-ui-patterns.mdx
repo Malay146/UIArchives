@@ -1,0 +1,142 @@
+---
+title: "The 8 States of an AI Response: UI Patterns for Streaming LLM Output"
+description: "Most AI interfaces design two states: loading and done. Real model responses have eight. A pattern guide for thinking, tool use, streaming text, partial results, stopping, errors, regeneration and citations."
+excerpt: "Loading and done isn't enough. The eight states every AI response goes through, and the interface patterns that make streaming output feel fast, honest and in control."
+date: "2026-11-16"
+category: "Design"
+tags: ["AI UX", "Streaming", "LLM", "Conversational UI", "Loading States", "Product Design"]
+coverImage: "/blogs/ai-streaming-response-ui-patterns.png"
+---
+
+**Short answer:** an AI response isn't "loading, then done". It moves through up to eight states: **submitted, thinking, using tools, streaming, paused or awaiting input, complete, stopped, and failed**. Design each one explicitly. Show something within about a second, label what the model is doing instead of showing a generic spinner, keep a visible **Stop** button while it streams, don't yank the scroll position, keep partial output when things fail, and render structure (code, tables, citations) progressively instead of reflowing it at the end.
+
+## Why AI responses need their own states
+
+Traditional loading states assume a request takes a moment and returns a complete result. Model responses are different: they can take 2 seconds or 2 minutes, arrive token by token, call tools midway, ask a question, or fail halfway through a paragraph.
+
+Interfaces that only design "spinner" and "answer" feel broken in every case in between: a spinner for 40 seconds feels frozen, text that suddenly reflows into a table feels glitchy, and a timeout that wipes half an answer feels like data loss.
+
+## The eight states
+
+| State | What the person needs to know | Pattern |
+| --- | --- | --- |
+| 1. Submitted | "It got my message" | Echo the message instantly, disable double-send |
+| 2. Thinking | "It's working, not stuck" | Labelled status, optional expandable reasoning summary |
+| 3. Using tools | "What is it doing right now?" | Step list: "Searching flights", "Reading 3 pages" |
+| 4. Streaming | "It's answering" | Progressive text, stable layout, Stop button |
+| 5. Awaiting input | "It needs me" | Clear question, inline choices, paused indicator |
+| 6. Complete | "It's finished, what now?" | Actions: copy, retry, edit, feedback |
+| 7. Stopped | "I stopped it, what's kept?" | Keep partial text, mark it as stopped, offer continue |
+| 8. Failed | "Something broke, can I recover?" | Keep partial text, explain plainly, one-click retry |
+
+## 1. Submitted: respond in under 100 ms
+
+The person's message should appear in the thread immediately, before any network round trip. Disable the send button (not the text box) to prevent duplicates, and clear the input so they can start typing a follow-up.
+
+## 2. Thinking: replace the spinner with a sentence
+
+A spinner says "something is happening". A label says *what*. "Thinking…" is fine for a few seconds; after that, add elapsed time ("Thinking · 12s") so a long wait reads as deliberate rather than stuck.
+
+If your model exposes reasoning summaries, show them collapsed by default. Most people want the answer; some want to check the work. Let them choose.
+
+## 3. Using tools: show the plan as it unfolds
+
+Agentic responses can search, read files, run code and call APIs. Show each step as a compact line that updates in place:
+
+- ✓ Searched "flights BOM to NRT, 12 Dec"
+- ✓ Compared 14 results
+- … Checking baggage rules for 3 airlines
+
+This is the single biggest trust-builder in agent UIs. It turns a long wait into visible progress and makes mistakes easy to spot ("why is it searching for the wrong date?"). Let people expand a step to see inputs and outputs.
+
+## 4. Streaming: keep the layout still
+
+Streaming text feels fast, but only if the page stays calm while it arrives.
+
+- **Render Markdown progressively.** Use a streaming-aware parser so a half-written table or code block renders as one, instead of showing raw pipes and backticks that snap into place at the end.
+- **Reserve space for known structures.** When a code block starts, give it its frame immediately.
+- **Don't auto-scroll if the person scrolled up.** Follow the stream only when they're already at the bottom. Show a "Jump to latest" pill otherwise.
+- **Keep Stop visible** in the same place the Send button was, for the whole stream.
+- **Smooth the token rate** slightly. Bursty chunks of text read as jitter; a small buffer that releases text at an even pace reads as speech.
+- **Avoid a typewriter cursor for long answers.** It draws the eye to the end of the text while the person is still reading the start.
+
+## 5. Awaiting input: make it obvious the ball is in their court
+
+When the model needs a decision ("Which of these accounts?"), the response should stop looking like it's still working. Remove activity indicators, put the question at the end of the message, and offer **inline choices** (buttons or a small form) for common answers, while still allowing a typed reply.
+
+For consequential actions, like sending an email or making a payment, show exactly what will happen and require an explicit confirmation. Agents that act without a clear approval step lose trust quickly.
+
+## 6. Complete: offer the next move
+
+When the response finishes, reveal the actions that make sense now: copy, regenerate, edit the prompt, give feedback, and any follow-ups specific to the content (export a table, open a document). Keep them quiet until hover or focus on desktop so the thread stays readable.
+
+## 7. Stopped: never throw away what was written
+
+When someone presses Stop, keep everything generated so far, mark it clearly ("Stopped"), and offer **Continue**. People stop responses for many reasons: they already have what they need, they see it going in the wrong direction, or they want to edit their prompt. None of those mean "delete it".
+
+## 8. Failed: preserve, explain, retry
+
+Failures in AI products are common: timeouts, rate limits, network drops, safety refusals, tool errors. The rules:
+
+- **Keep partial output.** Losing 300 words of a good answer is the most frustrating failure there is.
+- **Say what happened in plain language.** "The connection dropped" or "This took too long", not "Error 524".
+- **Make retry one click** and keep the person's original message intact.
+- **Distinguish refusals from errors.** A refusal is an answer; present it as a message, not a red error state.
+
+## Patterns for longer, agentic work
+
+As responses stretch from seconds to minutes, three more patterns matter:
+
+- **Background runs.** Let people leave and come back. Show the run's status in the sidebar and notify on completion.
+- **Partial regeneration.** Let people select one paragraph or one table row and regenerate just that.
+- **Citations inline, sources at the end.** Mark claims with small numbered references and list sources below, so people can verify without leaving the flow.
+
+## Accessibility for streaming text
+
+- Don't put the entire streaming response in an `aria-live` region. Screen readers will either repeat constantly or announce nothing useful. Announce status changes instead ("Response started", "Response complete") and let people read the result when it's done.
+- Keep the Stop button keyboard-reachable without tabbing through the whole thread.
+- Respect `prefers-reduced-motion` for typing effects and shimmering placeholders.
+
+## Checklist
+
+- [ ] Message echoes instantly, send disabled while busy
+- [ ] Status labels say what's happening, with elapsed time on long waits
+- [ ] Tool steps visible and expandable
+- [ ] Markdown renders progressively, layout doesn't jump
+- [ ] Scroll follows only when already at the bottom
+- [ ] Stop always visible while streaming
+- [ ] Stopped and failed responses keep partial output
+- [ ] Errors explained plainly with one-click retry
+- [ ] Status changes announced to screen readers
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="Should AI responses stream or appear all at once?">
+
+Stream long or slow responses, and anything involving tool use or multiple steps. Short, predictable outputs (a title, a classification) often feel better appearing at once.
+
+</FaqItem>
+
+<FaqItem q="How do I stop the chat from jumping while text streams?">
+
+Only auto-scroll when the person is already at the bottom, render Markdown with a streaming-aware parser, and reserve space for code blocks and tables as soon as they begin.
+
+</FaqItem>
+
+<FaqItem q="What should happen when an AI response fails halfway?">
+
+Keep the partial text, explain the failure in plain language, and offer a one-click retry that keeps the original prompt.
+
+</FaqItem>
+
+<FaqItem q="Should I show the model's reasoning?">
+
+Show a short, collapsed summary by default. It builds trust for people who want to check the work without slowing down everyone else.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="designs" posts={["designing-mcp-apps-chatgpt-claude", "designing-websites-for-ai-agents"]} />

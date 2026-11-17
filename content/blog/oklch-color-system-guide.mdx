@@ -1,0 +1,190 @@
+---
+title: "Build a Future-Proof Color System with OKLCH, color-mix() and contrast-color()"
+description: "How to build a UI color palette in OKLCH: why HSL fails, picking lightness steps, deriving hover and dark-mode colors with relative color syntax, automatic text color with contrast-color(), and P3 colors with safe fallbacks."
+excerpt: "HSL lies about lightness. OKLCH doesn't. A step-by-step way to build palettes, states and dark mode with modern CSS color, now that contrast-color() is Baseline."
+date: "2026-11-17"
+category: "Design"
+tags: ["Color", "OKLCH", "CSS", "Design Systems", "Dark Mode", "Accessibility"]
+coverImage: "/blogs/oklch-color-system-guide.png"
+---
+
+**Short answer:** define your palette in **OKLCH** (`oklch(L C H)`), where L is perceived lightness, C is chroma (colourfulness) and H is hue. Keep lightness steps consistent across hues, derive hover, pressed and subtle variants with **relative color syntax** (`oklch(from var(--brand) calc(l - 0.08) c h)`), mix tints with **`color-mix()`**, and let **`contrast-color()`** pick black or white text. All of this works in every current browser in 2026, and OKLCH can reach the wider P3 colors that modern screens show.
+
+## Why HSL palettes always look uneven
+
+Take `hsl(60 100% 50%)` (yellow) and `hsl(240 100% 50%)` (blue). Both say 50% lightness. Yellow looks almost white; blue looks almost black. HSL's lightness is a math convenience, not how eyes work.
+
+That's why palettes built by stepping HSL lightness feel uneven: your yellow-500 and blue-500 don't sit at the same visual weight, and text contrast on each is wildly different. Designers fix it by hand, swatch by swatch.
+
+OKLCH is built on a perceptual model. **Equal L means equal perceived lightness** across hues. Set every 500 shade to `L = 0.62` and they sit on the same visual level. Contrast becomes predictable, and so does dark mode.
+
+## Reading an OKLCH value
+
+```css
+color: oklch(0.62 0.19 259);
+/*            L    C    H   */
+```
+
+- **L (0 to 1):** lightness. 0 is black, 1 is white.
+- **C (0 to about 0.37):** chroma. 0 is grey. How high you can go depends on hue and lightness.
+- **H (0 to 360):** hue angle. Roughly 25 red, 70 orange, 100 yellow, 145 green, 250 blue, 300 purple.
+
+## Step 1: Pick one lightness scale for every hue
+
+Choose your steps once and reuse them for every color:
+
+| Step | L | Typical use |
+| --- | --- | --- |
+| 50 | 0.97 | Subtle backgrounds |
+| 100 | 0.94 | Hover backgrounds |
+| 200 | 0.88 | Borders |
+| 300 | 0.80 | Disabled fills |
+| 400 | 0.71 | Icons on dark surfaces |
+| 500 | 0.62 | Brand fill |
+| 600 | 0.54 | Hover on fill |
+| 700 | 0.46 | Text on light |
+| 800 | 0.38 | Pressed |
+| 900 | 0.30 | Strong text |
+
+Then only vary **hue** between your color families, and lower **chroma** at the very light and very dark ends (colors get muddy or impossible if chroma stays high near white or black).
+
+```css
+:root {
+  --blue-500: oklch(0.62 0.19 259);
+  --green-500: oklch(0.62 0.16 150);
+  --red-500: oklch(0.62 0.21 25);
+}
+```
+
+Because the L values match, text that passes contrast on `--blue-500` will very likely pass on `--green-500` too. Still check: OKLCH lightness is close to, but not identical to, the luminance WCAG uses.
+
+## Step 2: Derive states with relative color syntax
+
+Relative color syntax reads a color's channels and lets you change them. It works in all major browsers.
+
+```css
+.button {
+  --bg: var(--blue-500);
+  background: var(--bg);
+}
+
+.button:hover {
+  background: oklch(from var(--bg) calc(l - 0.06) c h);
+}
+
+.button:active {
+  background: oklch(from var(--bg) calc(l - 0.12) c h);
+}
+
+.button:disabled {
+  background: oklch(from var(--bg) l calc(c * 0.3) h);
+}
+```
+
+One base color now drives every state, for every variant. Change `--bg` and hover, pressed and disabled follow.
+
+## Step 3: Tints and overlays with color-mix() and alpha()
+
+```css
+.badge {
+  background: color-mix(in oklch, var(--blue-500) 12%, transparent);
+  color: var(--blue-700);
+}
+```
+
+Mixing **in oklch** keeps tints from going grey in the middle, which happens when mixing in sRGB. The newer `alpha()` function, Baseline since September 2026, changes only the opacity of a color variable without restating its channels.
+
+## Step 4: Automatic text color with contrast-color()
+
+`contrast-color()` returns black or white, whichever contrasts more with the color you give it. It shipped in Chrome 147, Firefox 146 and Safari 26, so it's Baseline in 2026.
+
+```css
+.tag {
+  background: var(--tag-color);
+  color: contrast-color(var(--tag-color));
+}
+```
+
+This is ideal for user-chosen colors: labels, avatars, calendar events. Two cautions:
+
+- It only picks between black and white. For brand-coloured text, choose it yourself.
+- Higher contrast isn't always enough contrast. Mid-tone backgrounds can fail WCAG with either black or white. Avoid mid-lightness backgrounds (around L 0.55 to 0.65) for small text.
+
+## Step 5: Dark mode without a second palette
+
+Don't invert. Map semantic tokens to different steps, and use `light-dark()` to keep both values side by side:
+
+```css
+:root {
+  color-scheme: light dark;
+  --surface: light-dark(oklch(0.99 0 0), oklch(0.18 0.01 259));
+  --text: light-dark(oklch(0.22 0.02 259), oklch(0.95 0.01 259));
+  --accent: light-dark(oklch(0.54 0.19 259), oklch(0.72 0.15 259));
+}
+```
+
+Three rules for dark mode in OKLCH:
+
+- **Raise accent lightness** (about +0.15) so brand colors don't sink into the background.
+- **Lower chroma slightly.** Saturated colors vibrate on dark surfaces.
+- **Tint your neutrals.** A dark grey with a hint of brand hue (chroma 0.01) feels designed; pure grey feels unfinished.
+
+## Step 6: Use P3 colors safely
+
+Most phones and laptops now show Display P3, which includes more vivid greens, reds and oranges than sRGB. OKLCH can express those colors directly, by raising chroma beyond the sRGB limit. Browsers on sRGB screens map them back into range automatically.
+
+If you want strict control, pair them with a media query:
+
+```css
+.cta { background: oklch(0.65 0.2 145); }
+
+@media (color-gamut: p3) {
+  .cta { background: oklch(0.65 0.28 145); }
+}
+```
+
+## Store it as tokens
+
+A palette is only future-proof if it's written down once. The [DTCG 2025.10 color module](/blog/design-tokens-w3c-spec-guide) stores colors with an explicit color space, including OKLCH, so the same values flow into Figma, CSS, iOS and Android.
+
+## OKLCH palette checklist
+
+- [ ] One shared lightness scale for every hue
+- [ ] Chroma tapered near white and black
+- [ ] States derived with relative color syntax, not hand-picked hex values
+- [ ] Tints mixed `in oklch`
+- [ ] `contrast-color()` for user-generated colors, manual checks for everything else
+- [ ] Dark mode via semantic tokens and `light-dark()`, not inversion
+- [ ] Every text pair checked against WCAG 2.2 AA (4.5:1 for body text)
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="Is OKLCH supported in all browsers?">
+
+Yes. oklch() has worked in Chrome, Edge, Firefox and Safari since 2023, and relative color syntax is supported in all of them too.
+
+</FaqItem>
+
+<FaqItem q="What is the difference between OKLCH and HSL?">
+
+Both describe color by lightness, colourfulness and hue, but OKLCH's lightness matches human perception. Two colors with the same L in OKLCH look equally light; in HSL they often don't.
+
+</FaqItem>
+
+<FaqItem q="Does contrast-color() guarantee WCAG compliance?">
+
+No. It picks whichever of black or white has more contrast, but for some mid-tone backgrounds neither reaches 4.5:1. Avoid mid-lightness backgrounds for small text, and test.
+
+</FaqItem>
+
+<FaqItem q="Should I convert my existing hex palette to OKLCH?">
+
+Convert it, then normalise the lightness steps. Simply converting keeps the old inconsistencies; the benefit comes from giving every hue the same L scale.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="resources" posts={["design-tokens-w3c-spec-guide", "why-ai-generated-websites-look-the-same"]} />

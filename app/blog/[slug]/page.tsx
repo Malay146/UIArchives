@@ -184,6 +184,27 @@ export default async function PostPage({ params }: PostPageProps) {
     articleSection: category,
   };
 
+  // FAQPage JSON-LD, read from the post's <FaqItem q="…">answer</FaqItem> blocks.
+  const faqs = [...post.content.matchAll(/<FaqItem\s+q="([^"]+)"[^>]*>([\s\S]*?)<\/FaqItem>/g)].map((m) => ({
+    q: m[1],
+    a: m[2]
+      .replace(/\[([^\]]+)\]\([^)]+\)/g, "$1")
+      .replace(/[`*_]/g, "")
+      .replace(/\s+/g, " ")
+      .trim(),
+  }));
+  const faqJsonLd = faqs.length
+    ? {
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faqs.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
+      }
+    : null;
+
   // Breadcrumb JSON-LD
   const breadcrumbJsonLd = {
     "@context": "https://schema.org",
@@ -220,6 +241,12 @@ export default async function PostPage({ params }: PostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
+      {faqJsonLd && (
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd).replace(/</g, "\\u003c") }}
+        />
+      )}
       <article className="mx-auto max-w-[680px] px-4 pt-12 sm:px-6 sm:pt-16">
         <Link
           href="/blog"

@@ -1,0 +1,130 @@
+---
+title: "Why AI-Generated Websites All Look the Same (and How to Make Yours Not)"
+description: "Purple gradients, Inter, three feature cards and a glowing hero. Why AI coding tools converge on the same design, the tells that give it away, and a practical system for getting distinctive UI out of AI."
+excerpt: "AI tools design by average, so everything ends up looking like everything else. The tells, the reasons, and a repeatable way to give AI-built interfaces real taste."
+date: "2026-11-15"
+category: "Design"
+tags: ["AI Design", "Vibe Coding", "Design Taste", "Agent Skills", "Landing Pages", "Branding"]
+coverImage: "/blogs/why-ai-generated-websites-look-the-same.png"
+---
+
+**Short answer:** AI models generate the **most statistically likely** interface for a prompt, and the most likely interface is built from the most common defaults in their training data: Tailwind's indigo, the Inter font, a centred hero with a gradient, three feature cards and a pricing table. Without design constraints, you get the average of the internet. The fix isn't "make it less AI"; it's to **make the decisions the model would otherwise make for you**: real references, a defined type and color system, a layout idea, written design rules (tokens and skills), and a human editing pass.
+
+## The look you already recognise
+
+Spend a day on new product launches and you'll see the same site repeatedly:
+
+- An indigo-to-purple gradient, often glowing behind the hero
+- Inter or a similar neutral sans everywhere, at the same weights
+- A centred headline, a one-line subhead and two buttons
+- "Trusted by" logos in grey
+- Three cards with an icon, a bold title and two lines of text
+- Rounded-2xl cards with soft shadows on a near-white or near-black page
+- Emoji or generic line icons as feature illustrations
+- A testimonial carousel, a three-tier pricing table, an FAQ accordion
+- Copy that says "seamless", "supercharge" and "unlock"
+
+None of these are wrong on their own. Together, they signal "nobody decided anything here", and people have learned to read that signal.
+
+## Why it happens
+
+### Models predict the median
+
+A language model generates the most probable continuation. For "build a SaaS landing page", the most probable answer is a blend of the thousands of SaaS landing pages, templates and tutorials it learned from. Distinctive design is, by definition, unusual, so it's unlikely to come out unprompted.
+
+### Framework defaults became design defaults
+
+Years of tutorials, starter kits and component demos used the same defaults, such as Tailwind's indigo examples and Inter as the default font in design tools. Models absorbed those defaults as "what a website looks like".
+
+### Banning the cliché just moves it
+
+Telling a model "no purple gradients" doesn't produce taste; it produces the *next* most likely look, like warm cream with terracotta or black with acid green. Negative prompts swap one cliché for another.
+
+### Nobody made the decisions
+
+A designer's job is mostly decisions: what this brand feels like, what to emphasise, what to leave out. When a prompt doesn't make those decisions, the model fills them with defaults. The generic look is what unmade decisions look like.
+
+## How to get distinctive UI out of AI
+
+### 1. Start from references, not adjectives
+
+"Modern, clean and premium" describes every site. Instead, collect 5 to 10 real references for **specific qualities**: this site's type scale, that one's use of whitespace, a third's motion. Archives like [UIArchives](/), [design videos](/designs) and [OG images](/og-images) exist for exactly this. Show the model screenshots and say what to take from each.
+
+### 2. Decide type first
+
+Typography carries most of a site's personality. Choose a display face with character and a readable text face, then set a scale and stick to it. A distinctive serif headline or a tight grotesk at large sizes changes a page more than any color.
+
+### 3. Define a small, deliberate palette
+
+Pick one or two brand colors with intent, build neutral surfaces tinted with your hue, and write it all down as [OKLCH tokens](/blog/oklch-color-system-guide). A model following a defined palette can't drift back to indigo.
+
+### 4. Have a layout idea
+
+Generic pages stack centred sections. Give the page a structural idea: an editorial grid, a product-first hero with real UI, a long-form story, a dense index. Describe it explicitly ("left-aligned, 12-column grid, the product screenshot bleeds off the right edge").
+
+### 5. Use real content
+
+Placeholder copy produces placeholder design. Write the actual headline, use real product screenshots, real customer names and real numbers. Specific content forces specific layouts.
+
+### 6. Write your rules down for the agent
+
+The most effective fix in 2026 is giving AI tools a durable design brief:
+
+- **Design tokens** in a standard format, like the [W3C DTCG spec](/blog/design-tokens-w3c-spec-guide), so color, type and spacing come from your system.
+- **Agent skills**: reusable instruction files that teach a coding agent your taste, components and rules. Our [Skills archive](/skills) collects the best ones for UI and frontend craft.
+- **A "do and don't" list** with screenshots of good and bad output from your own product.
+
+### 7. Edit like a designer
+
+AI is excellent at the first 80%. The last 20%, where taste lives, is editing: remove a section, enlarge the one thing that matters, fix the rhythm of spacing, cut adjectives from copy, replace stock icons with something specific. Plan time for it.
+
+## A prompt structure that works
+
+```text
+Context: [what the product is, who it's for, the one action we want]
+References: [3–5 screenshots] — take the type scale from #1,
+  the editorial grid from #2, the restraint of #3.
+System: use tokens.json for every color, type size and spacing value.
+Layout: left-aligned, asymmetric hero; real product UI as the visual.
+Content: [actual headline, subhead, features, proof points]
+Rules: no gradients behind text, no icon-title-text card grids,
+  no more than one accent color per screen.
+```
+
+Notice that most of this is decisions, not adjectives. That's the point.
+
+## The bigger picture
+
+As AI makes competent UI nearly free, competence stops being a differentiator. What people will notice, and remember, is a point of view: a typeface choice, a layout idea, a tone of voice, a detail nobody asked for. The teams that win won't avoid AI; they'll feed it better decisions.
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="Why do AI-generated websites use purple gradients?">
+
+Models reproduce the most common patterns in their training data, and years of templates, tutorials and framework examples used indigo and purple gradients heavily. Without other instructions, that's the likeliest output.
+
+</FaqItem>
+
+<FaqItem q="How do I make an AI-built website look unique?">
+
+Make the design decisions yourself and give them to the model: references for specific qualities, a chosen typeface and scale, a defined palette as tokens, a layout idea, real content and written rules such as agent skills. Then edit the result by hand.
+
+</FaqItem>
+
+<FaqItem q="Does telling the AI to avoid clichés work?">
+
+Only partly. Banning one cliché usually produces the next most common look. Positive constraints, what to do, work much better than negative ones.
+
+</FaqItem>
+
+<FaqItem q="What are agent skills for design?">
+
+Reusable instruction files that teach an AI coding agent how to design and build in a particular style, with your components, rules and examples. They make results more consistent across sessions.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="designs" posts={["oklch-color-system-guide", "design-tokens-w3c-spec-guide"]} />

@@ -1,0 +1,142 @@
+---
+title: "The W3C Design Tokens Spec Is Stable: A Practical Guide to DTCG 2025.10"
+description: "The Design Tokens Community Group published its first stable spec, 2025.10. What the format looks like, how types, aliases, groups and themes work, and how to migrate your design system to it."
+excerpt: "Design tokens finally have a stable, vendor-neutral file format. What's in DTCG 2025.10, how to structure tokens that last, and a migration plan you can start this week."
+date: "2026-11-17"
+category: "Design"
+tags: ["Design Tokens", "Design Systems", "DTCG", "W3C", "Figma", "Theming"]
+coverImage: "/blogs/design-tokens-w3c-spec-guide.png"
+---
+
+**Short answer:** on 28 October 2025, the W3C Design Tokens Community Group (DTCG) published the [first stable version of the Design Tokens specification](https://www.w3.org/community/design-tokens/2025/10/28/design-tokens-specification-reaches-first-stable-version/), called **2025.10**. It defines one JSON format for tokens (`$value`, `$type`, `$description`), groups, aliases written as `{path.to.token}`, a set of standard types, a color module with modern color spaces, and a **resolver** module for themes like light and dark. If you store tokens in a tool-specific format today, migrating to DTCG is the most future-proof thing you can do for your design system.
+
+## What a design token actually is
+
+A design token is a named design decision: `color.text.primary`, `space.4`, `radius.card`. Instead of copying `#0F172A` into 400 places in Figma and code, you reference the name. Change the value once and every platform updates.
+
+The problem was never the idea. It was that every tool stored tokens differently. Figma variables, Tokens Studio, Style Dictionary and in-house scripts all had their own JSON. Switching tools meant rewriting everything. The DTCG spec is a shared file format, so design tools and code tools can exchange tokens without lossy conversions.
+
+## The three modules
+
+The 2025.10 release is split into [three technical reports](https://www.designtokens.org/tr/2025.10/):
+
+- **Format:** the file structure, token types, groups and aliases.
+- **Color:** how to write colors with explicit color spaces, including modern ones like Display P3 and OKLCH.
+- **Resolver:** how to combine token sets for different contexts, such as light and dark themes, brands or densities.
+
+## The format in one example
+
+```json
+{
+  "color": {
+    "$type": "color",
+    "blue": {
+      "500": {
+        "$value": { "colorSpace": "oklch", "components": [0.62, 0.19, 259] },
+        "$description": "Brand blue, the base of every interactive color."
+      }
+    },
+    "action": {
+      "primary": { "$value": "{color.blue.500}" }
+    }
+  },
+  "space": {
+    "$type": "dimension",
+    "2": { "$value": { "value": 8, "unit": "px" } },
+    "4": { "$value": { "value": 16, "unit": "px" } }
+  }
+}
+```
+
+The rules that matter:
+
+- **Every property the spec defines starts with `$`.** Anything without `$` is a group or token name. That's how tools tell structure from data.
+- **`$type` is inherited.** Set it on a group and every token inside gets it.
+- **Aliases use curly braces.** `{color.blue.500}` points to another token. This is how you build primitive → semantic layers.
+- **Values are structured.** Dimensions are `{ value, unit }` objects, and colors carry an explicit color space. No more parsing strings like `"16px"` and guessing.
+
+## Token types you get out of the box
+
+The format defines simple types (`color`, `dimension`, `fontFamily`, `fontWeight`, `duration`, `cubicBezier`, `number`) and composite types built from them (`shadow`, `border`, `transition`, `gradient`, `typography`, `strokeStyle`). Composite types are what make the format useful beyond colors: a single `typography` token can hold family, size, weight, line height and letter spacing, and each part can be an alias.
+
+## Structure tokens in three layers
+
+The spec doesn't force a naming scheme, but the structure that ages best has three layers:
+
+1. **Primitive tokens:** the raw palette. `color.blue.500`, `space.4`. Never used directly in components.
+2. **Semantic tokens:** the decision. `color.text.primary`, `color.surface.raised`, `color.action.primary`. These alias primitives, and they're what changes per theme.
+3. **Component tokens (optional):** `button.primary.background`. Only add these when a component genuinely needs to diverge.
+
+Name semantic tokens by **purpose, not appearance**. `color.text.danger` survives a rebrand; `color.red-text` doesn't.
+
+## Themes with the resolver module
+
+Before 2025.10, every team invented its own way to do light and dark mode in token files. The [resolver module](https://w3c.github.io/cg-reports/design-tokens/CG-FINAL-resolver-20251028/) standardises it: you describe token sets (base, light, dark, brand A, brand B) and how to combine them for a given context. A tool resolves the right set of values for "dark + brand B" without you hand-writing every combination.
+
+In practice that means your semantic layer can have one value per theme, while components only ever reference `color.text.primary`.
+
+## Turning tokens into CSS
+
+Your build tool reads the DTCG file and outputs platform code. For the web, that's custom properties:
+
+```css
+:root {
+  --color-blue-500: oklch(0.62 0.19 259);
+  --color-action-primary: var(--color-blue-500);
+  --space-4: 16px;
+}
+
+[data-theme="dark"] {
+  --color-text-primary: oklch(0.96 0.01 259);
+}
+```
+
+Keep aliases as `var()` references rather than flattening them. It keeps the generated CSS readable and lets you debug which primitive a semantic token points to in DevTools.
+
+## A migration plan
+
+1. **Inventory.** Export what you have, from Figma variables or your current JSON. Count how many tokens are actually used.
+2. **Delete before you convert.** Most systems carry dead tokens. Remove anything unused.
+3. **Rename into layers.** Split primitives from semantics. This is the slow part, and it's worth it.
+4. **Convert the syntax.** Add `$value` and `$type`, turn string dimensions into objects, give colors an explicit color space, and rewrite references as `{alias}` paths.
+5. **Validate.** Check that every alias resolves and every token has a type.
+6. **Generate code from the file**, never the other way round. The token file is the source of truth.
+7. **Version it.** Note which spec version you target (the date, `2025.10`, works as a version number).
+
+## Why this is future-proof
+
+- **Tool independence.** A stable, openly licensed format means you can change design tools or build tools without rewriting tokens.
+- **AI agents read it well.** Coding agents generate UI faster and more consistently when a design system is a typed, documented JSON file instead of tribal knowledge. A token file with `$description` on every semantic token is effectively a style guide an agent can follow. It's one of the best defences against [the generic AI-generated look](/blog/why-ai-generated-websites-look-the-same).
+- **Modern color is built in.** The color module supports wide-gamut spaces, so your palette won't need to be redone for P3 displays. See our [OKLCH color system guide](/blog/oklch-color-system-guide).
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="What is the DTCG design tokens format?">
+
+It's a JSON format for design tokens published by the W3C Design Tokens Community Group. Tokens have a $value and a $type, can be grouped, and can reference each other with `{alias}` paths. Version 2025.10 is the first stable release.
+
+</FaqItem>
+
+<FaqItem q="Is the design tokens spec a W3C standard?">
+
+It's a Community Group final report, not a W3C Recommendation. In practice it's the vendor-neutral format the design tool ecosystem is converging on, and it's openly licensed so any tool can implement it.
+
+</FaqItem>
+
+<FaqItem q="How do I handle dark mode with design tokens?">
+
+Keep primitives the same and give semantic tokens (like color.text.primary) a different value per theme. The 2025.10 resolver module standardises how tools combine base, light and dark token sets.
+
+</FaqItem>
+
+<FaqItem q="Should component tokens be part of my design system?">
+
+Only where a component needs to diverge from the semantic layer. Too many component tokens make a system hard to change; most components should use semantic tokens directly.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="resources" posts={["oklch-color-system-guide", "why-ai-generated-websites-look-the-same"]} />

@@ -1,0 +1,124 @@
+---
+title: "Designing MCP Apps: UI That Lives Inside ChatGPT and Claude"
+description: "A design guide to MCP Apps, the standard for interactive UI inside AI chats. Display modes, when to show UI at all, layout and theming inside a host, state, actions and the mistakes that make chat apps feel bolted on."
+excerpt: "Interfaces now render inside conversations. How MCP Apps work, when a widget beats plain text, and the design rules for cards, carousels and fullscreen views that feel native in any AI host."
+date: "2026-11-16"
+category: "Design"
+tags: ["MCP Apps", "ChatGPT Apps", "Claude", "Conversational UI", "AI", "Product Design"]
+coverImage: "/blogs/designing-mcp-apps-chatgpt-claude.png"
+---
+
+**Short answer:** MCP Apps is the official extension to the Model Context Protocol that lets a tool return **interactive HTML UI** that the AI host (Claude, ChatGPT and others) renders in a sandboxed iframe inside the conversation. Design for it like a guest, not a homeowner: show UI only when it beats text, default to a compact **inline** card, go **fullscreen** only for deep work, use the host's theme, keep one or two clear actions, and always return a text result the model can reason about.
+
+## What MCP Apps are
+
+The [Model Context Protocol](https://modelcontextprotocol.io) lets AI assistants call tools on external servers: search a catalogue, create a ticket, fetch analytics. Originally, results came back as text or JSON, and the assistant described them.
+
+**MCP Apps** (extension id `io.modelcontextprotocol/ui`) adds a UI layer. A tool declares a `ui://` resource containing HTML. When the tool runs, the host fetches that HTML and renders it in a sandboxed iframe in the chat. The app and the host talk over `postMessage` using JSON-RPC: the app can receive the tool's data, call more tools, and ask the host to send a follow-up message.
+
+It was published as the first official MCP extension in January 2026, and both Claude and ChatGPT support it. OpenAI's Apps SDK builds on the same standard and adds ChatGPT-specific extras. In practice, **one server can now show UI in several AI hosts**, which is why it's worth designing well.
+
+## The first question: should this be UI at all?
+
+Most tool results should be text. A model can summarise, compare and explain. UI earns its place when the person needs to:
+
+- **See** something hard to describe: a map, a chart, a product photo, a seat layout.
+- **Choose** between several similar options: hotels, plans, time slots.
+- **Manipulate** something directly: drag a range, edit a draft, reorder a list.
+- **Confirm** a consequential action with precise details: a payment, a booking, a deletion.
+
+If the answer is "the result is a number" or "the result is a paragraph", skip the widget.
+
+## The display modes
+
+Hosts offer a small set of surfaces. The [OpenAI design guidelines](https://developers.openai.com/apps-sdk/concepts/design-guidelines) describe them, and the MCP Apps spec defines the same idea of inline, fullscreen and picture-in-picture modes.
+
+| Mode | Use it for | Avoid |
+| --- | --- | --- |
+| Inline card | One result, a confirmation, a small set of actions | Deep navigation, tabs, long forms |
+| Inline carousel | Choosing between roughly 3 to 8 similar items, each with an image | Items without visuals, mixed item types |
+| Fullscreen | Maps, editors, detailed browsing, multi-step work | Simple results that fit in a card |
+| Picture-in-picture | Ongoing activity: a live session, a game, a timer | Static content, heavy controls |
+
+Request the mode you want, then **render for the mode the host actually grants**. Hosts can refuse a request, especially on mobile.
+
+## Design rules for inline cards
+
+- **One job per card.** If you need tabs, you probably need fullscreen or two tool calls.
+- **One or two primary actions.** "Book" and "See details" beats a toolbar.
+- **No internal scrolling.** Nested scroll areas inside a scrolling chat are miserable, especially on phones. Show fewer items instead.
+- **Fit the width you're given.** Chat columns are narrow and vary between hosts. Design mobile-first at roughly 360 px and let it stretch.
+- **Let the conversation do the explaining.** The model writes the context around your card. Don't repeat it inside.
+
+## Feel native: theme, type and spacing
+
+The fastest way to look bolted on is your own brand colors and font everywhere. Hosts pass context to the app, including the theme (light or dark) and, in some hosts, style variables. Use them:
+
+- **Follow the host's light or dark theme.** A white card in a dark chat is jarring.
+- **Use the system font stack** or the host's font. Keep your brand in the logo, imagery and one accent color.
+- **Match the host's radius and spacing** roughly. A card with sharp corners in a soft, rounded UI stands out for the wrong reasons.
+- **Avoid heavy shadows and gradients.** The chat already has its own surfaces.
+
+## State and actions
+
+The app runs in an iframe that may be re-rendered, scrolled away or shown again later in the conversation. Plan for that:
+
+- **Keep state in the tool result, not only in the iframe.** If the person refreshes, the card should still show the right thing.
+- **Make actions call tools.** A "Book" button should call a server tool with the chosen option, so the model and the log both know what happened.
+- **Tell the model what happened.** After an action, send a short follow-up message or update the context so the assistant can continue ("Booked seat 14C, confirmation ABC123").
+- **Confirm consequential actions inside the UI** with the exact details, not a vague "Are you sure?".
+
+## Always ship a text fallback
+
+Hosts that don't support MCP Apps (and the model itself) only see the tool's text output. Every tool that returns UI should also return a concise, structured text result. It's what lets the assistant answer "which one was cheapest?" without reading pixels, and it's what users of text-only hosts see.
+
+## Security and trust
+
+The iframe is sandboxed, and apps declare which external origins they need. Design within that:
+
+- **Declare the minimum** network origins your UI needs.
+- **Never collect passwords or card numbers in a widget** you don't control end to end. Hand off to your own site or the host's payment flow.
+- **Show who you are.** A small app name or logo in the card tells people which service is acting.
+
+## Common mistakes
+
+- **Rebuilding your whole app inside the chat.** The guidelines warn against copying a native app wholesale. Ship the one slice that benefits from being in a conversation.
+- **Widgets for everything.** UI on every response makes the chat feel like an ad-supported feed.
+- **Ignoring the model.** If your UI changes state silently, the assistant will contradict it in the next message.
+- **Desktop-only layouts.** A large share of chat usage is on phones.
+
+## Why this is worth learning now
+
+Interfaces are starting to appear wherever people already are, and in 2026 that increasingly means inside an assistant. The skills transfer directly: small, focused, well-labelled components with clear states, which is also what makes a site [usable by AI agents](/blog/designing-websites-for-ai-agents). Designers who can make a 360 px card do one job beautifully will be in demand for a long time.
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="What are MCP Apps?">
+
+MCP Apps is an official extension to the Model Context Protocol that lets tools return interactive HTML interfaces. AI hosts such as Claude and ChatGPT render them in a sandboxed iframe inside the conversation.
+
+</FaqItem>
+
+<FaqItem q="Are ChatGPT apps and MCP Apps the same thing?">
+
+ChatGPT supports the MCP Apps standard, and OpenAI's Apps SDK builds on it with some ChatGPT-only extras. A server built on the standard can show its UI in several hosts.
+
+</FaqItem>
+
+<FaqItem q="When should an MCP tool return UI instead of text?">
+
+When the person needs to see, choose, manipulate or confirm something that text handles poorly, like a map, a set of options with images, or a booking summary. Most results should stay as text.
+
+</FaqItem>
+
+<FaqItem q="How wide should an inline MCP App card be?">
+
+Design mobile-first, around 360 px, and let it stretch to the chat column. Avoid fixed widths and internal scrolling.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="skills" posts={["designing-websites-for-ai-agents", "ai-streaming-response-ui-patterns"]} />

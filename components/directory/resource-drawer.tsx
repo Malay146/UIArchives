@@ -193,21 +193,8 @@ function Details({
           rel="noopener noreferrer"
           tabIndex={-1}
           aria-hidden="true"
-          className="group/snap mt-8 block overflow-hidden rounded-lg bg-bg shadow-[0_0_0_1px_var(--line-strong),0_8px_24px_-12px_rgb(0_0_0/0.18)]"
+          className="mt-8 block overflow-hidden rounded-lg bg-bg shadow-[0_0_0_1px_var(--line-strong),0_8px_24px_-12px_rgb(0_0_0/0.18)]"
         >
-          {snap && (
-            <div className="flex h-8 items-center gap-3 border-b px-3">
-              <span className="flex gap-1.5" aria-hidden="true">
-                <span className="size-2 rounded-full bg-line-strong" />
-                <span className="size-2 rounded-full bg-line-strong" />
-                <span className="size-2 rounded-full bg-line-strong" />
-              </span>
-              <span className="flex-1 truncate text-center text-[12px] text-fg-3">
-                {href.replace(/^https?:\/\//, "").replace(/\/$/, "")}
-              </span>
-              <ArrowUpRightGlyph18 className="size-2.5 text-fg-3 transition-colors group-hover/snap:text-fg" />
-            </div>
-          )}
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             key={preview.src}

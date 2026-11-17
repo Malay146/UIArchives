@@ -1,0 +1,206 @@
+---
+title: "How to Style a Native Select with appearance: base-select (2026 Guide)"
+description: "A practical guide to customizable select: opting in with appearance: base-select, styling the button, picker and options, rich option content, positioning, animation, browser support and fallbacks."
+excerpt: "The real select element is finally fully stylable. How to opt in, style every part, put icons inside options, animate the picker and ship it safely while Firefox catches up."
+date: "2026-11-18"
+category: "Engineering"
+tags: ["CSS", "HTML", "Forms", "Customizable Select", "Accessibility", "Safari 27"]
+coverImage: "/blogs/customizable-select-base-select-guide.png"
+---
+
+**Short answer:** add `appearance: base-select` to both `select` and `::picker(select)`. The browser then lets you style the button, the dropdown, every option, the checkmark and the arrow, and even put images and rich HTML inside options, while keeping native keyboard support, screen reader semantics and form submission. It works in Chrome and Edge 135+ and in Safari 27. Firefox ignores it and shows a normal select, so it's safe to ship today.
+
+## Why this is a bigger deal than it looks
+
+The `select` element has been the most-rebuilt component on the web. Because it couldn't be styled, design systems shipped their own: a `div` button, a `ul` listbox, and hundreds of lines of JavaScript for keyboard handling, typeahead, scroll-into-view and ARIA. Most got at least one of those wrong.
+
+Customizable select means the native element now matches your design, and you get everything the browser already does well for free: typeahead, Escape to close, correct roles, mobile behaviour, autofill and form validation.
+
+## Step 1: Opt in
+
+```css
+select,
+::picker(select) {
+  appearance: base-select;
+}
+```
+
+Both selectors matter. Setting it only on `select` restyles the closed button but leaves the dropdown native. With both, you get a minimal, unstyled-but-functional base to design from.
+
+## Step 2: Know the parts
+
+Customizable select exposes new pieces you can target:
+
+| Selector | What it is |
+| --- | --- |
+| `select` | The closed button |
+| `select button` | An optional custom button you write yourself |
+| `selectedcontent` | Mirrors the chosen option inside your custom button |
+| `::picker(select)` | The dropdown surface |
+| `option` | Each item, now able to hold any phrasing content |
+| `option::checkmark` | The tick next to the selected option |
+| `::picker-icon` | The arrow on the closed button |
+| `select:open` | The select while its picker is open |
+
+## Step 3: Style the button and picker
+
+```css
+select {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg);
+  font: inherit;
+}
+
+select::picker-icon {
+  transition: rotate 0.2s;
+}
+
+select:open::picker-icon {
+  rotate: 180deg;
+}
+
+::picker(select) {
+  margin-top: 4px;
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.12);
+}
+
+option {
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+
+option:hover,
+option:focus-visible {
+  background: var(--hover);
+}
+
+option:checked {
+  font-weight: 500;
+}
+```
+
+## Step 4: Put rich content inside options
+
+This is the part that used to be impossible. Options can contain images, icons and secondary text:
+
+```html
+<select name="country">
+  <button>
+    <selectedcontent></selectedcontent>
+  </button>
+  <option value="in">
+    <img src="/flags/in.svg" alt="" width="20" height="14" />
+    <span>India</span>
+  </option>
+  <option value="jp">
+    <img src="/flags/jp.svg" alt="" width="20" height="14" />
+    <span>Japan</span>
+  </option>
+</select>
+```
+
+`selectedcontent` clones the chosen option's content into the button, so the flag shows there too. Keep decorative images at `alt=""` so screen readers only announce the country name.
+
+## Step 5: Position it with anchor positioning
+
+The picker is anchored to the select automatically, which means [anchor positioning](/blog/css-features-that-replace-javascript-2026) properties work on it. To align it to the right edge, or flip it above when there's no room:
+
+```css
+::picker(select) {
+  position-area: block-end span-inline-start;
+  position-try-fallbacks: flip-block;
+}
+```
+
+## Step 6: Animate opening and closing
+
+The picker is a popover in the top layer, so `@starting-style` and discrete transitions work:
+
+```css
+::picker(select) {
+  opacity: 1;
+  translate: 0 0;
+  transition: opacity 0.15s, translate 0.15s, display 0.15s allow-discrete, overlay 0.15s allow-discrete;
+}
+
+@starting-style {
+  ::picker(select):popover-open {
+    opacity: 0;
+    translate: 0 -4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  ::picker(select) { transition: none; }
+}
+```
+
+## Browser support and fallbacks
+
+As of November 2026:
+
+- **Chrome and Edge:** supported since version 135.
+- **Safari:** supported in [Safari 27](https://webkit.org/blog/18325/webkit-features-for-safari-27-0/).
+- **Firefox:** in development, not yet on by default.
+
+Unsupported browsers ignore `appearance: base-select` and the extra markup degrades cleanly: the custom `button` is dropped and options render their text. To keep your fallback styles from leaking into the new mode, scope the fancy parts:
+
+```css
+@supports (appearance: base-select) {
+  select, ::picker(select) { appearance: base-select; }
+  /* rich styles here */
+}
+```
+
+## Mistakes to avoid
+
+- **Interactive content inside options.** Links or buttons inside an option are not allowed and confuse assistive tech. Options are for content, not controls.
+- **Dropping the visible label.** A styled select still needs a `<label>`.
+- **Hiding the focus ring.** Restyle `:focus-visible` instead of removing it.
+- **Tiny hit targets.** Keep options at least 24 × 24 px to meet WCAG 2.2's target size rule. Our [accessibility checklist](/blog/european-accessibility-act-wcag-22-ui-checklist) covers the rest.
+- **Rebuilding multi-select.** `multiple` selects aren't part of the first release. Keep your existing component for those for now.
+
+## Should you delete your custom select component?
+
+Not yet, if Firefox users must see the full design. But you can change its implementation: render a native `select` with `base-select` styles in supporting browsers and keep the old component only as a fallback. When Firefox ships, delete the fallback. That path ends with less code and better accessibility than any library.
+
+## FAQ
+
+<Faq>
+
+<FaqItem q="What is appearance: base-select?">
+
+It's a CSS value that switches the select element into a new, fully stylable mode. The browser keeps the native behaviour (keyboard, typeahead, accessibility, forms) but lets you style every part and put rich content inside options.
+
+</FaqItem>
+
+<FaqItem q="Does customizable select work in Firefox?">
+
+Not by default as of November 2026. Firefox ignores the property and shows a normal native select, so the page still works.
+
+</FaqItem>
+
+<FaqItem q="Can I put images inside option elements now?">
+
+Yes, in supporting browsers. Options can contain images, icons and text, and the selectedcontent element mirrors the chosen option inside the button.
+
+</FaqItem>
+
+<FaqItem q="Is a customizable select accessible?">
+
+It keeps the native select's roles, keyboard support and screen reader behaviour, which is far more reliable than most custom dropdowns. You still need a visible label, a visible focus style and sufficient contrast.
+
+</FaqItem>
+
+</Faq>
+
+<Explore section="resources" posts={["css-features-that-replace-javascript-2026", "european-accessibility-act-wcag-22-ui-checklist"]} />
