@@ -2,6 +2,15 @@ import type { UiCardData } from "@/types/resource";
 
 export const cardData: UiCardData[] = [
   {
+    title: "uibrik",
+    description:
+      "uibrik is a UI kit for AI agents: 290+ animated React components your agent finds over MCP and installs with the shadcn CLI — as Tailwind CSS and Motion source you own.",
+    tag: ["Components", "Animation", "React", "shadcn/ui", "Motion", "MCP"],
+    links: {
+      website: "https://uibrik.com",
+    },
+  },
+  {
     title: "Shadcn",
     description:
       "Shadcn (often written as shadcn/ui) is a popular component library for React and Next.js projects that provides beautifully designed, accessible, and customizable UI components built using Tailwind CSS and Radix UI.",
@@ -1439,15 +1448,6 @@ export const cardData: UiCardData[] = [
       twitter: "",
       github: "",
       youtube: "",
-    },
-  },
-  {
-    title: "uibrik",
-    description:
-      "uibrik is a UI kit for AI agents: 290+ animated React components your agent finds over MCP and installs with the shadcn CLI — as Tailwind CSS and Motion source you own.",
-    tag: ["Components", "Animation", "React", "shadcn/ui", "Motion", "MCP"],
-    links: {
-      website: "https://uibrik.com",
     },
   },
 ];
