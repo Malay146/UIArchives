@@ -77,13 +77,16 @@ export const metadata: Metadata = {
     follow: true,
     googleBot: { index: true, follow: true, "max-image-preview": "large", "max-snippet": -1, "max-video-preview": -1 },
   },
+  // app/favicon.ico (real 16/32/48 ICO) is emitted by Next's file convention.
+  // The 192px PNG is the plain, media-free icon Google uses for search
+  // results; the light/dark pair only themes the browser tab.
   icons: {
     icon: [
+      { url: "/icon.png", type: "image/png", sizes: "192x192" },
       { url: "/faviconLight.png", media: "(prefers-color-scheme: light)" },
       { url: "/faviconDark.png", media: "(prefers-color-scheme: dark)" },
     ],
-    shortcut: "/favicon.ico",
-    apple: "/favicon.ico",
+    apple: { url: "/apple-icon.png", sizes: "180x180" },
   },
   category: "Design",
   ...(GOOGLE_VERIFICATION ? { verification: { google: GOOGLE_VERIFICATION } } : {}),
