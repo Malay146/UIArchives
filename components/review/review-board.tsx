@@ -9,7 +9,6 @@ import { ArrowUpRightGlyph18 } from "@/components/icons";
 import {
   type Field as FieldDef,
   type ItemData,
-  SECTION_ORDER,
   SECTION_SCHEMAS,
   type SectionKey,
 } from "@/lib/section-schemas";
@@ -37,6 +36,9 @@ const ago = (t: number) => {
   if (s < 86400) return `${Math.round(s / 3600)}h ago`;
   return `${Math.round(s / 86400)}d ago`;
 };
+
+/** Sections that still go through review. */
+const REVIEWED: SectionKey[] = ["app-icons"];
 
 const titleOf = (it: Item) => String(it.data[SECTION_SCHEMAS[it.section].titleField] ?? "Untitled");
 const linkOf = (it: Item) => String(it.data[SECTION_SCHEMAS[it.section].dedupeField] ?? "");
@@ -66,7 +68,8 @@ export function ReviewBoard({
 }) {
   const [items, setItems] = useState(initial);
   const [status, setStatus] = useState<Status>("pending");
-  const [section, setSection] = useState<SectionKey | "all">("all");
+  // The board only handles App Icons; other sections publish directly.
+  const [section, setSection] = useState<SectionKey | "all">("app-icons");
   const [open, setOpen] = useState<Item | null>(null);
   const [frozen, setFrozen] = useState<Item[]>([]);
   const [addUrl, setAddUrl] = useState("");
@@ -82,7 +85,7 @@ export function ReviewBoard({
 
   const sectionCounts = useMemo(() => {
     const c: Record<string, number> = { all: items[status].length };
-    for (const k of SECTION_ORDER) c[k] = items[status].filter((i) => i.section === k).length;
+    for (const k of REVIEWED) c[k] = items[status].filter((i) => i.section === k).length;
     return c;
   }, [items, status]);
 
@@ -135,15 +138,15 @@ export function ReviewBoard({
       {/* Header row */}
       <section className="grid gap-8 border-b px-4 pt-10 pb-8 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
         <div>
-          <h1 className="font-medium">Review</h1>
+          <h1 className="font-medium">Review · App Icons</h1>
           <p className="mt-1 text-fg-2">
-            Approved items go live immediately; submitters are emailed either way.
+            App icons are checked here before they go live. Designs, resources, OG images and skills publish directly.
           </p>
           <form onSubmit={quickAdd} className="mt-6 flex max-w-[520px] items-center gap-2">
             <input
               value={addUrl}
               onChange={(e) => setAddUrl(e.target.value)}
-              placeholder="Add by link — X post, App Store, GitHub or any site"
+              placeholder="Add an App Store link"
               className="h-9 min-w-0 flex-1 rounded-md bg-hover px-3 outline-none placeholder:text-fg-3 focus-visible:shadow-[inset_0_0_0_1px_var(--fg)]"
             />
             <Button type="submit" variant="secondary" disabled={!addUrl}>
@@ -179,8 +182,7 @@ export function ReviewBoard({
             key: "section",
             label: "Section",
             options: [
-              { value: "all", label: "All", count: sectionCounts.all, active: section === "all" },
-              ...SECTION_ORDER.map((k) => ({
+              ...REVIEWED.map((k) => ({
                 value: k,
                 label: SECTION_SCHEMAS[k].label,
                 count: sectionCounts[k],

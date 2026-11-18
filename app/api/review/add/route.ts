@@ -4,9 +4,8 @@ import { enrich } from "@/lib/server/enrich";
 import { SECTION_SCHEMAS, dedupeKey } from "@/lib/section-schemas";
 
 /**
- * Admin-only quick add: paste a link, the section is inferred (X post →
- * Designs, App Store → App Icons, GitHub → Skills, anything else → Resources),
- * details are filled from official sources, and it lands in the queue.
+ * Admin-only quick add for App Icons: paste an App Store link, details are
+ * filled from the App Store, and it lands in the review queue.
  */
 export async function POST(req: Request) {
   if (!sameOrigin(req) || !(await getAdmin())) return Response.json({ error: "Sign in first." }, { status: 401 });
@@ -18,7 +17,9 @@ export async function POST(req: Request) {
     return Response.json({ error: "Paste a full link." }, { status: 400 });
   }
   const key = dedupeKey(u.href);
-  const section = key.startsWith("x:") ? "designs" : key.startsWith("appstore:") ? "app-icons" : u.hostname === "github.com" ? "skills" : "resources";
+  // Review is for App Icons only; other sections are published directly.
+  if (!key.startsWith("appstore:")) return Response.json({ error: "Only App Store links go through review." }, { status: 400 });
+  const section = "app-icons";
   const field = SECTION_SCHEMAS[section].dedupeField;
   const data = await enrich(section, { [field]: u.href }, crypto.randomUUID().slice(0, 8));
   const item = await createItem({ section, data, source: "automation", origin: "manual" });

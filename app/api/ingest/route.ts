@@ -1,19 +1,20 @@
 import { env } from "@/lib/server/env";
-import { createItem, logRun } from "@/lib/server/db";
+import { createItem, logRun, reviewItem } from "@/lib/server/db";
 import { enrich, appStoreError } from "@/lib/server/enrich";
 import { SECTION_SCHEMAS, isSectionKey, validate, MIN_SKILL_STARS } from "@/lib/section-schemas";
 import { captureServer } from "@/lib/server/analytics";
 
 /**
- * Sections automation may add to. Everything else (resources, designs, OG
- * images, skills) is added by hand on /review for now.
+ * App icons are the only section that still goes through /review. Everything
+ * else the owner hands over (designs, resources, OG images, skills) is
+ * published straight away — the caller fills in every required field.
  */
-const AUTOMATED_SECTIONS: string[] = ["app-icons"];
+const REVIEWED_SECTIONS: string[] = ["app-icons"];
 
 /**
- * For the scheduled Claude agent (and any trusted script): add candidates to
- * the review queue. Bearer-token protected. Nothing is ever published here —
- * every item lands as `pending`.
+ * For the scheduled Claude agent (and any trusted script). Bearer-token
+ * protected. App icons land as `pending` for /review; every other section is
+ * validated in full, its media fetched, and published as `approved`.
  *
  * POST { origin: "claude", items: [{ section, data }] }  (max 25 per call)
  */
@@ -26,19 +27,18 @@ export async function POST(req: Request) {
   const items = (body?.items ?? []).slice(0, 25);
   const origin = String(body?.origin ?? "claude").slice(0, 40);
 
-  const results: { section: string; status: "queued" | "duplicate" | "invalid"; error?: string }[] = [];
+  const results: { section: string; status: "queued" | "published" | "duplicate" | "invalid"; id?: string; error?: string }[] = [];
   for (const it of items) {
     if (!isSectionKey(it.section) || !it.data) {
       results.push({ section: String(it.section), status: "invalid", error: "Unknown section or missing data" });
       continue;
     }
-    if (!AUTOMATED_SECTIONS.includes(it.section)) {
-      results.push({ section: it.section, status: "invalid", error: `Automation only adds ${AUTOMATED_SECTIONS.join(", ")} right now` });
-      continue;
-    }
+    const reviewed = REVIEWED_SECTIONS.includes(it.section);
     const schema = SECTION_SCHEMAS[it.section];
-    // Automation may omit fields a person will set during review (style, colour…).
-    const { data, errors } = validate({ ...schema, fields: schema.fields.map((f) => ({ ...f, required: f.key === schema.dedupeField })) }, it.data, {
+    // Queued items may omit fields a person sets during review (style, colour…);
+    // published items must arrive complete.
+    const fields = reviewed ? schema.fields.map((f) => ({ ...f, required: f.key === schema.dedupeField })) : schema.fields;
+    const { data, errors } = validate({ ...schema, fields }, it.data, {
       hasFile: { image: !!it.data.image, video: !!it.data.video },
     });
     if (errors.length) {
@@ -62,15 +62,29 @@ export async function POST(req: Request) {
       results.push({ section: it.section, status: "invalid", error: `Couldn't fetch its media right now. Try again.${why}` });
       continue;
     }
+    if (it.section === "designs" && !String(enriched.note ?? "").trim()) {
+      results.push({ section: it.section, status: "invalid", error: "Designs need a “Why it works” note" });
+      continue;
+    }
     const created = await createItem({ section: it.section, data: enriched, source: "automation", origin });
-    results.push({ section: it.section, status: created ? "queued" : "duplicate" });
+    if (!created) {
+      results.push({ section: it.section, status: "duplicate" });
+      continue;
+    }
+    if (reviewed) {
+      results.push({ section: it.section, status: "queued", id: created.id });
+    } else {
+      await reviewItem(created.id, "approved", enriched, null);
+      results.push({ section: it.section, status: "published", id: created.id });
+    }
   }
-  const queued = results.filter((r) => r.status === "queued").length;
+  const queued = results.filter((r) => r.status === "queued" || r.status === "published").length;
   await logRun(origin, items.length, queued).catch(() => {});
   await captureServer("automation_ingest", {
     origin,
     received: items.length,
     queued,
+    published: results.filter((r) => r.status === "published").length,
     duplicates: results.filter((r) => r.status === "duplicate").length,
     invalid: results.filter((r) => r.status === "invalid").length,
   }, `uiarchives-automation:${origin}`);

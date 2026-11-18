@@ -27,9 +27,10 @@ export default async function Page() {
   }
 
   const [pending, approved, rejected, counts, runs] = await Promise.all([
-    listItems("pending"),
-    listItems("approved", undefined, 100),
-    listItems("rejected", undefined, 100),
+    // Only App Icons are reviewed; every other section publishes directly.
+    listItems("pending", "app-icons"),
+    listItems("approved", "app-icons", 100),
+    listItems("rejected", "app-icons", 100),
     countByStatus(),
     lastRuns(6),
   ]);
