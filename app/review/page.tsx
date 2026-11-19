@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/site/header";
 import { getAdmin } from "@/lib/server/auth";
-import { countByStatus, lastRuns, listItems } from "@/lib/server/db";
+import { countByStatus, lastRuns, listReviewable } from "@/lib/server/db";
 import { ReviewBoard } from "@/components/review/review-board";
 import { headers } from "next/headers";
 import { PasskeySignIn } from "@/components/review/passkey-sign-in";
@@ -27,10 +27,10 @@ export default async function Page() {
   }
 
   const [pending, approved, rejected, counts, runs] = await Promise.all([
-    // Only App Icons are reviewed; every other section publishes directly.
-    listItems("pending", "app-icons"),
-    listItems("approved", "app-icons", 100),
-    listItems("rejected", "app-icons", 100),
+    // App Icons, plus public submissions from every other section.
+    listReviewable("pending"),
+    listReviewable("approved", 100),
+    listReviewable("rejected", 100),
     countByStatus(),
     lastRuns(6),
   ]);

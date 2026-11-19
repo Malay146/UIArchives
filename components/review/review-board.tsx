@@ -37,8 +37,9 @@ const ago = (t: number) => {
   return `${Math.round(s / 86400)}d ago`;
 };
 
-/** Sections that still go through review. */
-const REVIEWED: SectionKey[] = ["app-icons"];
+/** Section filter order. App Icons are always reviewed; the others only show
+ * up here when a person submits one through the public form. */
+const SECTION_ORDER: SectionKey[] = ["app-icons", "resources", "designs", "og-images", "skills"];
 
 const titleOf = (it: Item) => String(it.data[SECTION_SCHEMAS[it.section].titleField] ?? "Untitled");
 const linkOf = (it: Item) => String(it.data[SECTION_SCHEMAS[it.section].dedupeField] ?? "");
@@ -68,8 +69,7 @@ export function ReviewBoard({
 }) {
   const [items, setItems] = useState(initial);
   const [status, setStatus] = useState<Status>("pending");
-  // The board only handles App Icons; other sections publish directly.
-  const [section, setSection] = useState<SectionKey | "all">("app-icons");
+  const [section, setSection] = useState<SectionKey | "all">("all");
   const [open, setOpen] = useState<Item | null>(null);
   const [frozen, setFrozen] = useState<Item[]>([]);
   const [addUrl, setAddUrl] = useState("");
@@ -85,9 +85,18 @@ export function ReviewBoard({
 
   const sectionCounts = useMemo(() => {
     const c: Record<string, number> = { all: items[status].length };
-    for (const k of REVIEWED) c[k] = items[status].filter((i) => i.section === k).length;
+    for (const k of SECTION_ORDER) c[k] = items[status].filter((i) => i.section === k).length;
     return c;
   }, [items, status]);
+
+  // App Icons always; another section once it has any submission.
+  const shownSections = useMemo(
+    () =>
+      SECTION_ORDER.filter(
+        (k) => k === "app-icons" || (["pending", "approved", "rejected"] as Status[]).some((s) => items[s].some((i) => i.section === k)),
+      ),
+    [items],
+  );
 
   const openItem = useCallback(
     (it: Item) => {
@@ -138,9 +147,9 @@ export function ReviewBoard({
       {/* Header row */}
       <section className="grid gap-8 border-b px-4 pt-10 pb-8 sm:px-6 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
         <div>
-          <h1 className="font-medium">Review · App Icons</h1>
+          <h1 className="font-medium">Review</h1>
           <p className="mt-1 text-fg-2">
-            App icons are checked here before they go live. Designs, resources, OG images and skills publish directly.
+            App icons, and anything people send through the submit form, are checked here before they go live. Your own links publish directly.
           </p>
           <form onSubmit={quickAdd} className="mt-6 flex max-w-[520px] items-center gap-2">
             <input
@@ -182,7 +191,8 @@ export function ReviewBoard({
             key: "section",
             label: "Section",
             options: [
-              ...REVIEWED.map((k) => ({
+              { value: "all", label: "All", count: sectionCounts.all, active: section === "all" },
+              ...shownSections.map((k) => ({
                 value: k,
                 label: SECTION_SCHEMAS[k].label,
                 count: sectionCounts[k],

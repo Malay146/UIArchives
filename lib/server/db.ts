@@ -93,6 +93,20 @@ export async function listItems(status: ItemStatus, section?: SectionKey, limit 
   return results.map(parse);
 }
 
+/**
+ * What /review shows: every App Icon, plus anything a person sent through the
+ * public submit form in another section. Automation finds outside App Icons
+ * stay off the board — those sections publish directly.
+ */
+export async function listReviewable(status: ItemStatus, limit = 200): Promise<Item[]> {
+  const { results } = await env.DB.prepare(
+    "SELECT * FROM items WHERE status = ? AND (section = 'app-icons' OR source = 'submission') ORDER BY created_at DESC LIMIT ?",
+  )
+    .bind(status, limit)
+    .all<Row>();
+  return results.map(parse);
+}
+
 export async function countByStatus(): Promise<Record<string, number>> {
   const { results } = await env.DB.prepare(
     "SELECT status || ':' || section AS k, COUNT(*) AS n FROM items GROUP BY status, section",
