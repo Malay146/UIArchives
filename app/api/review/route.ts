@@ -3,7 +3,7 @@ import { getAdmin, sameOrigin } from "@/lib/server/auth";
 import { findsDuplicate, getItem, reviewItem } from "@/lib/server/db";
 import { storeRemote } from "@/lib/server/media";
 import { resourceMedia } from "@/lib/server/enrich";
-import { layout, sendMail } from "@/lib/server/email";
+import { layout, sendMailLater } from "@/lib/server/email";
 import { SECTION_SCHEMAS, validate } from "@/lib/section-schemas";
 
 const fail = (error: string, status = 400) => Response.json({ error }, { status });
@@ -63,7 +63,7 @@ export async function POST(req: Request) {
     const title = String(data[schema.titleField] ?? "your submission");
     const name = item.submitter_name ?? "there";
     if (body.action === "approve") {
-      await sendMail({
+      sendMailLater({
         to: item.submitter_email,
         subject: `“${title}” is now in UIArchives`,
         text: `Hi ${name},\n\nGood news — “${title}” was approved and is now live in the ${schema.label} section.${note ? `\n\nNote: ${note}` : ""}\n\n${env.SITE_URL}${schema.key === "resources" ? "/" : `/${schema.key}`}\n\nThank you for contributing.\n— UIArchives`,
@@ -74,7 +74,7 @@ export async function POST(req: Request) {
         ], { href: `${env.SITE_URL}${schema.key === "resources" ? "/" : `/${schema.key}`}`, label: `View ${schema.label}` }),
       });
     } else {
-      await sendMail({
+      sendMailLater({
         to: item.submitter_email,
         subject: `About your submission: “${title}”`,
         text: `Hi ${name},\n\nThanks for sending “${title}”. After review, it isn't a fit for UIArchives right now.${note ? `\n\nWhy: ${note}` : ""}\n\nYou're welcome to submit something else any time.\n— UIArchives`,

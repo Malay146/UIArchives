@@ -1,3 +1,4 @@
+import { waitUntil } from "cloudflare:workers";
 import { env } from "./env";
 
 type Mail = { to: string; subject: string; text: string; html?: string; replyTo?: string };
@@ -56,5 +57,19 @@ export async function sendMail(mail: Mail): Promise<boolean> {
   } catch (e) {
     console.error("[email:error]", e);
     return false;
+  }
+}
+
+/**
+ * Send in the background: the response goes back right away and the Worker
+ * stays alive until the email is out. Gmail SMTP takes a few seconds per
+ * message, which people shouldn't have to wait for.
+ */
+export function sendMailLater(...mails: Mail[]) {
+  const job = Promise.all(mails.map(sendMail));
+  try {
+    waitUntil(job);
+  } catch {
+    // No request context (e.g. a script): the promise still runs.
   }
 }

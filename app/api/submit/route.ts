@@ -3,7 +3,7 @@ import { createItem } from "@/lib/server/db";
 import { ipHash } from "@/lib/server/auth";
 import { enrich } from "@/lib/server/enrich";
 import { putFile } from "@/lib/server/media";
-import { layout, sendMail } from "@/lib/server/email";
+import { layout, sendMailLater } from "@/lib/server/email";
 import { SECTION_SCHEMAS, isSectionKey, validate } from "@/lib/section-schemas";
 import { captureServer } from "@/lib/server/analytics";
 
@@ -84,25 +84,25 @@ export async function POST(req: Request) {
   await captureServer("submission_stored", { section, title: String(enriched[schema.titleField] ?? "") });
 
   const title = String(enriched[schema.titleField] ?? "your submission");
-  await Promise.all([
-    sendMail({
+  sendMailLater(
+    {
       to: email,
       subject: `We got your ${schema.noun}: ${title}`,
       text: `Hi ${name},\n\nThanks for sending “${title}” to UIArchives. Every submission is reviewed by hand — we'll email you as soon as it's been looked at.\n\n— UIArchives`,
       html: layout(`Thanks, ${name}.`, [
         `We received “${title}”. Every submission is reviewed by hand, and we'll email you as soon as it's been looked at.`,
       ]),
-    }),
-    env.ADMIN_EMAIL
-      ? sendMail({
+    },
+    ...(env.ADMIN_EMAIL
+      ? [{
           to: env.ADMIN_EMAIL,
           replyTo: email,
           subject: `New ${schema.noun} to review: ${title}`,
           text: `${name} <${email}> submitted “${title}”.\n\nReview: ${env.SITE_URL}/review`,
           html: layout(`New ${schema.noun} to review`, [`${name} submitted “${title}”.`], { href: `${env.SITE_URL}/review`, label: "Open review" }),
-        })
-      : Promise.resolve(false),
-  ]);
+        }]
+      : []),
+  );
 
   return Response.json({ ok: true });
 }
