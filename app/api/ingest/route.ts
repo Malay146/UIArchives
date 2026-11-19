@@ -5,16 +5,15 @@ import { SECTION_SCHEMAS, isSectionKey, validate, MIN_SKILL_STARS } from "@/lib/
 import { captureServer } from "@/lib/server/analytics";
 
 /**
- * App icons are the only section that still goes through /review. Everything
- * else the owner hands over (designs, resources, OG images, skills) is
- * published straight away — the caller fills in every required field.
+ * The owner's own links. Everything is published straight away — the caller
+ * fills in every required field. /review is only for public submissions.
  */
-const REVIEWED_SECTIONS: string[] = ["app-icons"];
+const REVIEWED_SECTIONS: string[] = [];
 
 /**
- * For the scheduled Claude agent (and any trusted script). Bearer-token
- * protected. App icons land as `pending` for /review; every other section is
- * validated in full, its media fetched, and published as `approved`.
+ * For the owner's links (and any trusted script). Bearer-token protected.
+ * Every item is validated in full, its media fetched, and published as
+ * `approved`.
  *
  * POST { origin: "claude", items: [{ section, data }] }  (max 25 per call)
  */

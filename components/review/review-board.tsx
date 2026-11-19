@@ -27,7 +27,6 @@ type Item = {
   created_at: number;
 };
 type Status = Item["status"];
-type Run = { started_at: number; source: string; found: number; queued: number; error: string | null };
 
 const ago = (t: number) => {
   const s = Math.round((Date.now() - t) / 1000);
@@ -37,8 +36,7 @@ const ago = (t: number) => {
   return `${Math.round(s / 86400)}d ago`;
 };
 
-/** Section filter order. App Icons are always reviewed; the others only show
- * up here when a person submits one through the public form. */
+/** Section filter order; a section shows once someone has submitted to it. */
 const SECTION_ORDER: SectionKey[] = ["app-icons", "resources", "designs", "og-images", "skills"];
 
 const titleOf = (it: Item) => String(it.data[SECTION_SCHEMAS[it.section].titleField] ?? "Untitled");
@@ -60,20 +58,16 @@ export function ReviewBoard({
   admin,
   initial,
   counts,
-  runs,
 }: {
   admin: string;
   initial: Record<Status, Item[]>;
   counts: Record<string, number>;
-  runs: Run[];
 }) {
   const [items, setItems] = useState(initial);
   const [status, setStatus] = useState<Status>("pending");
   const [section, setSection] = useState<SectionKey | "all">("all");
   const [open, setOpen] = useState<Item | null>(null);
   const [frozen, setFrozen] = useState<Item[]>([]);
-  const [addUrl, setAddUrl] = useState("");
-  const [addMsg, setAddMsg] = useState<string | null>(null);
 
   // Only a signed-in reviewer sees this board: flag the browser as internal.
   useEffect(() => identifyReviewer(), []);
@@ -89,12 +83,8 @@ export function ReviewBoard({
     return c;
   }, [items, status]);
 
-  // App Icons always; another section once it has any submission.
   const shownSections = useMemo(
-    () =>
-      SECTION_ORDER.filter(
-        (k) => k === "app-icons" || (["pending", "approved", "rejected"] as Status[]).some((s) => items[s].some((i) => i.section === k)),
-      ),
+    () => SECTION_ORDER.filter((k) => (["pending", "approved", "rejected"] as Status[]).some((s) => items[s].some((i) => i.section === k))),
     [items],
   );
 
@@ -130,18 +120,6 @@ export function ReviewBoard({
     }
   };
 
-  const quickAdd = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setAddMsg("Looking it up…");
-    const res = await fetch("/api/review/add", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ url: addUrl }) });
-    const body = (await res.json().catch(() => ({}))) as { error?: string; item?: Item };
-    if (!res.ok || !body.item) return setAddMsg(body.error ?? "Couldn't add that link.");
-    track("review_added", { section: body.item.section });
-    setItems((s) => ({ ...s, pending: [body.item!, ...s.pending] }));
-    setAddUrl("");
-    setAddMsg(`Queued in ${SECTION_SCHEMAS[body.item.section].label}.`);
-  };
-
   return (
     <div className="mx-auto max-w-[1920px]">
       {/* Header row */}
@@ -149,20 +127,8 @@ export function ReviewBoard({
         <div>
           <h1 className="font-medium">Review</h1>
           <p className="mt-1 text-fg-2">
-            App icons, and anything people send through the submit form, are checked here before they go live. Your own links publish directly.
+            What people send through the submit form. Approve or reject each one; the submitter is emailed either way.
           </p>
-          <form onSubmit={quickAdd} className="mt-6 flex max-w-[520px] items-center gap-2">
-            <input
-              value={addUrl}
-              onChange={(e) => setAddUrl(e.target.value)}
-              placeholder="Add an App Store link"
-              className="h-9 min-w-0 flex-1 rounded-md bg-hover px-3 outline-none placeholder:text-fg-3 focus-visible:shadow-[inset_0_0_0_1px_var(--fg)]"
-            />
-            <Button type="submit" variant="secondary" disabled={!addUrl}>
-              Add
-            </Button>
-          </form>
-          {addMsg && <p className="mt-2 text-[13px] text-fg-3" aria-live="polite">{addMsg}</p>}
         </div>
         <dl className="flex gap-8">
           {(["pending", "approved", "rejected"] as Status[]).map((s) => (
@@ -210,7 +176,7 @@ export function ReviewBoard({
         <div className="px-4 py-16 sm:px-6">
           <p>{status === "pending" ? "All caught up." : `Nothing ${status} yet.`}</p>
           <p className="mt-1 text-fg-2">
-            {status === "pending" ? "New submissions and automation finds will appear here." : ""}
+            {status === "pending" ? "New submissions will appear here." : ""}
           </p>
         </div>
       ) : (
@@ -240,24 +206,6 @@ export function ReviewBoard({
             </li>
           ))}
         </ul>
-      )}
-
-      {/* Automation status */}
-      {runs.length > 0 && (
-        <section className="px-4 py-10 sm:px-6">
-          <h2 className="mb-3 text-fg-3">Automation</h2>
-          <ul className="border-t text-[13px]">
-            {runs.map((r) => (
-              <li key={`${r.started_at}-${r.source}`} className="flex justify-between gap-6 border-b py-2">
-                <span>{r.source}</span>
-                <span className="text-fg-2">
-                  {r.error ? `× ${r.error}` : `${r.queued} queued of ${r.found} found`}
-                </span>
-                <span className="text-fg-3">{ago(r.started_at)}</span>
-              </li>
-            ))}
-          </ul>
-        </section>
       )}
 
       <Sheet item={open} list={frozen} onSelect={openItem} onClose={() => setOpen(null)}>

@@ -2,15 +2,13 @@
 
 The site is a [vinext](https://github.com/cloudflare/vinext) app (Next.js API on
 Vite) deployed as one Cloudflare Worker. Everything uses free plans and needs no
-payment method: Workers Free, D1, Workers KV, Cron Triggers, and Gmail SMTP for email.
+payment method: Workers Free, D1, Workers KV, and Gmail SMTP for email.
 
 | Piece | What it does |
 | --- | --- |
 | Worker `uiarchives` | Serves the site on `uiarchives.com` and `www.uiarchives.com` (`cloudflare.config.ts`) |
-| D1 `uiarchives` | Submissions, review queue, automation runs, passkeys, email codes (`migrations/`) |
+| D1 `uiarchives` | Archive items, public submissions, passkeys, email codes (`migrations/`) |
 | KV `MEDIA` | Uploaded and fetched images/videos, served at `/media/…` |
-| Cron `0 */6 * * *` | Crawls App Store, GitHub and Hacker News into the review queue (`lib/server/automation.ts`) |
-| Claude routine (daily) | Curates new items and posts them to `/api/ingest` (`automation/claude-curator.md`) |
 
 ## Deploy
 
@@ -67,24 +65,19 @@ Cloudflare Email Sending instead.
 deploy, and the workers.dev address is turned off. The GoDaddy mail records
 (MX, SPF, DMARC) were copied into the zone with `scripts/dns-records.sh`.
 
-## Daily Claude curator
+## Review and submissions
 
-A Claude Code cloud routine runs daily and follows `automation/claude-curator.md`.
-It posts to `https://uiarchives.com/api/ingest` with `INGEST_TOKEN`.
-Manage it at https://claude.ai/code/routines.
+There is no automation. `/review` lists only what people send through the
+public submit form (protected by Cloudflare Turnstile). The owner's own links
+are posted to `/api/ingest` with `INGEST_TOKEN` and publish directly.
 
 ## Local development
 
 ```sh
-npm run dev            # http://localhost:3001, with D1, KV and cron running locally
+npm run dev            # http://localhost:3001, with D1 and KV running locally
 ```
 
 Local secrets go in `.dev.vars` (git-ignored). Locally, emails are only logged to
 the console unless SMTP credentials are set. To create the local tables, run the
 SQL files in `migrations/` against the local database. The dev server's explorer
-at `/cdn-cgi/local/explorer/api` accepts raw SQL. Trigger the cron with:
-
-```sh
-curl -X POST "http://localhost:3001/cdn-cgi/local/explorer/api/local/scheduled?worker=uiarchives" \
-  -H "content-type: application/json" -d '{"cron":"0 */6 * * *"}'
-```
+at `/cdn-cgi/local/explorer/api` accepts raw SQL.

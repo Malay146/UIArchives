@@ -93,14 +93,10 @@ export async function listItems(status: ItemStatus, section?: SectionKey, limit 
   return results.map(parse);
 }
 
-/**
- * What /review shows: every App Icon, plus anything a person sent through the
- * public submit form in another section. Automation finds outside App Icons
- * stay off the board — those sections publish directly.
- */
+/** What /review shows: only what people sent through the public submit form. */
 export async function listReviewable(status: ItemStatus, limit = 200): Promise<Item[]> {
   const { results } = await env.DB.prepare(
-    "SELECT * FROM items WHERE status = ? AND (section = 'app-icons' OR source = 'submission') ORDER BY created_at DESC LIMIT ?",
+    "SELECT * FROM items WHERE status = ? AND source = 'submission' ORDER BY created_at DESC LIMIT ?",
   )
     .bind(status, limit)
     .all<Row>();
@@ -140,11 +136,4 @@ export async function logRun(source: string, found: number, queued: number, erro
   await env.DB.prepare("INSERT INTO automation_runs (started_at, source, found, queued, error) VALUES (?, ?, ?, ?, ?)")
     .bind(Date.now(), source, found, queued, error ?? null)
     .run();
-}
-
-export async function lastRuns(limit = 8) {
-  const { results } = await env.DB.prepare("SELECT * FROM automation_runs ORDER BY started_at DESC LIMIT ?").bind(limit).all<{
-    started_at: number; source: string; found: number; queued: number; error: string | null;
-  }>();
-  return results;
 }

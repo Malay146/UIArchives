@@ -1,9 +1,9 @@
-import { bindings, defineConfig, defineWorker, triggers } from "cf/config";
+import { bindings, defineConfig, defineWorker } from "cf/config";
 
 export default defineConfig({
   worker: defineWorker({
     name: "uiarchives",
-    // vinext's request handler plus a `scheduled` handler for automation.
+    // vinext's request handler plus the PostHog proxy.
     entrypoint: "./worker/index.ts",
     compatibilityDate: "2026-11-12",
     // Served on the apex and www (the zone is on Cloudflare DNS).
@@ -13,10 +13,6 @@ export default defineConfig({
       notFoundHandling: "none",
       runWorkerFirst: ["/*", "!/_next/static/*", "!/*/_next/static/*"],
     },
-    triggers: [
-      // Steady official sources (App Store, GitHub, Hacker News) every 6 hours.
-      triggers.scheduled({ schedule: "0 */6 * * *" }),
-    ],
     env: {
       ASSETS: bindings.assets(),
 

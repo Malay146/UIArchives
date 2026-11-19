@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Field, TextArea } from "@/components/ui/field";
 import { CheckGlyph18 } from "@/components/icons";
 import { track } from "@/lib/analytics";
+import { Turnstile, type TurnstileHandle } from "@/components/submit/turnstile";
 import { type Field as FieldDef, SECTION_SCHEMAS, type SectionKey } from "@/lib/section-schemas";
 
 type Status = { type: "success" | "error"; text: string } | null;
@@ -14,6 +15,7 @@ type Status = { type: "success" | "error"; text: string } | null;
 export function SubmitForm({ section }: { section: SectionKey }) {
   const schema = SECTION_SCHEMAS[section];
   const formRef = useRef<HTMLFormElement>(null);
+  const turnstile = useRef<TurnstileHandle>(null);
   const [picks, setPicks] = useState<Record<string, string[]>>({});
   const [loading, setLoading] = useState(false);
   const [status, setStatus] = useState<Status>(null);
@@ -50,6 +52,8 @@ export function SubmitForm({ section }: { section: SectionKey }) {
     } catch (err) {
       track("submission_failed", { section, reason: (err as Error).message });
       setStatus({ type: "error", text: (err as Error).message });
+      // A token is single-use: get a fresh one for the next try.
+      turnstile.current?.reset();
     } finally {
       setLoading(false);
     }
@@ -147,6 +151,8 @@ export function SubmitForm({ section }: { section: SectionKey }) {
         <Field name="submitterName" label="Your name" autoComplete="name" required />
         <Field name="submitterEmail" label="Your email" type="email" autoComplete="email" hint="For the review result" required />
       </div>
+
+      <Turnstile ref={turnstile} />
 
       <div className="flex items-center justify-between gap-6">
         <p aria-live="polite" className={status?.type === "error" ? "text-fg" : "text-fg-3"}>

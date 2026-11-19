@@ -1,5 +1,4 @@
 import app from "vinext/server/fetch-handler";
-import { runAutomation } from "../lib/server/automation";
 import { POSTHOG_API_HOST, POSTHOG_ASSETS_HOST, POSTHOG_PROXY_PATH } from "../lib/analytics-config";
 
 /**
@@ -23,10 +22,7 @@ async function proxyPostHog(req: Request, url: URL): Promise<Response> {
   });
 }
 
-/**
- * The Worker: vinext serves the site; `scheduled` runs the automation that
- * gathers new candidates into the review queue.
- */
+/** The Worker: vinext serves the site; /_ph/* goes to PostHog. */
 export default {
   ...app,
   async fetch(req: Request, env: unknown, ctx: ExecutionContext) {
@@ -35,8 +31,5 @@ export default {
       return proxyPostHog(req, url);
     }
     return app.fetch(req, env, ctx);
-  },
-  async scheduled(controller: ScheduledController, _env: unknown, ctx: ExecutionContext) {
-    ctx.waitUntil(runAutomation(controller.cron));
   },
 };

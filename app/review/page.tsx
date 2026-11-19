@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Header } from "@/components/site/header";
 import { getAdmin } from "@/lib/server/auth";
-import { countByStatus, lastRuns, listReviewable } from "@/lib/server/db";
+import { countByStatus, listReviewable } from "@/lib/server/db";
 import { ReviewBoard } from "@/components/review/review-board";
 import { headers } from "next/headers";
 import { PasskeySignIn } from "@/components/review/passkey-sign-in";
@@ -26,20 +26,19 @@ export default async function Page() {
     );
   }
 
-  const [pending, approved, rejected, counts, runs] = await Promise.all([
-    // App Icons, plus public submissions from every other section.
+  const [pending, approved, rejected, counts] = await Promise.all([
+    // Only people's submissions; your own links publish directly.
     listReviewable("pending"),
     listReviewable("approved", 100),
     listReviewable("rejected", 100),
     countByStatus(),
-    lastRuns(6),
   ]);
 
   return (
     <>
       <Header />
       <main>
-        <ReviewBoard admin={admin} initial={{ pending, approved, rejected }} counts={counts} runs={runs} />
+        <ReviewBoard admin={admin} initial={{ pending, approved, rejected }} counts={counts} />
       </main>
     </>
   );
