@@ -10,8 +10,9 @@ import { dedupeKey, type ItemData, type SectionKey } from "@/lib/section-schemas
 
 /**
  * What each public section shows: the hand-curated data files plus
- * everything approved on /review (newest approvals last, so catalogue
- * numbers for existing entries never shift).
+ * everything approved (newest last, so catalogue numbers for existing
+ * entries never shift). Resources are the exception: newest first, with
+ * uibrik pinned on top.
  *
  * Every list is de-duplicated by the same identity used on submit and
  * approval (website, X post, page, App Store id, repo), so nothing appears
@@ -20,6 +21,8 @@ import { dedupeKey, type ItemData, type SectionKey } from "@/lib/section-schemas
  */
 const s = (d: ItemData, k: string) => (typeof d[k] === "string" ? (d[k] as string) : "");
 const a = (d: ItemData, k: string) => (Array.isArray(d[k]) ? (d[k] as string[]) : d[k] ? [String(d[k])] : []);
+/** Resources always listed first, by normalised title. */
+const PINNED = [norm("uibrik")];
 const iso = (t: number | null) => new Date(t ?? Date.now()).toISOString().slice(0, 10);
 
 export async function getResources(): Promise<UiCardData[]> {
@@ -42,7 +45,16 @@ export async function getResources(): Promise<UiCardData[]> {
     })
     .filter((r): r is UiCardData => !!r);
   // Full link (not just the domain) so two curated pages on one site both show.
-  return uniqueBy([...staticResources, ...extra], (r) => [dedupeKey(r.links?.website || r.links?.twitter || ""), norm(r.title)]);
+  // De-duplicate in the original order so the static entry wins a clash.
+  const all = uniqueBy([...staticResources, ...extra], (r) => [dedupeKey(r.links?.website || r.links?.twitter || ""), norm(r.title)]);
+  // Newest first: approved items (most recently added on top), then the static
+  // list from its last-added entry back. uibrik is always pinned first.
+  const fromStatic = new Set(staticResources);
+  const isPinned = (r: UiCardData) => PINNED.includes(norm(r.title));
+  const pinned = all.filter(isPinned);
+  const approved = all.filter((r) => !fromStatic.has(r) && !isPinned(r)).reverse();
+  const curated = all.filter((r) => fromStatic.has(r) && !isPinned(r)).reverse();
+  return [...pinned, ...approved, ...curated];
 }
 
 export async function getDesigns(): Promise<DesignClip[]> {
